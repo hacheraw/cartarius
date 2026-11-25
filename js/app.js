@@ -24,6 +24,23 @@
   const saveOpts = () => store.set('options', opts);
 
   const markerR = () => 4.2 * (opts.markerScale || 1) / currentK;
+  function updateCaps() {
+    if (!layer) return;
+    layer.selectAll('.cap').attr('transform', d => 'translate(' + d.x + ',' + d.y + ') scale(' + (1 / currentK) + ')');
+    svg.classed('caps-far', currentK < 2.2);
+  }
+  // Icono de capital (estrella en círculo) con su nombre; tamaño constante en pantalla
+  const STAR = (() => { let d = ''; for (let i = 0; i < 10; i++) { const r = i % 2 ? 1.6 : 3.8, a = Math.PI / 5 * i - Math.PI / 2; d += (i ? 'L' : 'M') + (r * Math.cos(a)).toFixed(2) + ',' + (r * Math.sin(a)).toFixed(2); } return d + 'Z'; })();
+  function addCapital(key) {
+    const c = capitalOf(key); if (!c) return;
+    const p = projection([c.lng, c.lat]); if (!p) return;
+    layer.select('.caps').selectAll('.cap[data-key="' + key + '"]').remove();
+    const g = layer.select('.caps').append('g').datum({ x: p[0], y: p[1] }).attr('class', 'cap').attr('data-key', key);
+    g.append('circle').attr('r', 6);
+    g.append('path').attr('d', STAR);
+    g.append('text').attr('x', 9).attr('y', 4).text(c.nombre);
+    updateCaps();
+  }
   function updateMarkers() { if (layer) layer.selectAll('.marker').attr('r', markerR()); }
 
   // ---------- Datos ----------
@@ -47,7 +64,7 @@
 
   function poolFor(cat) { // códigos que entran en la carta con las opciones actuales
     if (cat.kind === 'continents') return null;
-    return allIsos.filter(i => G.isAskable(i, opts) && (!cat.cont || G.CONT_OF[i] === cat.cont));
+    return allIsos.filter(i => G.isAskable(i, opts) && (!cat.cont || G.CONT_OF[i] === cat.cont) && (cat.kind !== 'capitals' || capitalOf(i)));
   }
   function itemsFromPool(cat, pool) {
     if (cat.kind === 'continents') {
@@ -56,11 +73,20 @@
         ...Object.entries(G.CONT_NAMES).map(([k, n]) => ({ key: 'c:' + k, name: n }))
       ];
     }
+    if (cat.kind === 'capitals') return pool.map(i => ({ key: i, name: capitalOf(i).nombre }));
     return pool.map(i => ({ key: i, name: G.countryName(i) }));
+  }
+  function capitalOf(iso) { const c = G.COUNTRY[iso]; return c && c.capital && isFinite(c.capital.lat) ? c.capital : null; }
+  const isCapitals = () => state.cat && state.cat.kind === 'capitals';
+  // Nombre para mensajes tras acertar o con "mostrar país pulsado": en capitales, «País (Capital)»
+  function fullName(key) {
+    if (isCapitals() && capitalOf(key)) return G.countryName(key) + ' (' + capitalOf(key).nombre + ')';
+    return nameOfKey(key);
   }
   function nameOfKey(key) {
     if (key.startsWith('o:')) return G.OCEAN_NAMES[key.slice(2)];
     if (key.startsWith('c:')) return G.CONT_NAMES[key.slice(2)];
+    if (isCapitals() && capitalOf(key)) return capitalOf(key).nombre;
     return G.countryName(key);
   }
 
@@ -117,6 +143,7 @@
       state.markers[key] = c;
     });
     layer.append('g').attr('class', 'labels');
+    layer.append('g').attr('class', 'caps');
 
     zoom = d3.zoom().scaleExtent([1, 40]).translateExtent([[0, 0], [W, H]])
       // Rueda: zoom. Botón derecho: arrastrar. Botón izquierdo: solo responder (nunca arrastra).
@@ -124,7 +151,7 @@
       .on('zoom', ev => {
         layer.attr('transform', ev.transform);
         currentK = ev.transform.k;
-        updateMarkers();
+        updateMarkers(); updateCaps();
         layer.selectAll('.label').attr('font-size', d => d.size / Math.sqrt(currentK)).attr('stroke-width', 3 / currentK);
       });
     svg.call(zoom).on('dblclick.zoom', null);
@@ -176,6 +203,7 @@
       el.style.fill = flag ? flagFill(el, flag, key + '-' + i) || c : c;
     });
     addLabel(key);
+    if (isCapitals()) addCapital(key);
   }
   // En la vista previa publicada las banderas llegan en un solo JSON (data/flags.json) y se sirven como blob:
   let flagBundle = null; const flagBlobs = {};
@@ -357,10 +385,10 @@
       if (el.__piece && state.cat.kind !== 'continents') toast(opts.showClicked ? G.countryName(el.__piece.raw, el.__piece.en) + ' no entra en esta carta' : 'Eso no entra en esta carta');
       return;
     }
-    if (state.found.has(key)) { toast('Ya colocado: ' + nameOfKey(key)); return; }
+    if (state.found.has(key)) { toast('Ya colocado: ' + fullName(key)); return; }
     ensureStarted();
     if (key === state.sel) {
-      state.found.add(key); paint(key); toast(nameOfKey(key), 'ok');
+      state.found.add(key); paint(key); toast(fullName(key), 'ok');
       const idx = state.items.findIndex(i => i.key === key);
       const li = state.cat.kind === 'flags' ? $('dockRow').querySelector('[data-key="' + CSS.escape(key) + '"]') : $('list').querySelector('li[data-key="' + CSS.escape(key) + '"]');
       state.items.splice(idx, 1);
@@ -373,7 +401,7 @@
     } else {
       state.errors++; state.tries++;
       flash(elementsFor(key));
-      if (opts.showClicked) { state.aided = true; toast('No. Eso es ' + nameOfKey(key), 'bad'); }
+      if (opts.showClicked) { state.aided = true; toast('No. Eso es ' + fullName(key), 'bad'); }
       else toast('Incorrecto', 'bad');
       if (opts.hints && state.tries >= opts.hintAfter) { state.aided = true; applyHint(); renderList(); }
       renderStats();
@@ -559,7 +587,7 @@
   function onMove(ev) {
     const el = ev.target; let name = null;
     if (state.paused) { tip.hidden = true; return; }
-    if (el && el.classList && el.classList.contains('painted') && el.__key) name = nameOfKey(el.__key);
+    if (el && el.classList && el.classList.contains('painted') && el.__key) name = fullName(el.__key);
     else if (opts.showClicked && el && el.__piece && !el.__key && state.cat && state.cat.kind !== 'continents') name = G.countryName(el.__piece.raw, el.__piece.en);
     if (!name) { tip.hidden = true; return; }
     tip.textContent = name; tip.hidden = false;

@@ -6,6 +6,14 @@ import json, os
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 raw = json.load(open(os.path.join(ROOT, 'data/raw/restcountries-v5.json'), encoding='utf-8'))
 ov = json.load(open(os.path.join(ROOT, 'data/overrides.json'), encoding='utf-8'))
+def capital_es(a2, c):
+    caps = c.get('capitals', [])
+    if not caps:
+        x = ov.get('capitales_extra', {}).get(a2)
+        return dict(x, nombre_en=None) if x else None
+    x = next((x for x in caps if x['attributes'].get('primary')), caps[0])
+    return {'nombre': ov.get('capitales', {}).get(a2) or x['name'], 'nombre_en': x['name'],
+            'lat': x['coordinates']['lat'], 'lng': x['coordinates']['lng']}
 cont_of = {i: c for c, s in ov['continentes'].items() for i in s.split()}
 a3_to_a2 = {c['codes']['alpha_3']: c['codes']['alpha_2'] for c in raw['countries'] if c['codes'].get('alpha_2')}
 
@@ -36,6 +44,7 @@ for c in raw['countries']:
         'soberano': (c.get('parent') or {}).get('alpha_2') or None,
         'capitales': [{'nombre': x['name'], 'lat': x['coordinates']['lat'], 'lng': x['coordinates']['lng'],
                        'principal': x['attributes'].get('primary', False)} for x in c.get('capitals', [])],
+        'capital': capital_es(a2, c),
         'bandera': {'svg': 'data/flags/%s.svg' % a2.lower() if f.get('url_svg') else None, 'emoji': f.get('emoji'),
                     'color': (f.get('colors') or {}).get('prominent'), 'descripcion_en': f.get('description') or None},
         'centro': [c.get('coordinates', {}).get('lat'), c.get('coordinates', {}).get('lng')],

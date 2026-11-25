@@ -20,7 +20,7 @@ Juego web de geografía. Estética: carta náutica, pergamino, toques regios.
 
 ## Tramo 3 · Más pruebas de "Completa el mapa"
 - [x] Banderas: mapa a todo el ancho, dock inferior con scroll horizontal; al acertar el país se rellena con su bandera.
-- [ ] Capitales (punto en el mapa; clic en el país o en la ciudad).
+- [x] Capitales: se señala el país; al acertar aparece la capital con estrella y nombre (el nombre se oculta con el mapa muy alejado).
 - [ ] Ríos, montañas y cordilleras (requiere nuevas capas: Natural Earth rivers/geography).
 - [ ] Provincias/comunidades de España y otros países (capas admin-1).
 - [ ] Ciudades, lenguas, personajes famosos (datos propios).
@@ -36,7 +36,7 @@ Juego web de geografía. Estética: carta náutica, pergamino, toques regios.
 ## Decisiones técnicas
 - Datos de países: REST Countries v5 descargado una vez a `data/raw/restcountries-v5.json` (`tools/fetch-countries.mjs`, gasta 3 peticiones). `tools/build-data.py` + `data/overrides.json` generan `data/countries.json`/`.js` (nombres en español, continente, estatus, capitales, bandera, población, idiomas, monedas, fronteras…). La clave no va en el juego.
 - Banderas: 250 SVG locales en `data/flags/` (`tools/fetch-flags.mjs`, CDN gratuito sin clave).
-- Pendiente para la prueba de capitales: los nombres de capitales vienen en inglés; habrá que traducirlos en `overrides.json`.
+- Capitales: nombre en español en `overrides.json` (`capitales`), una por país (la primera si hay varias: Bolivia → Sucre, Sudáfrica → Pretoria). Campo `capital` en `countries.json`.
 - HTML + CSS + JS sin compilador; D3 (local en `js/vendor/`) para la proyección Natural Earth y el zoom.
 - Nombres en español con `Intl.DisplayNames` + correcciones propias.
 - Límites de océanos simplificados (inspirados en la OHI); el Mediterráneo cuenta como Atlántico.

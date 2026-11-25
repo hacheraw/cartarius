@@ -26,6 +26,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Andorra la Vella",
+    "nombre_en": "Andorra la Vella",
+    "lat": 42.5,
+    "lng": 1.52
+   },
    "bandera": {
     "svg": "data/flags/ad.svg",
     "emoji": "🇦🇩",
@@ -92,6 +98,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Abu Dabi",
+    "nombre_en": "Abu Dhabi",
+    "lat": 24.47,
+    "lng": 54.37
+   },
    "bandera": {
     "svg": "data/flags/ae.svg",
     "emoji": "🇦🇪",
@@ -162,6 +174,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Kabul",
+    "nombre_en": "Kabul",
+    "lat": 34.52,
+    "lng": 69.18
+   },
    "bandera": {
     "svg": "data/flags/af.svg",
     "emoji": "🇦🇫",
@@ -242,6 +260,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Saint John's",
+    "nombre_en": "Saint John's",
+    "lat": 17.12,
+    "lng": -61.85
+   },
    "bandera": {
     "svg": "data/flags/ag.svg",
     "emoji": "🇦🇬",
@@ -306,6 +330,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "The Valley",
+    "nombre_en": "The Valley",
+    "lat": 18.22,
+    "lng": -63.05
+   },
    "bandera": {
     "svg": "data/flags/ai.svg",
     "emoji": "🇦🇮",
@@ -367,6 +397,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Tirana",
+    "nombre_en": "Tirana",
+    "lat": 41.32,
+    "lng": 19.82
+   },
    "bandera": {
     "svg": "data/flags/al.svg",
     "emoji": "🇦🇱",
@@ -436,6 +472,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Ereván",
+    "nombre_en": "Yerevan",
+    "lat": 40.17,
+    "lng": 44.5
+   },
    "bandera": {
     "svg": "data/flags/am.svg",
     "emoji": "🇦🇲",
@@ -504,6 +546,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Luanda",
+    "nombre_en": "Luanda",
+    "lat": -8.83,
+    "lng": 13.22
+   },
    "bandera": {
     "svg": "data/flags/ao.svg",
     "emoji": "🇦🇴",
@@ -566,6 +614,7 @@
    "tipo_dependencia": "international_territory",
    "soberano": null,
    "capitales": [],
+   "capital": null,
    "bandera": {
     "svg": "data/flags/aq.svg",
     "emoji": "🇦🇶",
@@ -622,6 +671,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Buenos Aires",
+    "nombre_en": "Buenos Aires",
+    "lat": -34.58,
+    "lng": -58.67
+   },
    "bandera": {
     "svg": "data/flags/ar.svg",
     "emoji": "🇦🇷",
@@ -697,6 +752,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Pago Pago",
+    "nombre_en": "Pago Pago",
+    "lat": -14.27,
+    "lng": -170.7
+   },
    "bandera": {
     "svg": "data/flags/as.svg",
     "emoji": "🇦🇸",
@@ -763,6 +824,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Viena",
+    "nombre_en": "Vienna",
+    "lat": 48.2,
+    "lng": 16.37
+   },
    "bandera": {
     "svg": "data/flags/at.svg",
     "emoji": "🇦🇹",
@@ -839,6 +906,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Canberra",
+    "nombre_en": "Canberra",
+    "lat": -35.27,
+    "lng": 149.13
+   },
    "bandera": {
     "svg": "data/flags/au.svg",
     "emoji": "🇦🇺",
@@ -912,6 +985,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Oranjestad",
+    "nombre_en": "Oranjestad",
+    "lat": 12.52,
+    "lng": -70.03
+   },
    "bandera": {
     "svg": "data/flags/aw.svg",
     "emoji": "🇦🇼",
@@ -978,6 +1057,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Mariehamn",
+    "nombre_en": "Mariehamn",
+    "lat": 60.12,
+    "lng": 19.9
+   },
    "bandera": {
     "svg": "data/flags/ax.svg",
     "emoji": "🇦🇽",
@@ -1039,6 +1124,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Bakú",
+    "nombre_en": "Baku",
+    "lat": 40.38,
+    "lng": 49.87
+   },
    "bandera": {
     "svg": "data/flags/az.svg",
     "emoji": "🇦🇿",
@@ -1108,6 +1199,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Sarajevo",
+    "nombre_en": "Sarajevo",
+    "lat": 43.87,
+    "lng": 18.42
+   },
    "bandera": {
     "svg": "data/flags/ba.svg",
     "emoji": "🇧🇦",
@@ -1185,6 +1282,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Bridgetown",
+    "nombre_en": "Bridgetown",
+    "lat": 13.1,
+    "lng": -59.62
+   },
    "bandera": {
     "svg": "data/flags/bb.svg",
     "emoji": "🇧🇧",
@@ -1249,6 +1352,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Daca",
+    "nombre_en": "Dhaka",
+    "lat": 23.72,
+    "lng": 90.4
+   },
    "bandera": {
     "svg": "data/flags/bd.svg",
     "emoji": "🇧🇩",
@@ -1316,6 +1425,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Bruselas",
+    "nombre_en": "Brussels",
+    "lat": 50.83,
+    "lng": 4.33
+   },
    "bandera": {
     "svg": "data/flags/be.svg",
     "emoji": "🇧🇪",
@@ -1399,6 +1514,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Uagadugú",
+    "nombre_en": "Ouagadougou",
+    "lat": 12.37,
+    "lng": -1.52
+   },
    "bandera": {
     "svg": "data/flags/bf.svg",
     "emoji": "🇧🇫",
@@ -1470,6 +1591,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Sofía",
+    "nombre_en": "Sofia",
+    "lat": 42.68,
+    "lng": 23.32
+   },
    "bandera": {
     "svg": "data/flags/bg.svg",
     "emoji": "🇧🇬",
@@ -1543,6 +1670,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Manama",
+    "nombre_en": "Manama",
+    "lat": 26.23,
+    "lng": 50.57
+   },
    "bandera": {
     "svg": "data/flags/bh.svg",
     "emoji": "🇧🇭",
@@ -1607,6 +1740,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Gitega",
+    "nombre_en": "Gitega",
+    "lat": -3.43,
+    "lng": 29.93
+   },
    "bandera": {
     "svg": "data/flags/bi.svg",
     "emoji": "🇧🇮",
@@ -1680,6 +1819,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Porto-Novo",
+    "nombre_en": "Porto-Novo",
+    "lat": 6.48,
+    "lng": 2.62
+   },
    "bandera": {
     "svg": "data/flags/bj.svg",
     "emoji": "🇧🇯",
@@ -1749,6 +1894,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Gustavia",
+    "nombre_en": "Gustavia",
+    "lat": 17.88,
+    "lng": -62.85
+   },
    "bandera": {
     "svg": "data/flags/bl.svg",
     "emoji": "🇧🇱",
@@ -1810,6 +1961,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Hamilton",
+    "nombre_en": "Hamilton",
+    "lat": 32.28,
+    "lng": -64.78
+   },
    "bandera": {
     "svg": "data/flags/bm.svg",
     "emoji": "🇧🇲",
@@ -1871,6 +2028,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Bandar Seri Begawan",
+    "nombre_en": "Bandar Seri Begawan",
+    "lat": 4.88,
+    "lng": 114.93
+   },
    "bandera": {
     "svg": "data/flags/bn.svg",
     "emoji": "🇧🇳",
@@ -1949,6 +2112,12 @@
      "principal": false
     }
    ],
+   "capital": {
+    "nombre": "Sucre",
+    "nombre_en": "Sucre",
+    "lat": -19.04,
+    "lng": -65.26
+   },
    "bandera": {
     "svg": "data/flags/bo.svg",
     "emoji": "🇧🇴",
@@ -2033,6 +2202,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Kralendijk",
+    "nombre_en": "Kralendijk",
+    "lat": 12.14,
+    "lng": -68.27
+   },
    "bandera": {
     "svg": "data/flags/bq.svg",
     "emoji": "🇧🇶",
@@ -2105,6 +2280,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Brasilia",
+    "nombre_en": "Brasília",
+    "lat": -15.79,
+    "lng": -47.88
+   },
    "bandera": {
     "svg": "data/flags/br.svg",
     "emoji": "🇧🇷",
@@ -2184,6 +2365,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Nassau",
+    "nombre_en": "Nassau",
+    "lat": 25.08,
+    "lng": -77.35
+   },
    "bandera": {
     "svg": "data/flags/bs.svg",
     "emoji": "🇧🇸",
@@ -2253,6 +2440,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Timbu",
+    "nombre_en": "Thimphu",
+    "lat": 27.47,
+    "lng": 89.63
+   },
    "bandera": {
     "svg": "data/flags/bt.svg",
     "emoji": "🇧🇹",
@@ -2317,6 +2510,7 @@
    "tipo_dependencia": "overseas_territory",
    "soberano": "NO",
    "capitales": [],
+   "capital": null,
    "bandera": {
     "svg": "data/flags/bv.svg",
     "emoji": "🇧🇻",
@@ -2372,6 +2566,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Gaborone",
+    "nombre_en": "Gaborone",
+    "lat": -24.63,
+    "lng": 25.9
+   },
    "bandera": {
     "svg": "data/flags/bw.svg",
     "emoji": "🇧🇼",
@@ -2447,6 +2647,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Minsk",
+    "nombre_en": "Minsk",
+    "lat": 53.9,
+    "lng": 27.57
+   },
    "bandera": {
     "svg": "data/flags/by.svg",
     "emoji": "🇧🇾",
@@ -2521,6 +2727,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Belmopan",
+    "nombre_en": "Belmopan",
+    "lat": 17.25,
+    "lng": -88.77
+   },
    "bandera": {
     "svg": "data/flags/bz.svg",
     "emoji": "🇧🇿",
@@ -2598,6 +2810,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Ottawa",
+    "nombre_en": "Ottawa",
+    "lat": 45.42,
+    "lng": -75.7
+   },
    "bandera": {
     "svg": "data/flags/ca.svg",
     "emoji": "🇨🇦",
@@ -2678,6 +2896,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "West Island",
+    "nombre_en": "West Island",
+    "lat": -12.17,
+    "lng": 96.83
+   },
    "bandera": {
     "svg": "data/flags/cc.svg",
     "emoji": "🇨🇨",
@@ -2739,6 +2963,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Kinsasa",
+    "nombre_en": "Kinshasa",
+    "lat": -4.32,
+    "lng": 15.3
+   },
    "bandera": {
     "svg": "data/flags/cd.svg",
     "emoji": "🇨🇩",
@@ -2834,6 +3064,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Bangui",
+    "nombre_en": "Bangui",
+    "lat": 4.37,
+    "lng": 18.58
+   },
    "bandera": {
     "svg": "data/flags/cf.svg",
     "emoji": "🇨🇫",
@@ -2910,6 +3146,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Brazzaville",
+    "nombre_en": "Brazzaville",
+    "lat": -4.25,
+    "lng": 15.28
+   },
    "bandera": {
     "svg": "data/flags/cg.svg",
     "emoji": "🇨🇬",
@@ -2991,6 +3233,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Berna",
+    "nombre_en": "Bern",
+    "lat": 46.92,
+    "lng": 7.47
+   },
    "bandera": {
     "svg": "data/flags/ch.svg",
     "emoji": "🇨🇭",
@@ -3077,6 +3325,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Yamusukro",
+    "nombre_en": "Yamoussoukro",
+    "lat": 6.82,
+    "lng": -5.27
+   },
    "bandera": {
     "svg": "data/flags/ci.svg",
     "emoji": "🇨🇮",
@@ -3147,6 +3401,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Avarua",
+    "nombre_en": "Avarua",
+    "lat": -21.2,
+    "lng": -159.77
+   },
    "bandera": {
     "svg": "data/flags/ck.svg",
     "emoji": "🇨🇰",
@@ -3218,6 +3478,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Santiago",
+    "nombre_en": "Santiago",
+    "lat": -33.45,
+    "lng": -70.67
+   },
    "bandera": {
     "svg": "data/flags/cl.svg",
     "emoji": "🇨🇱",
@@ -3287,6 +3553,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Yaundé",
+    "nombre_en": "Yaoundé",
+    "lat": 3.85,
+    "lng": 11.5
+   },
    "bandera": {
     "svg": "data/flags/cm.svg",
     "emoji": "🇨🇲",
@@ -3364,6 +3636,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Pekín",
+    "nombre_en": "Beijing",
+    "lat": 39.92,
+    "lng": 116.38
+   },
    "bandera": {
     "svg": "data/flags/cn.svg",
     "emoji": "🇨🇳",
@@ -3450,6 +3728,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Bogotá",
+    "nombre_en": "Bogotá",
+    "lat": 4.71,
+    "lng": -74.07
+   },
    "bandera": {
     "svg": "data/flags/co.svg",
     "emoji": "🇨🇴",
@@ -3520,6 +3804,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "San José",
+    "nombre_en": "San José",
+    "lat": 9.93,
+    "lng": -84.09
+   },
    "bandera": {
     "svg": "data/flags/cr.svg",
     "emoji": "🇨🇷",
@@ -3587,6 +3877,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "La Habana",
+    "nombre_en": "Havana",
+    "lat": 23.12,
+    "lng": -82.35
+   },
    "bandera": {
     "svg": "data/flags/cu.svg",
     "emoji": "🇨🇺",
@@ -3650,6 +3946,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Praia",
+    "nombre_en": "Praia",
+    "lat": 14.92,
+    "lng": -23.52
+   },
    "bandera": {
     "svg": "data/flags/cv.svg",
     "emoji": "🇨🇻",
@@ -3714,6 +4016,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Willemstad",
+    "nombre_en": "Willemstad",
+    "lat": 12.1,
+    "lng": -68.92
+   },
    "bandera": {
     "svg": "data/flags/cw.svg",
     "emoji": "🇨🇼",
@@ -3785,6 +4093,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Flying Fish Cove",
+    "nombre_en": "Flying Fish Cove",
+    "lat": -10.42,
+    "lng": 105.68
+   },
    "bandera": {
     "svg": "data/flags/cx.svg",
     "emoji": "🇨🇽",
@@ -3846,6 +4160,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Nicosia",
+    "nombre_en": "Nicosia",
+    "lat": 35.17,
+    "lng": 33.37
+   },
    "bandera": {
     "svg": "data/flags/cy.svg",
     "emoji": "🇨🇾",
@@ -3917,6 +4237,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Praga",
+    "nombre_en": "Prague",
+    "lat": 50.08,
+    "lng": 14.47
+   },
    "bandera": {
     "svg": "data/flags/cz.svg",
     "emoji": "🇨🇿",
@@ -3994,6 +4320,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Berlín",
+    "nombre_en": "Berlin",
+    "lat": 52.52,
+    "lng": 13.4
+   },
    "bandera": {
     "svg": "data/flags/de.svg",
     "emoji": "🇩🇪",
@@ -4074,6 +4406,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Yibuti",
+    "nombre_en": "Djibouti",
+    "lat": 11.58,
+    "lng": 43.15
+   },
    "bandera": {
     "svg": "data/flags/dj.svg",
     "emoji": "🇩🇯",
@@ -4148,6 +4486,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Copenhague",
+    "nombre_en": "Copenhagen",
+    "lat": 55.67,
+    "lng": 12.58
+   },
    "bandera": {
     "svg": "data/flags/dk.svg",
     "emoji": "🇩🇰",
@@ -4221,6 +4565,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Roseau",
+    "nombre_en": "Roseau",
+    "lat": 15.301,
+    "lng": -61.3881
+   },
    "bandera": {
     "svg": "data/flags/dm.svg",
     "emoji": "🇩🇲",
@@ -4285,6 +4635,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Santo Domingo",
+    "nombre_en": "Santo Domingo",
+    "lat": 18.47,
+    "lng": -69.9
+   },
    "bandera": {
     "svg": "data/flags/do.svg",
     "emoji": "🇩🇴",
@@ -4350,6 +4706,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Argel",
+    "nombre_en": "Algiers",
+    "lat": 36.75,
+    "lng": 3.05
+   },
    "bandera": {
     "svg": "data/flags/dz.svg",
     "emoji": "🇩🇿",
@@ -4425,6 +4787,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Quito",
+    "nombre_en": "Quito",
+    "lat": -0.22,
+    "lng": -78.5
+   },
    "bandera": {
     "svg": "data/flags/ec.svg",
     "emoji": "🇪🇨",
@@ -4492,6 +4860,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Tallin",
+    "nombre_en": "Tallinn",
+    "lat": 59.43,
+    "lng": 24.72
+   },
    "bandera": {
     "svg": "data/flags/ee.svg",
     "emoji": "🇪🇪",
@@ -4563,6 +4937,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "El Cairo",
+    "nombre_en": "Cairo",
+    "lat": 30.05,
+    "lng": 31.25
+   },
    "bandera": {
     "svg": "data/flags/eg.svg",
     "emoji": "🇪🇬",
@@ -4635,6 +5015,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "El Aaiún",
+    "nombre_en": "El Aaiún",
+    "lat": 27.1253,
+    "lng": -13.1625
+   },
    "bandera": {
     "svg": "data/flags/eh.svg",
     "emoji": "🇪🇭",
@@ -4717,6 +5103,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Asmara",
+    "nombre_en": "Asmara",
+    "lat": 15.33,
+    "lng": 38.93
+   },
    "bandera": {
     "svg": "data/flags/er.svg",
     "emoji": "🇪🇷",
@@ -4795,6 +5187,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Madrid",
+    "nombre_en": "Madrid",
+    "lat": 40.4,
+    "lng": -3.68
+   },
    "bandera": {
     "svg": "data/flags/es.svg",
     "emoji": "🇪🇸",
@@ -4890,6 +5288,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Adís Abeba",
+    "nombre_en": "Addis Ababa",
+    "lat": 9.03,
+    "lng": 38.7
+   },
    "bandera": {
     "svg": "data/flags/et.svg",
     "emoji": "🇪🇹",
@@ -4962,6 +5366,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Helsinki",
+    "nombre_en": "Helsinki",
+    "lat": 60.17,
+    "lng": 24.93
+   },
    "bandera": {
     "svg": "data/flags/fi.svg",
     "emoji": "🇫🇮",
@@ -5039,6 +5449,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Suva",
+    "nombre_en": "Suva",
+    "lat": -18.13,
+    "lng": 178.42
+   },
    "bandera": {
     "svg": "data/flags/fj.svg",
     "emoji": "🇫🇯",
@@ -5113,6 +5529,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Puerto Argentino",
+    "nombre_en": "Stanley",
+    "lat": -51.7,
+    "lng": -57.85
+   },
    "bandera": {
     "svg": "data/flags/fk.svg",
     "emoji": "🇫🇰",
@@ -5174,6 +5596,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Palikir",
+    "nombre_en": "Palikir",
+    "lat": 6.92,
+    "lng": 158.15
+   },
    "bandera": {
     "svg": "data/flags/fm.svg",
     "emoji": "🇫🇲",
@@ -5238,6 +5666,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Tórshavn",
+    "nombre_en": "Tórshavn",
+    "lat": 62.01,
+    "lng": -6.77
+   },
    "bandera": {
     "svg": "data/flags/fo.svg",
     "emoji": "🇫🇴",
@@ -5309,6 +5743,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "París",
+    "nombre_en": "Paris",
+    "lat": 48.87,
+    "lng": 2.33
+   },
    "bandera": {
     "svg": "data/flags/fr.svg",
     "emoji": "🇫🇷",
@@ -5401,6 +5841,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Libreville",
+    "nombre_en": "Libreville",
+    "lat": 0.38,
+    "lng": 9.45
+   },
    "bandera": {
     "svg": "data/flags/ga.svg",
     "emoji": "🇬🇦",
@@ -5471,6 +5917,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Londres",
+    "nombre_en": "London",
+    "lat": 51.5,
+    "lng": -0.08
+   },
    "bandera": {
     "svg": "data/flags/gb.svg",
     "emoji": "🇬🇧",
@@ -5550,6 +6002,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Saint George's",
+    "nombre_en": "St. George's",
+    "lat": 12.0529,
+    "lng": -61.7523
+   },
    "bandera": {
     "svg": "data/flags/gd.svg",
     "emoji": "🇬🇩",
@@ -5614,6 +6072,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Tiflis",
+    "nombre_en": "Tbilisi",
+    "lat": 41.68,
+    "lng": 44.83
+   },
    "bandera": {
     "svg": "data/flags/ge.svg",
     "emoji": "🇬🇪",
@@ -5682,6 +6146,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Cayena",
+    "nombre_en": "Cayenne",
+    "lat": 4.94,
+    "lng": -52.33
+   },
    "bandera": {
     "svg": "data/flags/gf.svg",
     "emoji": "🇬🇫",
@@ -5750,6 +6220,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Saint Peter Port",
+    "nombre_en": "St. Peter Port",
+    "lat": 49.45,
+    "lng": -2.54
+   },
    "bandera": {
     "svg": "data/flags/gg.svg",
     "emoji": "🇬🇬",
@@ -5826,6 +6302,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Acra",
+    "nombre_en": "Accra",
+    "lat": 5.55,
+    "lng": -0.22
+   },
    "bandera": {
     "svg": "data/flags/gh.svg",
     "emoji": "🇬🇭",
@@ -5895,6 +6377,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Gibraltar",
+    "nombre_en": "Gibraltar",
+    "lat": 36.13,
+    "lng": -5.35
+   },
    "bandera": {
     "svg": "data/flags/gi.svg",
     "emoji": "🇬🇮",
@@ -5958,6 +6446,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Nuuk",
+    "nombre_en": "Nuuk",
+    "lat": 64.18,
+    "lng": -51.75
+   },
    "bandera": {
     "svg": "data/flags/gl.svg",
     "emoji": "🇬🇱",
@@ -6022,6 +6516,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Banjul",
+    "nombre_en": "Banjul",
+    "lat": 13.45,
+    "lng": -16.57
+   },
    "bandera": {
     "svg": "data/flags/gm.svg",
     "emoji": "🇬🇲",
@@ -6089,6 +6589,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Conakri",
+    "nombre_en": "Conakry",
+    "lat": 9.6412,
+    "lng": -13.5784
+   },
    "bandera": {
     "svg": "data/flags/gn.svg",
     "emoji": "🇬🇳",
@@ -6160,6 +6666,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Basse-Terre",
+    "nombre_en": "Basse-Terre",
+    "lat": 16.03,
+    "lng": -61.73
+   },
    "bandera": {
     "svg": "data/flags/gp.svg",
     "emoji": "🇬🇵",
@@ -6225,6 +6737,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Malabo",
+    "nombre_en": "Malabo",
+    "lat": 3.75,
+    "lng": 8.78
+   },
    "bandera": {
     "svg": "data/flags/gq.svg",
     "emoji": "🇬🇶",
@@ -6303,6 +6821,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Atenas",
+    "nombre_en": "Athens",
+    "lat": 37.98,
+    "lng": 23.73
+   },
    "bandera": {
     "svg": "data/flags/gr.svg",
     "emoji": "🇬🇷",
@@ -6376,6 +6900,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "King Edward Point",
+    "nombre_en": "King Edward Point",
+    "lat": -54.28,
+    "lng": -36.5
+   },
    "bandera": {
     "svg": "data/flags/gs.svg",
     "emoji": "🇬🇸",
@@ -6437,6 +6967,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Ciudad de Guatemala",
+    "nombre_en": "Guatemala City",
+    "lat": 14.62,
+    "lng": -90.52
+   },
    "bandera": {
     "svg": "data/flags/gt.svg",
     "emoji": "🇬🇹",
@@ -6505,6 +7041,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Agaña",
+    "nombre_en": "Hagåtña",
+    "lat": 13.48,
+    "lng": 144.75
+   },
    "bandera": {
     "svg": "data/flags/gu.svg",
     "emoji": "🇬🇺",
@@ -6576,6 +7118,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Bisáu",
+    "nombre_en": "Bissau",
+    "lat": 11.85,
+    "lng": -15.58
+   },
    "bandera": {
     "svg": "data/flags/gw.svg",
     "emoji": "🇬🇼",
@@ -6648,6 +7196,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Georgetown",
+    "nombre_en": "Georgetown",
+    "lat": 6.8,
+    "lng": -58.15
+   },
    "bandera": {
     "svg": "data/flags/gy.svg",
     "emoji": "🇬🇾",
@@ -6716,6 +7270,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Victoria",
+    "nombre_en": "City of Victoria",
+    "lat": 22.267,
+    "lng": 114.188
+   },
    "bandera": {
     "svg": "data/flags/hk.svg",
     "emoji": "🇭🇰",
@@ -6778,6 +7338,7 @@
    "tipo_dependencia": "external_territory",
    "soberano": "AU",
    "capitales": [],
+   "capital": null,
    "bandera": {
     "svg": "data/flags/hm.svg",
     "emoji": "🇭🇲",
@@ -6834,6 +7395,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Tegucigalpa",
+    "nombre_en": "Tegucigalpa",
+    "lat": 14.1,
+    "lng": -87.22
+   },
    "bandera": {
     "svg": "data/flags/hn.svg",
     "emoji": "🇭🇳",
@@ -6901,6 +7468,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Zagreb",
+    "nombre_en": "Zagreb",
+    "lat": 45.815,
+    "lng": 15.9819
+   },
    "bandera": {
     "svg": "data/flags/hr.svg",
     "emoji": "🇭🇷",
@@ -6974,6 +7547,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Puerto Príncipe",
+    "nombre_en": "Port-au-Prince",
+    "lat": 18.53,
+    "lng": -72.33
+   },
    "bandera": {
     "svg": "data/flags/ht.svg",
     "emoji": "🇭🇹",
@@ -7044,6 +7623,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Budapest",
+    "nombre_en": "Budapest",
+    "lat": 47.5,
+    "lng": 19.08
+   },
    "bandera": {
     "svg": "data/flags/hu.svg",
     "emoji": "🇭🇺",
@@ -7119,6 +7704,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Yakarta",
+    "nombre_en": "Jakarta",
+    "lat": -6.17,
+    "lng": 106.82
+   },
    "bandera": {
     "svg": "data/flags/id.svg",
     "emoji": "🇮🇩",
@@ -7190,6 +7781,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Dublín",
+    "nombre_en": "Dublin",
+    "lat": 53.32,
+    "lng": -6.23
+   },
    "bandera": {
     "svg": "data/flags/ie.svg",
     "emoji": "🇮🇪",
@@ -7263,6 +7860,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Jerusalén",
+    "nombre_en": "Jerusalem",
+    "lat": 31.77,
+    "lng": 35.23
+   },
    "bandera": {
     "svg": "data/flags/il.svg",
     "emoji": "🇮🇱",
@@ -7338,6 +7941,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Douglas",
+    "nombre_en": "Douglas",
+    "lat": 54.15,
+    "lng": -4.48
+   },
    "bandera": {
     "svg": "data/flags/im.svg",
     "emoji": "🇮🇲",
@@ -7409,6 +8018,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Nueva Delhi",
+    "nombre_en": "New Delhi",
+    "lat": 28.6139,
+    "lng": 77.209
+   },
    "bandera": {
     "svg": "data/flags/in.svg",
     "emoji": "🇮🇳",
@@ -7492,6 +8107,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Diego García",
+    "nombre_en": "Diego Garcia",
+    "lat": -7.3133,
+    "lng": 72.4111
+   },
    "bandera": {
     "svg": "data/flags/io.svg",
     "emoji": "🇮🇴",
@@ -7553,6 +8174,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Bagdad",
+    "nombre_en": "Baghdad",
+    "lat": 33.33,
+    "lng": 44.4
+   },
    "bandera": {
     "svg": "data/flags/iq.svg",
     "emoji": "🇮🇶",
@@ -7635,6 +8262,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Teherán",
+    "nombre_en": "Tehran",
+    "lat": 35.7,
+    "lng": 51.42
+   },
    "bandera": {
     "svg": "data/flags/ir.svg",
     "emoji": "🇮🇷",
@@ -7709,6 +8342,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Reikiavik",
+    "nombre_en": "Reykjavik",
+    "lat": 64.15,
+    "lng": -21.95
+   },
    "bandera": {
     "svg": "data/flags/is.svg",
     "emoji": "🇮🇸",
@@ -7775,6 +8414,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Roma",
+    "nombre_en": "Rome",
+    "lat": 41.9,
+    "lng": 12.48
+   },
    "bandera": {
     "svg": "data/flags/it.svg",
     "emoji": "🇮🇹",
@@ -7857,6 +8502,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Saint Helier",
+    "nombre_en": "Saint Helier",
+    "lat": 49.18,
+    "lng": -2.1
+   },
    "bandera": {
     "svg": "data/flags/je.svg",
     "emoji": "🇯🇪",
@@ -7933,6 +8584,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Kingston",
+    "nombre_en": "Kingston",
+    "lat": 17.99702,
+    "lng": -76.79358
+   },
    "bandera": {
     "svg": "data/flags/jm.svg",
     "emoji": "🇯🇲",
@@ -8002,6 +8659,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Amán",
+    "nombre_en": "Amman",
+    "lat": 31.95,
+    "lng": 35.93
+   },
    "bandera": {
     "svg": "data/flags/jo.svg",
     "emoji": "🇯🇴",
@@ -8073,6 +8736,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Tokio",
+    "nombre_en": "Tokyo",
+    "lat": 35.68,
+    "lng": 139.75
+   },
    "bandera": {
     "svg": "data/flags/jp.svg",
     "emoji": "🇯🇵",
@@ -8140,6 +8809,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Nairobi",
+    "nombre_en": "Nairobi",
+    "lat": -1.28,
+    "lng": 36.82
+   },
    "bandera": {
     "svg": "data/flags/ke.svg",
     "emoji": "🇰🇪",
@@ -8216,6 +8891,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Biskek",
+    "nombre_en": "Bishkek",
+    "lat": 42.87,
+    "lng": 74.6
+   },
    "bandera": {
     "svg": "data/flags/kg.svg",
     "emoji": "🇰🇬",
@@ -8289,6 +8970,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Nom Pen",
+    "nombre_en": "Phnom Penh",
+    "lat": 11.55,
+    "lng": 104.92
+   },
    "bandera": {
     "svg": "data/flags/kh.svg",
     "emoji": "🇰🇭",
@@ -8362,6 +9049,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Tarawa Sur",
+    "nombre_en": "South Tarawa",
+    "lat": 1.33,
+    "lng": 172.98
+   },
    "bandera": {
     "svg": "data/flags/ki.svg",
     "emoji": "🇰🇮",
@@ -8438,6 +9131,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Moroni",
+    "nombre_en": "Moroni",
+    "lat": -11.7,
+    "lng": 43.23
+   },
    "bandera": {
     "svg": "data/flags/km.svg",
     "emoji": "🇰🇲",
@@ -8513,6 +9212,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Basseterre",
+    "nombre_en": "Basseterre",
+    "lat": 17.3,
+    "lng": -62.72
+   },
    "bandera": {
     "svg": "data/flags/kn.svg",
     "emoji": "🇰🇳",
@@ -8577,6 +9282,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Pionyang",
+    "nombre_en": "Pyongyang",
+    "lat": 39.02,
+    "lng": 125.75
+   },
    "bandera": {
     "svg": "data/flags/kp.svg",
     "emoji": "🇰🇵",
@@ -8644,6 +9355,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Seúl",
+    "nombre_en": "Seoul",
+    "lat": 37.55,
+    "lng": 126.98
+   },
    "bandera": {
     "svg": "data/flags/kr.svg",
     "emoji": "🇰🇷",
@@ -8712,6 +9429,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Kuwait",
+    "nombre_en": "Kuwait City",
+    "lat": 29.37,
+    "lng": 47.97
+   },
    "bandera": {
     "svg": "data/flags/kw.svg",
     "emoji": "🇰🇼",
@@ -8780,6 +9503,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "George Town",
+    "nombre_en": "George Town",
+    "lat": 19.3,
+    "lng": -81.38
+   },
    "bandera": {
     "svg": "data/flags/ky.svg",
     "emoji": "🇰🇾",
@@ -8841,6 +9570,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Astaná",
+    "nombre_en": "Astana",
+    "lat": 51.16,
+    "lng": 71.45
+   },
    "bandera": {
     "svg": "data/flags/kz.svg",
     "emoji": "🇰🇿",
@@ -8917,6 +9652,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Vientián",
+    "nombre_en": "Vientiane",
+    "lat": 17.97,
+    "lng": 102.6
+   },
    "bandera": {
     "svg": "data/flags/la.svg",
     "emoji": "🇱🇦",
@@ -8987,6 +9728,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Beirut",
+    "nombre_en": "Beirut",
+    "lat": 33.87,
+    "lng": 35.5
+   },
    "bandera": {
     "svg": "data/flags/lb.svg",
     "emoji": "🇱🇧",
@@ -9059,6 +9806,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Castries",
+    "nombre_en": "Castries",
+    "lat": 13.9957,
+    "lng": -61.0061
+   },
    "bandera": {
     "svg": "data/flags/lc.svg",
     "emoji": "🇱🇨",
@@ -9123,6 +9876,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Vaduz",
+    "nombre_en": "Vaduz",
+    "lat": 47.13,
+    "lng": 9.52
+   },
    "bandera": {
     "svg": "data/flags/li.svg",
     "emoji": "🇱🇮",
@@ -9190,6 +9949,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Sri Jayawardenapura Kotte",
+    "nombre_en": "Sri Jayawardenepura Kotte",
+    "lat": 6.89,
+    "lng": 79.9
+   },
    "bandera": {
     "svg": "data/flags/lk.svg",
     "emoji": "🇱🇰",
@@ -9261,6 +10026,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Monrovia",
+    "nombre_en": "Monrovia",
+    "lat": 6.3156,
+    "lng": -10.8074
+   },
    "bandera": {
     "svg": "data/flags/lr.svg",
     "emoji": "🇱🇷",
@@ -9329,6 +10100,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Maseru",
+    "nombre_en": "Maseru",
+    "lat": -29.32,
+    "lng": 27.48
+   },
    "bandera": {
     "svg": "data/flags/ls.svg",
     "emoji": "🇱🇸",
@@ -9406,6 +10183,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Vilnius",
+    "nombre_en": "Vilnius",
+    "lat": 54.68,
+    "lng": 25.32
+   },
    "bandera": {
     "svg": "data/flags/lt.svg",
     "emoji": "🇱🇹",
@@ -9479,6 +10262,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Luxemburgo",
+    "nombre_en": "Luxembourg",
+    "lat": 49.6,
+    "lng": 6.12
+   },
    "bandera": {
     "svg": "data/flags/lu.svg",
     "emoji": "🇱🇺",
@@ -9561,6 +10350,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Riga",
+    "nombre_en": "Riga",
+    "lat": 56.95,
+    "lng": 24.1
+   },
    "bandera": {
     "svg": "data/flags/lv.svg",
     "emoji": "🇱🇻",
@@ -9634,6 +10429,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Trípoli",
+    "nombre_en": "Tripoli",
+    "lat": 32.88,
+    "lng": 13.17
+   },
    "bandera": {
     "svg": "data/flags/ly.svg",
     "emoji": "🇱🇾",
@@ -9707,6 +10508,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Rabat",
+    "nombre_en": "Rabat",
+    "lat": 34.02,
+    "lng": -6.82
+   },
    "bandera": {
     "svg": "data/flags/ma.svg",
     "emoji": "🇲🇦",
@@ -9782,6 +10589,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Mónaco",
+    "nombre_en": "Monaco",
+    "lat": 43.73,
+    "lng": 7.42
+   },
    "bandera": {
     "svg": "data/flags/mc.svg",
     "emoji": "🇲🇨",
@@ -9847,6 +10660,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Chisináu",
+    "nombre_en": "Chișinău",
+    "lat": 47.01,
+    "lng": 28.9
+   },
    "bandera": {
     "svg": "data/flags/md.svg",
     "emoji": "🇲🇩",
@@ -9913,6 +10732,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Podgorica",
+    "nombre_en": "Podgorica",
+    "lat": 42.43,
+    "lng": 19.27
+   },
    "bandera": {
     "svg": "data/flags/me.svg",
     "emoji": "🇲🇪",
@@ -9983,6 +10808,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Marigot",
+    "nombre_en": "Marigot",
+    "lat": 18.07,
+    "lng": -63.08
+   },
    "bandera": {
     "svg": "data/flags/mf.svg",
     "emoji": "🇲🇫",
@@ -10047,6 +10878,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Antananarivo",
+    "nombre_en": "Antananarivo",
+    "lat": -18.92,
+    "lng": 47.52
+   },
    "bandera": {
     "svg": "data/flags/mg.svg",
     "emoji": "🇲🇬",
@@ -10116,6 +10953,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Majuro",
+    "nombre_en": "Majuro",
+    "lat": 7.1,
+    "lng": 171.38
+   },
    "bandera": {
     "svg": "data/flags/mh.svg",
     "emoji": "🇲🇭",
@@ -10184,6 +11027,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Skopie",
+    "nombre_en": "Skopje",
+    "lat": 42,
+    "lng": 21.43
+   },
    "bandera": {
     "svg": "data/flags/mk.svg",
     "emoji": "🇲🇰",
@@ -10254,6 +11103,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Bamako",
+    "nombre_en": "Bamako",
+    "lat": 12.65,
+    "lng": -8
+   },
    "bandera": {
     "svg": "data/flags/ml.svg",
     "emoji": "🇲🇱",
@@ -10326,6 +11181,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Naipyidó",
+    "nombre_en": "Naypyidaw",
+    "lat": 19.76,
+    "lng": 96.07
+   },
    "bandera": {
     "svg": "data/flags/mm.svg",
     "emoji": "🇲🇲",
@@ -10396,6 +11257,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Ulán Bator",
+    "nombre_en": "Ulan Bator",
+    "lat": 47.92,
+    "lng": 106.91
+   },
    "bandera": {
     "svg": "data/flags/mn.svg",
     "emoji": "🇲🇳",
@@ -10456,6 +11323,12 @@
    "tipo_dependencia": "special_administrative_region",
    "soberano": "CN",
    "capitales": [],
+   "capital": {
+    "nombre": "Macao",
+    "lat": 22.19,
+    "lng": 113.54,
+    "nombre_en": null
+   },
    "bandera": {
     "svg": "data/flags/mo.svg",
     "emoji": "🇲🇴",
@@ -10524,6 +11397,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Saipán",
+    "nombre_en": "Saipan",
+    "lat": 15.2,
+    "lng": 145.75
+   },
    "bandera": {
     "svg": "data/flags/mp.svg",
     "emoji": "🇲🇵",
@@ -10595,6 +11474,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Fort-de-France",
+    "nombre_en": "Fort-de-France",
+    "lat": 14.6,
+    "lng": -61.08
+   },
    "bandera": {
     "svg": "data/flags/mq.svg",
     "emoji": "🇲🇶",
@@ -10660,6 +11545,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Nuakchot",
+    "nombre_en": "Nouakchott",
+    "lat": 18.07,
+    "lng": -15.97
+   },
    "bandera": {
     "svg": "data/flags/mr.svg",
     "emoji": "🇲🇷",
@@ -10730,6 +11621,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Plymouth",
+    "nombre_en": "Plymouth",
+    "lat": 16.7,
+    "lng": -62.22
+   },
    "bandera": {
     "svg": "data/flags/ms.svg",
     "emoji": "🇲🇸",
@@ -10791,6 +11688,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Valletta",
+    "nombre_en": "Valletta",
+    "lat": 35.88,
+    "lng": 14.5
+   },
    "bandera": {
     "svg": "data/flags/mt.svg",
     "emoji": "🇲🇹",
@@ -10863,6 +11766,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Port Louis",
+    "nombre_en": "Port Louis",
+    "lat": -20.15,
+    "lng": 57.48
+   },
    "bandera": {
     "svg": "data/flags/mu.svg",
     "emoji": "🇲🇺",
@@ -10938,6 +11847,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Malé",
+    "nombre_en": "Malé",
+    "lat": 4.17,
+    "lng": 73.51
+   },
    "bandera": {
     "svg": "data/flags/mv.svg",
     "emoji": "🇲🇻",
@@ -11002,6 +11917,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Lilongüe",
+    "nombre_en": "Lilongwe",
+    "lat": -13.97,
+    "lng": 33.78
+   },
    "bandera": {
     "svg": "data/flags/mw.svg",
     "emoji": "🇲🇼",
@@ -11076,6 +11997,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Ciudad de México",
+    "nombre_en": "Mexico City",
+    "lat": 19.43,
+    "lng": -99.13
+   },
    "bandera": {
     "svg": "data/flags/mx.svg",
     "emoji": "🇲🇽",
@@ -11147,6 +12074,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Kuala Lumpur",
+    "nombre_en": "Kuala Lumpur",
+    "lat": 3.17,
+    "lng": 101.7
+   },
    "bandera": {
     "svg": "data/flags/my.svg",
     "emoji": "🇲🇾",
@@ -11221,6 +12154,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Maputo",
+    "nombre_en": "Maputo",
+    "lat": -25.95,
+    "lng": 32.58
+   },
    "bandera": {
     "svg": "data/flags/mz.svg",
     "emoji": "🇲🇿",
@@ -11293,6 +12232,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Windhoek",
+    "nombre_en": "Windhoek",
+    "lat": -22.57,
+    "lng": 17.08
+   },
    "bandera": {
     "svg": "data/flags/na.svg",
     "emoji": "🇳🇦",
@@ -11408,6 +12353,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Numea",
+    "nombre_en": "Nouméa",
+    "lat": -22.27,
+    "lng": 166.45
+   },
    "bandera": {
     "svg": "data/flags/nc.svg",
     "emoji": "🇳🇨",
@@ -11469,6 +12420,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Niamey",
+    "nombre_en": "Niamey",
+    "lat": 13.52,
+    "lng": 2.12
+   },
    "bandera": {
     "svg": "data/flags/ne.svg",
     "emoji": "🇳🇪",
@@ -11541,6 +12498,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Kingston",
+    "nombre_en": "Kingston",
+    "lat": -29.05,
+    "lng": 167.97
+   },
    "bandera": {
     "svg": "data/flags/nf.svg",
     "emoji": "🇳🇫",
@@ -11607,6 +12570,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Abuya",
+    "nombre_en": "Abuja",
+    "lat": 9.08,
+    "lng": 7.53
+   },
    "bandera": {
     "svg": "data/flags/ng.svg",
     "emoji": "🇳🇬",
@@ -11678,6 +12647,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Managua",
+    "nombre_en": "Managua",
+    "lat": 12.13,
+    "lng": -86.25
+   },
    "bandera": {
     "svg": "data/flags/ni.svg",
     "emoji": "🇳🇮",
@@ -11744,6 +12719,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Amsterdam",
+    "nombre_en": "Amsterdam",
+    "lat": 52.35,
+    "lng": 4.92
+   },
    "bandera": {
     "svg": "data/flags/nl.svg",
     "emoji": "🇳🇱",
@@ -11815,6 +12796,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Oslo",
+    "nombre_en": "Oslo",
+    "lat": 59.92,
+    "lng": 10.75
+   },
    "bandera": {
     "svg": "data/flags/no.svg",
     "emoji": "🇳🇴",
@@ -11905,6 +12892,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Katmandú",
+    "nombre_en": "Kathmandu",
+    "lat": 27.72,
+    "lng": 85.32
+   },
    "bandera": {
     "svg": "data/flags/np.svg",
     "emoji": "🇳🇵",
@@ -11971,6 +12964,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Yaren",
+    "nombre_en": "Yaren",
+    "lat": -0.55,
+    "lng": 166.92
+   },
    "bandera": {
     "svg": "data/flags/nr.svg",
     "emoji": "🇳🇷",
@@ -12040,6 +13039,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Alofi",
+    "nombre_en": "Alofi",
+    "lat": -19.02,
+    "lng": -169.92
+   },
    "bandera": {
     "svg": "data/flags/nu.svg",
     "emoji": "🇳🇺",
@@ -12106,6 +13111,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Wellington",
+    "nombre_en": "Wellington",
+    "lat": -41.3,
+    "lng": 174.78
+   },
    "bandera": {
     "svg": "data/flags/nz.svg",
     "emoji": "🇳🇿",
@@ -12185,6 +13196,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Mascate",
+    "nombre_en": "Muscat",
+    "lat": 23.62,
+    "lng": 58.58
+   },
    "bandera": {
     "svg": "data/flags/om.svg",
     "emoji": "🇴🇲",
@@ -12253,6 +13270,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Ciudad de Panamá",
+    "nombre_en": "Panama City",
+    "lat": 8.97,
+    "lng": -79.53
+   },
    "bandera": {
     "svg": "data/flags/pa.svg",
     "emoji": "🇵🇦",
@@ -12324,6 +13347,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Lima",
+    "nombre_en": "Lima",
+    "lat": -12.05,
+    "lng": -77.05
+   },
    "bandera": {
     "svg": "data/flags/pe.svg",
     "emoji": "🇵🇪",
@@ -12403,6 +13432,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Papeete",
+    "nombre_en": "Papeetē",
+    "lat": -17.53,
+    "lng": -149.56
+   },
    "bandera": {
     "svg": "data/flags/pf.svg",
     "emoji": "🇵🇫",
@@ -12466,6 +13501,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Port Moresby",
+    "nombre_en": "Port Moresby",
+    "lat": -9.45,
+    "lng": 147.18
+   },
    "bandera": {
     "svg": "data/flags/pg.svg",
     "emoji": "🇵🇬",
@@ -12542,6 +13583,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Manila",
+    "nombre_en": "Manila",
+    "lat": 14.6,
+    "lng": 120.97
+   },
    "bandera": {
     "svg": "data/flags/ph.svg",
     "emoji": "🇵🇭",
@@ -12611,6 +13658,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Islamabad",
+    "nombre_en": "Islamabad",
+    "lat": 33.68,
+    "lng": 73.05
+   },
    "bandera": {
     "svg": "data/flags/pk.svg",
     "emoji": "🇵🇰",
@@ -12685,6 +13738,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Varsovia",
+    "nombre_en": "Warsaw",
+    "lat": 52.25,
+    "lng": 21
+   },
    "bandera": {
     "svg": "data/flags/pl.svg",
     "emoji": "🇵🇱",
@@ -12760,6 +13819,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "San Pedro",
+    "nombre_en": "Saint-Pierre",
+    "lat": 46.77,
+    "lng": -56.18
+   },
    "bandera": {
     "svg": "data/flags/pm.svg",
     "emoji": "🇵🇲",
@@ -12821,6 +13886,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Adamstown",
+    "nombre_en": "Adamstown",
+    "lat": -25.07,
+    "lng": -130.08
+   },
    "bandera": {
     "svg": "data/flags/pn.svg",
     "emoji": "🇵🇳",
@@ -12882,6 +13953,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "San Juan",
+    "nombre_en": "San Juan",
+    "lat": 18.47,
+    "lng": -66.12
+   },
    "bandera": {
     "svg": "data/flags/pr.svg",
     "emoji": "🇵🇷",
@@ -12954,6 +14031,12 @@
      "principal": false
     }
    ],
+   "capital": {
+    "nombre": "Ramala",
+    "nombre_en": "Ramallah",
+    "lat": 31.9038,
+    "lng": 35.2034
+   },
    "bandera": {
     "svg": "data/flags/ps.svg",
     "emoji": "🇵🇸",
@@ -13032,6 +14115,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Lisboa",
+    "nombre_en": "Lisbon",
+    "lat": 38.72,
+    "lng": -9.13
+   },
    "bandera": {
     "svg": "data/flags/pt.svg",
     "emoji": "🇵🇹",
@@ -13103,6 +14192,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Ngerulmud",
+    "nombre_en": "Ngerulmud",
+    "lat": 7.5,
+    "lng": 134.62
+   },
    "bandera": {
     "svg": "data/flags/pw.svg",
     "emoji": "🇵🇼",
@@ -13171,6 +14266,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Asunción",
+    "nombre_en": "Asunción",
+    "lat": -25.28,
+    "lng": -57.57
+   },
    "bandera": {
     "svg": "data/flags/py.svg",
     "emoji": "🇵🇾",
@@ -13243,6 +14344,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Doha",
+    "nombre_en": "Doha",
+    "lat": 25.28,
+    "lng": 51.53
+   },
    "bandera": {
     "svg": "data/flags/qa.svg",
     "emoji": "🇶🇦",
@@ -13310,6 +14417,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Saint-Denis",
+    "nombre_en": "Saint-Denis",
+    "lat": -20.88,
+    "lng": 55.45
+   },
    "bandera": {
     "svg": "data/flags/re.svg",
     "emoji": "🇷🇪",
@@ -13375,6 +14488,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Bucarest",
+    "nombre_en": "Bucharest",
+    "lat": 44.43,
+    "lng": 26.1
+   },
    "bandera": {
     "svg": "data/flags/ro.svg",
     "emoji": "🇷🇴",
@@ -13447,6 +14566,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Belgrado",
+    "nombre_en": "Belgrade",
+    "lat": 44.83,
+    "lng": 20.5
+   },
    "bandera": {
     "svg": "data/flags/rs.svg",
     "emoji": "🇷🇸",
@@ -13520,6 +14645,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Moscú",
+    "nombre_en": "Moscow",
+    "lat": 55.75,
+    "lng": 37.6
+   },
    "bandera": {
     "svg": "data/flags/ru.svg",
     "emoji": "🇷🇺",
@@ -13610,6 +14741,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Kigali",
+    "nombre_en": "Kigali",
+    "lat": -1.95,
+    "lng": 30.05
+   },
    "bandera": {
     "svg": "data/flags/rw.svg",
     "emoji": "🇷🇼",
@@ -13690,6 +14827,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Riad",
+    "nombre_en": "Riyadh",
+    "lat": 24.65,
+    "lng": 46.7
+   },
    "bandera": {
     "svg": "data/flags/sa.svg",
     "emoji": "🇸🇦",
@@ -13765,6 +14908,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Honiara",
+    "nombre_en": "Honiara",
+    "lat": -9.43,
+    "lng": 159.95
+   },
    "bandera": {
     "svg": "data/flags/sb.svg",
     "emoji": "🇸🇧",
@@ -13829,6 +14978,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Victoria",
+    "nombre_en": "Victoria",
+    "lat": -4.62,
+    "lng": 55.45
+   },
    "bandera": {
     "svg": "data/flags/sc.svg",
     "emoji": "🇸🇨",
@@ -13904,6 +15059,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Jartum",
+    "nombre_en": "Khartoum",
+    "lat": 15.6,
+    "lng": 32.53
+   },
    "bandera": {
     "svg": "data/flags/sd.svg",
     "emoji": "🇸🇩",
@@ -13982,6 +15143,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Estocolmo",
+    "nombre_en": "Stockholm",
+    "lat": 59.33,
+    "lng": 18.05
+   },
    "bandera": {
     "svg": "data/flags/se.svg",
     "emoji": "🇸🇪",
@@ -14052,6 +15219,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Singapur",
+    "nombre_en": "Singapore",
+    "lat": 1.28,
+    "lng": 103.85
+   },
    "bandera": {
     "svg": "data/flags/sg.svg",
     "emoji": "🇸🇬",
@@ -14134,6 +15307,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Jamestown",
+    "nombre_en": "Jamestown",
+    "lat": -15.93,
+    "lng": -5.72
+   },
    "bandera": {
     "svg": "data/flags/sh.svg",
     "emoji": "🇸🇭",
@@ -14201,6 +15380,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Liubliana",
+    "nombre_en": "Ljubljana",
+    "lat": 46.05,
+    "lng": 14.52
+   },
    "bandera": {
     "svg": "data/flags/si.svg",
     "emoji": "🇸🇮",
@@ -14274,6 +15459,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Longyearbyen",
+    "nombre_en": "Longyearbyen",
+    "lat": 78.22,
+    "lng": 15.63
+   },
    "bandera": {
     "svg": "data/flags/sj.svg",
     "emoji": "🇸🇯",
@@ -14335,6 +15526,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Bratislava",
+    "nombre_en": "Bratislava",
+    "lat": 48.15,
+    "lng": 17.12
+   },
    "bandera": {
     "svg": "data/flags/sk.svg",
     "emoji": "🇸🇰",
@@ -14409,6 +15606,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Freetown",
+    "nombre_en": "Freetown",
+    "lat": 8.48,
+    "lng": -13.23
+   },
    "bandera": {
     "svg": "data/flags/sl.svg",
     "emoji": "🇸🇱",
@@ -14477,6 +15680,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "San Marino",
+    "nombre_en": "City of San Marino",
+    "lat": 43.94,
+    "lng": 12.45
+   },
    "bandera": {
     "svg": "data/flags/sm.svg",
     "emoji": "🇸🇲",
@@ -14542,6 +15751,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Dakar",
+    "nombre_en": "Dakar",
+    "lat": 14.73,
+    "lng": -17.63
+   },
    "bandera": {
     "svg": "data/flags/sn.svg",
     "emoji": "🇸🇳",
@@ -14612,6 +15827,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Mogadiscio",
+    "nombre_en": "Mogadishu",
+    "lat": 2.07,
+    "lng": 45.33
+   },
    "bandera": {
     "svg": "data/flags/so.svg",
     "emoji": "🇸🇴",
@@ -14686,6 +15907,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Paramaribo",
+    "nombre_en": "Paramaribo",
+    "lat": 5.83,
+    "lng": -55.17
+   },
    "bandera": {
     "svg": "data/flags/sr.svg",
     "emoji": "🇸🇷",
@@ -14753,6 +15980,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Juba",
+    "nombre_en": "Juba",
+    "lat": 4.85,
+    "lng": 31.62
+   },
    "bandera": {
     "svg": "data/flags/ss.svg",
     "emoji": "🇸🇸",
@@ -14824,6 +16057,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Santo Tomé",
+    "nombre_en": "São Tomé",
+    "lat": 0.34,
+    "lng": 6.73
+   },
    "bandera": {
     "svg": "data/flags/st.svg",
     "emoji": "🇸🇹",
@@ -14888,6 +16127,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "San Salvador",
+    "nombre_en": "San Salvador",
+    "lat": 13.6929,
+    "lng": -89.2182
+   },
    "bandera": {
     "svg": "data/flags/sv.svg",
     "emoji": "🇸🇻",
@@ -14954,6 +16199,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Philipsburg",
+    "nombre_en": "Philipsburg",
+    "lat": 18.02,
+    "lng": -63.03
+   },
    "bandera": {
     "svg": "data/flags/sx.svg",
     "emoji": "🇸🇽",
@@ -15027,6 +16278,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Damasco",
+    "nombre_en": "Damascus",
+    "lat": 33.5138,
+    "lng": 36.2765
+   },
    "bandera": {
     "svg": "data/flags/sy.svg",
     "emoji": "🇸🇾",
@@ -15104,6 +16361,12 @@
      "principal": false
     }
    ],
+   "capital": {
+    "nombre": "Mbabane",
+    "nombre_en": "Mbabane",
+    "lat": -26.31,
+    "lng": 31.13
+   },
    "bandera": {
     "svg": "data/flags/sz.svg",
     "emoji": "🇸🇿",
@@ -15182,6 +16445,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Cockburn Town",
+    "nombre_en": "Cockburn Town",
+    "lat": 21.46,
+    "lng": -71.14
+   },
    "bandera": {
     "svg": "data/flags/tc.svg",
     "emoji": "🇹🇨",
@@ -15243,6 +16512,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Yamena",
+    "nombre_en": "N'Djamena",
+    "lat": 12.1,
+    "lng": 15.03
+   },
    "bandera": {
     "svg": "data/flags/td.svg",
     "emoji": "🇹🇩",
@@ -15319,6 +16594,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Port-aux-Français",
+    "nombre_en": "Port-aux-Français",
+    "lat": -49.35,
+    "lng": 70.2167
+   },
    "bandera": {
     "svg": "data/flags/tf.svg",
     "emoji": "🇹🇫",
@@ -15380,6 +16661,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Lomé",
+    "nombre_en": "Lomé",
+    "lat": 6.14,
+    "lng": 1.21
+   },
    "bandera": {
     "svg": "data/flags/tg.svg",
     "emoji": "🇹🇬",
@@ -15449,6 +16736,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Bangkok",
+    "nombre_en": "Bangkok",
+    "lat": 13.75,
+    "lng": 100.52
+   },
    "bandera": {
     "svg": "data/flags/th.svg",
     "emoji": "🇹🇭",
@@ -15519,6 +16812,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Dusambé",
+    "nombre_en": "Dushanbe",
+    "lat": 38.55,
+    "lng": 68.77
+   },
    "bandera": {
     "svg": "data/flags/tj.svg",
     "emoji": "🇹🇯",
@@ -15592,6 +16891,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Fakaofo",
+    "nombre_en": "Fakaofo",
+    "lat": -9.38,
+    "lng": -171.22
+   },
    "bandera": {
     "svg": "data/flags/tk.svg",
     "emoji": "🇹🇰",
@@ -15663,6 +16968,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Dili",
+    "nombre_en": "Dili",
+    "lat": -8.58,
+    "lng": 125.6
+   },
    "bandera": {
     "svg": "data/flags/tl.svg",
     "emoji": "🇹🇱",
@@ -15733,6 +17044,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Asjabad",
+    "nombre_en": "Ashgabat",
+    "lat": 37.95,
+    "lng": 58.38
+   },
    "bandera": {
     "svg": "data/flags/tm.svg",
     "emoji": "🇹🇲",
@@ -15806,6 +17123,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Túnez",
+    "nombre_en": "Tunis",
+    "lat": 36.8,
+    "lng": 10.18
+   },
    "bandera": {
     "svg": "data/flags/tn.svg",
     "emoji": "🇹🇳",
@@ -15874,6 +17197,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Nukualofa",
+    "nombre_en": "Nuku'alofa",
+    "lat": -21.13,
+    "lng": -175.2
+   },
    "bandera": {
     "svg": "data/flags/to.svg",
     "emoji": "🇹🇴",
@@ -15943,6 +17272,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Ankara",
+    "nombre_en": "Ankara",
+    "lat": 39.93,
+    "lng": 32.87
+   },
    "bandera": {
     "svg": "data/flags/tr.svg",
     "emoji": "🇹🇷",
@@ -16018,6 +17353,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Puerto España",
+    "nombre_en": "Port of Spain",
+    "lat": 10.65,
+    "lng": -61.52
+   },
    "bandera": {
     "svg": "data/flags/tt.svg",
     "emoji": "🇹🇹",
@@ -16082,6 +17423,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Funafuti",
+    "nombre_en": "Funafuti",
+    "lat": -8.52,
+    "lng": 179.22
+   },
    "bandera": {
     "svg": "data/flags/tv.svg",
     "emoji": "🇹🇻",
@@ -16156,6 +17503,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Taipéi",
+    "nombre_en": "Taipei",
+    "lat": 25.03,
+    "lng": 121.52
+   },
    "bandera": {
     "svg": "data/flags/tw.svg",
     "emoji": "🇹🇼",
@@ -16219,6 +17572,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Dodoma",
+    "nombre_en": "Dodoma",
+    "lat": -6.16,
+    "lng": 35.75
+   },
    "bandera": {
     "svg": "data/flags/tz.svg",
     "emoji": "🇹🇿",
@@ -16298,6 +17657,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Kiev",
+    "nombre_en": "Kyiv",
+    "lat": 50.43,
+    "lng": 30.52
+   },
    "bandera": {
     "svg": "data/flags/ua.svg",
     "emoji": "🇺🇦",
@@ -16370,6 +17735,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Kampala",
+    "nombre_en": "Kampala",
+    "lat": 0.32,
+    "lng": 32.55
+   },
    "bandera": {
     "svg": "data/flags/ug.svg",
     "emoji": "🇺🇬",
@@ -16439,6 +17810,7 @@
    "tipo_dependencia": "unincorporated_territory",
    "soberano": "US",
    "capitales": [],
+   "capital": null,
    "bandera": {
     "svg": "data/flags/um.svg",
     "emoji": "🇺🇲",
@@ -16502,6 +17874,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Washington D. C.",
+    "nombre_en": "Washington, D.C.",
+    "lat": 38.89,
+    "lng": -77.05
+   },
    "bandera": {
     "svg": "data/flags/us.svg",
     "emoji": "🇺🇸",
@@ -16582,6 +17960,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Montevideo",
+    "nombre_en": "Montevideo",
+    "lat": -34.85,
+    "lng": -56.17
+   },
    "bandera": {
     "svg": "data/flags/uy.svg",
     "emoji": "🇺🇾",
@@ -16648,6 +18032,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Taskent",
+    "nombre_en": "Tashkent",
+    "lat": 41.32,
+    "lng": 69.25
+   },
    "bandera": {
     "svg": "data/flags/uz.svg",
     "emoji": "🇺🇿",
@@ -16722,6 +18112,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Ciudad del Vaticano",
+    "nombre_en": "Vatican City",
+    "lat": 41.9,
+    "lng": 12.45
+   },
    "bandera": {
     "svg": "data/flags/va.svg",
     "emoji": "🇻🇦",
@@ -16790,6 +18186,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Kingstown",
+    "nombre_en": "Kingstown",
+    "lat": 13.13,
+    "lng": -61.22
+   },
    "bandera": {
     "svg": "data/flags/vc.svg",
     "emoji": "🇻🇨",
@@ -16854,6 +18256,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Caracas",
+    "nombre_en": "Caracas",
+    "lat": 10.48,
+    "lng": -66.87
+   },
    "bandera": {
     "svg": "data/flags/ve.svg",
     "emoji": "🇻🇪",
@@ -16922,6 +18330,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Road Town",
+    "nombre_en": "Road Town",
+    "lat": 18.42,
+    "lng": -64.62
+   },
    "bandera": {
     "svg": "data/flags/vg.svg",
     "emoji": "🇻🇬",
@@ -16983,6 +18397,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Charlotte Amalie",
+    "nombre_en": "Charlotte Amalie",
+    "lat": 18.35,
+    "lng": -64.93
+   },
    "bandera": {
     "svg": "data/flags/vi.svg",
     "emoji": "🇻🇮",
@@ -17044,6 +18464,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Hanói",
+    "nombre_en": "Hanoi",
+    "lat": 21.03,
+    "lng": 105.85
+   },
    "bandera": {
     "svg": "data/flags/vn.svg",
     "emoji": "🇻🇳",
@@ -17112,6 +18538,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Port Vila",
+    "nombre_en": "Port Vila",
+    "lat": -17.73,
+    "lng": 168.32
+   },
    "bandera": {
     "svg": "data/flags/vu.svg",
     "emoji": "🇻🇺",
@@ -17186,6 +18618,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Mata-Utu",
+    "nombre_en": "Mata-Utu",
+    "lat": -13.95,
+    "lng": -171.93
+   },
    "bandera": {
     "svg": "data/flags/wf.svg",
     "emoji": "🇼🇫",
@@ -17247,6 +18685,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Apia",
+    "nombre_en": "Apia",
+    "lat": -13.82,
+    "lng": -171.77
+   },
    "bandera": {
     "svg": "data/flags/ws.svg",
     "emoji": "🇼🇸",
@@ -17316,6 +18760,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Pristina",
+    "nombre_en": "Pristina",
+    "lat": 42.67,
+    "lng": 21.17
+   },
    "bandera": {
     "svg": "data/flags/xk.svg",
     "emoji": "🇽🇰",
@@ -17385,6 +18835,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Saná",
+    "nombre_en": "Sana'a",
+    "lat": 15.37,
+    "lng": 44.19
+   },
    "bandera": {
     "svg": "data/flags/ye.svg",
     "emoji": "🇾🇪",
@@ -17452,6 +18908,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Mamoudzou",
+    "nombre_en": "Mamoudzou",
+    "lat": -12.78,
+    "lng": 45.22
+   },
    "bandera": {
     "svg": "data/flags/yt.svg",
     "emoji": "🇾🇹",
@@ -17529,6 +18991,12 @@
      "principal": false
     }
    ],
+   "capital": {
+    "nombre": "Pretoria",
+    "nombre_en": "Pretoria",
+    "lat": -25.74,
+    "lng": 28.19
+   },
    "bandera": {
     "svg": "data/flags/za.svg",
     "emoji": "🇿🇦",
@@ -17653,6 +19121,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Lusaka",
+    "nombre_en": "Lusaka",
+    "lat": -15.42,
+    "lng": 28.28
+   },
    "bandera": {
     "svg": "data/flags/zm.svg",
     "emoji": "🇿🇲",
@@ -17727,6 +19201,12 @@
      "principal": true
     }
    ],
+   "capital": {
+    "nombre": "Harare",
+    "nombre_en": "Harare",
+    "lat": -17.82,
+    "lng": 31.03
+   },
    "bandera": {
     "svg": "data/flags/zw.svg",
     "emoji": "🇿🇼",

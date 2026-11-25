@@ -92,6 +92,12 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--royal)
 #map .marker { fill: var(--land); stroke: var(--sepia); stroke-width: .8; vector-effect: non-scaling-stroke; cursor: pointer; }
 #map .marker:hover { fill: #FFF9EA; stroke: var(--royal); }
 #map .label { font-family: var(--font-display); font-style: italic; font-weight: 600; fill: var(--ink); text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: rgba(248,242,227,.75); stroke-width: 3px; letter-spacing: .06em; }
+#map .caps { pointer-events: none; }
+#map .cap circle { fill: #FFF9EA; stroke: var(--royal); stroke-width: 1.4; }
+#map .cap path { fill: var(--royal); }
+#map .cap text { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 12px; fill: var(--ink); paint-order: stroke; stroke: rgba(248,242,227,.85); stroke-width: 3px; }
+#map.caps-far .cap text { display: none; }
+#map.caps-far .cap { opacity: .9; }
 #map .label.sea { fill: #2F4A4E; stroke: rgba(199,211,204,.7); letter-spacing: .3em; }
 .zoom { position: absolute; right: 30px; bottom: 30px; display: flex; flex-direction: column; border: 1px solid var(--sepia); background: var(--paper-3); }
 .zoom button { width: 34px; height: 34px; border: 0; background: none; font-size: 18px; font-weight: 600; }

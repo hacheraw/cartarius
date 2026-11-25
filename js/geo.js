@@ -132,9 +132,15 @@
     { id: 'banderas-asia', group: 'Banderas', title: 'Banderas de Asia', kind: 'flags', cont: 'AS', view: 'AS', blurb: 'Lleva cada bandera a su país.' },
     { id: 'banderas-america', group: 'Banderas', title: 'Banderas de América', kind: 'flags', cont: 'AM', view: 'AM', blurb: 'Lleva cada bandera a su país.' },
     { id: 'banderas-oceania', group: 'Banderas', title: 'Banderas de Oceanía', kind: 'flags', cont: 'OC', view: 'OC', blurb: 'Lleva cada bandera a su país.' },
-    { id: 'banderas-todas', group: 'Banderas', title: 'Todas las banderas', kind: 'flags', cont: null, view: 'WORLD', blurb: 'Todas las banderas del mundo.' }
+    { id: 'banderas-todas', group: 'Banderas', title: 'Todas las banderas', kind: 'flags', cont: null, view: 'WORLD', blurb: 'Todas las banderas del mundo.' },
+    { id: 'capitales-europa', group: 'Capitales', title: 'Capitales de Europa', kind: 'capitals', cont: 'EU', view: 'EU', blurb: 'Señala el país de cada capital.' },
+    { id: 'capitales-africa', group: 'Capitales', title: 'Capitales de África', kind: 'capitals', cont: 'AF', view: 'AF', blurb: 'Señala el país de cada capital.' },
+    { id: 'capitales-asia', group: 'Capitales', title: 'Capitales de Asia', kind: 'capitals', cont: 'AS', view: 'AS', blurb: 'Señala el país de cada capital.' },
+    { id: 'capitales-america', group: 'Capitales', title: 'Capitales de América', kind: 'capitals', cont: 'AM', view: 'AM', blurb: 'Señala el país de cada capital.' },
+    { id: 'capitales-oceania', group: 'Capitales', title: 'Capitales de Oceanía', kind: 'capitals', cont: 'OC', view: 'OC', blurb: 'Señala el país de cada capital.' },
+    { id: 'capitales-todas', group: 'Capitales', title: 'Todas las capitales', kind: 'capitals', cont: null, view: 'WORLD', blurb: 'Todas las capitales del mundo.' }
   ];
-  const UPCOMING = ['Capitales', 'Ríos', 'Montañas', 'Lenguas', 'Ciudades'];
+  const UPCOMING = ['Ríos', 'Montañas', 'Lenguas', 'Ciudades'];
 
   window.CartariusGeo = {
     init, COUNTRY, CONT_OF, CONT_NAMES, LIMITED, DEPENDENT, ownerName, isAskable, ALIAS, countryName, polygonContinent,
