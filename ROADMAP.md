@@ -2,14 +2,16 @@
 
 Juego web de geografía. Estética: carta náutica, pergamino, toques regios.
 
-## Tramo 1 · Completa el mapa (un jugador) ✅ en curso
+## Tramo 1 · Completa el mapa (un jugador) ✅
 - [x] Mapamundi en blanco (solo fronteras) a partir de `countries.csv` (WKT simplificado → `data/world.js`).
 - [x] Lista lateral con scroll; primer elemento seleccionado; se puede elegir otro.
 - [x] Clic correcto: se pinta y desaparece de la lista. Clic erróneo: error + aviso con lo que has señalado.
-- [x] Pista automática tras 3 fallos seguidos en el mismo elemento.
+- [x] Pista opcional tras X fallos seguidos.
 - [x] Zoom/arrastre, marcadores para microestados e islas.
 - [x] Categorías: Océanos y continentes · Países por continente · Todos los países.
-- [x] Tiempo, aciertos, errores, precisión y récord por categoría (guardado en el navegador).
+- [x] Tiempo, aciertos, errores, precisión. Récords (top 10 por carta) con nombre del jugador, en localStorage.
+- [x] Opciones: mostrar país pulsado, pistas tras X errores (ambas desactivadas por defecto), reconocimiento limitado, territorios dependientes.
+- [x] Pausa con desenfoque; partida guardada y "¿Quieres continuar donde lo dejaste?".
 
 ## Tramo 2 · Menú principal y estructura
 - [ ] Pantalla de inicio: elegir modo (Completa el mapa / Quiz).

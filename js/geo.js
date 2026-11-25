@@ -15,8 +15,25 @@
 
   const CONT_NAMES = { AM: 'América', EU: 'Europa', AF: 'África', AS: 'Asia', OC: 'Oceanía', AN: 'Antártida' };
 
-  // Territorios que se dibujan pero no se preguntan (no son estados soberanos de uso común)
-  const NON_PLAYABLE = new Set('AI AQ AS AW AX BL BM CK CW EH FK FO GG GL GS GU HK HM IM IO JE KY MF MO MP MS NC NF NU PF PM PN PR SH SX TC TF VG VI WF XG'.split(' '));
+  // Qué se puede preguntar. Por defecto: 193 miembros de la ONU + Vaticano (siempre)
+  // + estados de reconocimiento limitado (opción) + territorios dependientes (opción).
+  const LIMITED = new Set('XK TW PS EH'.split(' '));
+  const DEPENDENT = new Set('AI AS AW AX BL BM CK CW FK FO GG GL GS GU HK HM IM IO JE KY MF MO MP MS NC NF NU PF PM PN PR SH SX TC TF VG VI WF'.split(' '));
+  const NEVER = new Set(['AQ', 'XG']); // Antártida (solo como continente) y glaciar de Siachen
+  const TERR_OWNER = {
+    AI: 'Reino Unido', AS: 'EE. UU.', AW: 'Países Bajos', AX: 'Finlandia', BL: 'Francia', BM: 'Reino Unido', CK: 'Nueva Zelanda',
+    CW: 'Países Bajos', FK: 'Reino Unido', FO: 'Dinamarca', GG: 'Reino Unido', GL: 'Dinamarca', GS: 'Reino Unido', GU: 'EE. UU.',
+    HK: 'China', HM: 'Australia', IM: 'Reino Unido', IO: 'Reino Unido', JE: 'Reino Unido', KY: 'Reino Unido', MF: 'Francia',
+    MO: 'China', MP: 'EE. UU.', MS: 'Reino Unido', NC: 'Francia', NF: 'Australia', NU: 'Nueva Zelanda', PF: 'Francia',
+    PM: 'Francia', PN: 'Reino Unido', PR: 'EE. UU.', SH: 'Reino Unido', SX: 'Países Bajos', TC: 'Reino Unido', TF: 'Francia',
+    VG: 'Reino Unido', VI: 'EE. UU.', WF: 'Francia'
+  };
+  function isAskable(iso, opts) {
+    if (NEVER.has(iso)) return false;
+    if (LIMITED.has(iso)) return !!opts.limited;
+    if (DEPENDENT.has(iso)) return !!opts.territories;
+    return true;
+  }
   // Zonas que se cuentan como parte de otro país
   const ALIAS = { XC: 'CY', XS: 'SO' };
 
@@ -28,7 +45,12 @@
     MK: 'Macedonia del Norte', BA: 'Bosnia y Herzegovina', TW: 'Taiwán', XK: 'Kosovo', GB: 'Reino Unido',
     ST: 'Santo Tomé y Príncipe', KN: 'San Cristóbal y Nieves', VC: 'San Vicente y las Granadinas',
     AG: 'Antigua y Barbuda', TT: 'Trinidad y Tobago', CF: 'República Centroafricana', DO: 'República Dominicana',
-    AE: 'Emiratos Árabes Unidos', SA: 'Arabia Saudí', GQ: 'Guinea Ecuatorial', SS: 'Sudán del Sur', MH: 'Islas Marshall', SB: 'Islas Salomón'
+    AE: 'Emiratos Árabes Unidos', SA: 'Arabia Saudí', GQ: 'Guinea Ecuatorial', SS: 'Sudán del Sur', MH: 'Islas Marshall', SB: 'Islas Salomón',
+    HK: 'Hong Kong', MO: 'Macao', AX: 'Islas Åland', EH: 'Sáhara Occidental', BL: 'San Bartolomé', MF: 'San Martín (Francia)',
+    SX: 'San Martín (Países Bajos)', PM: 'San Pedro y Miquelón', SH: 'Santa Elena', GS: 'Islas Georgias del Sur', HM: 'Islas Heard y McDonald',
+    TF: 'Tierras Australes Francesas', IO: 'Territorio Británico del Océano Índico', NF: 'Isla Norfolk', CK: 'Islas Cook',
+    VG: 'Islas Vírgenes Británicas', VI: 'Islas Vírgenes de EE. UU.', FO: 'Islas Feroe', FK: 'Islas Malvinas', KY: 'Islas Caimán', TC: 'Islas Turcas y Caicos',
+    MP: 'Islas Marianas del Norte', AS: 'Samoa Americana', PF: 'Polinesia Francesa', NC: 'Nueva Caledonia', WF: 'Wallis y Futuna', PN: 'Islas Pitcairn'
   };
   let dn = null;
   try { dn = new Intl.DisplayNames(['es'], { type: 'region' }); } catch (e) { /* sin Intl */ }
@@ -126,12 +148,12 @@
     { id: 'paises-asia', title: 'Países de Asia', kind: 'countries', cont: 'AS', view: 'AS', blurb: 'De Turquía a Japón.' },
     { id: 'paises-america', title: 'Países de América', kind: 'countries', cont: 'AM', view: 'AM', blurb: 'De Canadá a Tierra del Fuego.' },
     { id: 'paises-oceania', title: 'Países de Oceanía', kind: 'countries', cont: 'OC', view: 'OC', blurb: 'Australia y las islas del Pacífico.' },
-    { id: 'paises-todos', title: 'Todos los países', kind: 'countries', cont: null, view: 'WORLD', blurb: 'El mundo entero, 197 estados.' }
+    { id: 'paises-todos', title: 'Todos los países', kind: 'countries', cont: null, view: 'WORLD', blurb: 'El mundo entero.' }
   ];
   const UPCOMING = ['Banderas', 'Capitales', 'Ríos', 'Montañas', 'Lenguas', 'Ciudades'];
 
   window.CartariusGeo = {
-    CONT_OF, CONT_NAMES, NON_PLAYABLE, ALIAS, countryName, polygonContinent,
+    CONT_OF, CONT_NAMES, LIMITED, DEPENDENT, TERR_OWNER, isAskable, ALIAS, countryName, polygonContinent,
     oceanFeatures, OCEAN_NAMES, OCEAN_LABEL_AT, VIEWS, CATEGORIES, UPCOMING
   };
 })();
