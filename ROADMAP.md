@@ -22,9 +22,11 @@ Juego web de geografía. Estética: carta náutica, pergamino, toques regios.
 ## Tramo 3 · Más pruebas de "Completa el mapa"
 - [x] Banderas: mapa a todo el ancho, dock inferior con scroll horizontal; al acertar el país se rellena con su bandera.
 - [x] Capitales: se señala el país; al acertar aparece la capital con estrella y nombre (el nombre se oculta con el mapa muy alejado).
-- [ ] Ríos, montañas y cordilleras (requiere nuevas capas: Natural Earth rivers/geography).
+- [x] Ríos: 134 ríos elegidos a mano (`data/curated/rios.json`) con trazado de Natural Earth; se pulsa la línea del río.
+- [x] Ciudades: las más pobladas de cada continente (y 80 del mundo), puntos en el mapa; al acertar aparece el nombre.
+- [ ] Montañas y cordilleras, monumentos (Natural Earth geography + Wikidata).
 - [ ] Provincias/comunidades de España y otros países (capas admin-1).
-- [ ] Ciudades, lenguas, personajes famosos (datos propios).
+- [ ] Lenguas, personajes famosos (Wikidata; personajes mejor en el Quiz).
 
 ## Tramo 4 · Quiz multijugador
 - [ ] Pantalla principal (anfitrión): crea sala, muestra QR y código de 4 caracteres.
@@ -36,6 +38,7 @@ Juego web de geografía. Estética: carta náutica, pergamino, toques regios.
 
 ## Decisiones técnicas
 - Datos de países: REST Countries v5 descargado una vez a `data/raw/restcountries-v5.json` (`tools/fetch-countries.mjs`, gasta 3 peticiones). `tools/build-data.py` + `data/overrides.json` generan `data/countries.json`/`.js` (nombres en español, continente, estatus, capitales, bandera, población, idiomas, monedas, fronteras…). La clave no va en el juego.
+- Ríos y ciudades: Natural Earth 10m (dominio público) en `data/raw/ne/` (`tools/fetch-ne.sh`); `tools/build-features.py` (requiere `pip install pyshp shapely`) genera `data/features.json`/`.js`.
 - Banderas: 250 SVG locales en `data/flags/` (`tools/fetch-flags.mjs`, CDN gratuito sin clave).
 - Capitales: nombre en español en `overrides.json` (`capitales`), una por país (la primera si hay varias: Bolivia → Sucre, Sudáfrica → Pretoria). Campo `capital` en `countries.json`.
 - HTML + CSS + JS sin compilador; D3 (local en `js/vendor/`) para la proyección Natural Earth y el zoom.

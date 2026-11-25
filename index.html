@@ -95,6 +95,29 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--royal)
 .menu-actions .lang-sel { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--sepia); padding: 0 6px 0 10px; background: var(--land); }
 .menu-actions .lang-sel svg { width: 16px; height: 16px; fill: none; stroke: var(--sepia); stroke-width: 1.5; }
 .menu-actions .lang-sel select { border: 0; background: transparent; font: inherit; font-size: 14px; padding: 8px 4px; color: var(--ink); cursor: pointer; }
+#map.mode-features .land.off { fill: var(--land); stroke-opacity: 1; }
+#map.mode-features .ocean { pointer-events: none; }
+#map .river { fill: none; stroke: #5E8BA0; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; pointer-events: none; transition: stroke .3s; }
+#map .river-hit { fill: none; stroke: transparent; stroke-width: 11; vector-effect: non-scaling-stroke; cursor: pointer; pointer-events: stroke; }
+#map .rv:hover .river:not(.painted) { stroke: #2F6B86; stroke-width: 2.4; }
+#map .river.painted { stroke: #1F5672; stroke-width: 2.6; }
+#map .river.wrong { animation: rwrong .7s ease-out; }
+@keyframes rwrong { 0%, 40% { stroke: var(--err); stroke-width: 3.5; } 100% { } }
+#map .river.hint { animation: rhint 1.1s ease-in-out infinite; }
+@keyframes rhint { 50% { stroke: #E9C46A; stroke-width: 4; } }
+#map .label.river-label { fill: #1F5672; letter-spacing: .04em; }
+#map .cityg .hit { fill: transparent; cursor: pointer; }
+#map .cityg .dot { fill: var(--land); stroke: var(--sepia); stroke-width: .8; vector-effect: non-scaling-stroke; pointer-events: none; }
+#map .cityg:hover .dot { fill: #FFF9EA; stroke: var(--royal); }
+#map .cityg.painted .dot { fill: var(--royal); stroke: #FFF9EA; }
+#map .cityg.painted .hit { cursor: default; }
+#map .cityg text { display: none; font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 12px; fill: var(--ink); paint-order: stroke; stroke: rgba(248,242,227,.85); stroke-width: 3px; pointer-events: none; }
+#map .cityg.painted text { display: block; }
+#map.caps-far .cityg.painted text { display: none; }
+#map .cityg .dot.wrong { animation: cwrong .7s ease-out; }
+@keyframes cwrong { 0%, 40% { fill: var(--err); } 100% { } }
+#map .cityg .dot.hint { animation: chint 1.1s ease-in-out infinite; }
+@keyframes chint { 50% { fill: #E9C46A; } }
 #map .caps { pointer-events: none; }
 #map .cap circle { fill: #FFF9EA; stroke: var(--royal); stroke-width: 1.4; }
 #map .cap path { fill: var(--royal); }
@@ -138,7 +161,7 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--royal)
 .list li button:hover { background: rgba(255,250,235,.55); }
 .list li button em { font-style: normal; font-family: var(--font-ui); font-size: 11px; color: var(--ink-soft); min-width: 20px; font-variant-numeric: tabular-nums; }
 .list li button[aria-current="true"] { background: var(--paper-3); color: var(--royal); box-shadow: inset 3px 0 0 var(--royal); }
-.list li.hinted button::after { content: "pista"; font-family: var(--font-ui); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-left: auto; }
+.list li.hinted button::after { content: var(--hint-label, "pista"); font-family: var(--font-ui); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-left: auto; }
 .list li.gone { animation: gone .35s ease-in forwards; }
 @keyframes gone { to { opacity: 0; transform: translateX(30px); } }
 
@@ -420,6 +443,7 @@ body.mode-dock .rose { bottom: 92px; }
 <script src="js/vendor/d3.min.js"></script>
 <script src="data/world.js"></script>
 <script src="data/countries.js"></script>
+<script src="data/features.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/geo.js"></script>
 <script src="js/app.js"></script>

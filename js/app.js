@@ -26,9 +26,19 @@
   I18N.placePref = opts.placeLang;
 
   const markerR = () => 4.2 * (opts.markerScale || 1) / currentK;
+  // Rótulo de un río: en el punto medio de su tramo más largo
+  function addRiverLabel(key) {
+    const r = featById[key];
+    const longest = r.lineas.reduce((a, b) => (b.length > a.length ? b : a));
+    const p = projection(longest[Math.floor(longest.length / 2)]); if (!p) return;
+    const d = { size: 13, fixed: true };
+    layer.select('.labels').append('text').datum(d).attr('class', 'label river-label')
+      .attr('x', p[0]).attr('y', p[1]).attr('dy', '-0.4em').attr('font-size', d.size / currentK).attr('stroke-width', 3 / currentK)
+      .text(featName(r));
+  }
   function updateCaps() {
     if (!layer) return;
-    layer.selectAll('.cap').attr('transform', d => 'translate(' + d.x + ',' + d.y + ') scale(' + (1 / currentK) + ')');
+    layer.selectAll('.cap, .cityg').attr('transform', d => 'translate(' + d.x + ',' + d.y + ') scale(' + (1 / currentK) + ')');
     svg.classed('caps-far', currentK < 2.2);
   }
   // Icono de capital (estrella en círculo) con su nombre; tamaño constante en pantalla
@@ -43,7 +53,15 @@
     g.append('text').attr('x', 9).attr('y', 4).text(G.capitalName(key));
     updateCaps();
   }
-  function updateMarkers() { if (layer) layer.selectAll('.marker').attr('r', markerR()); }
+  function updateMarkers() {
+    if (!layer) return;
+    layer.selectAll('.marker').attr('r', markerR());
+    // ciudades: mismo tamaño en pantalla que los puntos de países pequeños (opción 1x–5x)
+    const r = markerR() * currentK;
+    layer.selectAll('.cityg .dot').attr('r', r);
+    layer.selectAll('.cityg .hit').attr('r', r + 5);
+    layer.selectAll('.cityg text').attr('x', r + 4);
+  }
 
   // ---------- Datos ----------
   const pieces = [];    // un trozo por polígono: {iso, raw, en, cont, geom, el, key}
@@ -64,8 +82,15 @@
     oceans = G.oceanFeatures(d3);
   }
 
+  // Ríos y ciudades (data/features.json): índice por id
+  let FEAT = { rios: [], ciudades: [] }; const featById = {};
+  const isFeatKind = k => k === 'rivers' || k === 'cities';
+  const featName = f => (f.nombres && (f.nombres[I18N.place()] || f.nombres.en)) || f.id;
+
   function poolFor(cat) { // códigos que entran en la carta con las opciones actuales
     if (cat.kind === 'continents') return null;
+    if (cat.kind === 'rivers') return FEAT.rios.filter(r => !cat.cont || r.cont === cat.cont).map(r => r.id);
+    if (cat.kind === 'cities') return FEAT.ciudades.filter(c => cat.cont ? c.cont === cat.cont : c.mundo).map(c => c.id);
     return allIsos.filter(i => G.isAskable(i, opts) && (!cat.cont || G.CONT_OF[i] === cat.cont) && (cat.kind !== 'capitals' || capitalOf(i)));
   }
   function itemsFromPool(cat, pool) {
@@ -76,6 +101,7 @@
       ];
     }
     if (cat.kind === 'capitals') return pool.map(i => ({ key: i, name: G.capitalName(i) }));
+    if (isFeatKind(cat.kind)) return pool.map(i => ({ key: i, name: featName(featById[i]) }));
     return pool.map(i => ({ key: i, name: G.countryName(i) }));
   }
   function capitalOf(iso) { const c = G.COUNTRY[iso]; return c && c.capital && isFinite(c.capital.lat) ? c.capital : null; }
@@ -83,12 +109,14 @@
   // Nombre para mensajes tras acertar o con "mostrar país pulsado": en capitales, «País (Capital)»
   function fullName(key) {
     if (isCapitals() && capitalOf(key)) return G.countryName(key) + ' (' + G.capitalName(key) + ')';
+    if (featById[key] && featById[key].iso) return featName(featById[key]) + ' (' + G.countryName(featById[key].iso) + ')';
     return nameOfKey(key);
   }
   function nameOfKey(key) {
     if (key.startsWith('o:')) return G.OCEAN_NAMES[key.slice(2)];
     if (key.startsWith('c:')) return G.CONT_NAMES[key.slice(2)];
     if (isCapitals() && capitalOf(key)) return G.capitalName(key);
+    if (featById[key]) return featName(featById[key]);
     return G.countryName(key);
   }
 
@@ -106,7 +134,7 @@
   function drawMap(cat, poolSet) {
     const view = G.VIEWS[cat.view];
     svg.selectAll('*').remove();
-    svg.attr('class', cat.kind === 'continents' ? 'mode-continents' : 'mode-countries');
+    svg.attr('class', cat.kind === 'continents' ? 'mode-continents' : isFeatKind(cat.kind) ? 'mode-countries mode-features' : 'mode-countries');
     projection = d3.geoNaturalEarth1().rotate([view.rotate, 0]).fitExtent([[6, 6], [W - 6, H - 6]], { type: 'Sphere' });
     path = d3.geoPath(projection);
     svg.append('defs').attr('id', 'flagDefs');
@@ -144,8 +172,32 @@
       c.__key = key;
       state.markers[key] = c;
     });
+    featEls = {};
+    if (cat.kind === 'rivers') { // trazo visible + trazo ancho invisible para poder pulsar
+      const gR = layer.append('g').attr('class', 'rivers');
+      poolSet.forEach(id => {
+        const r = featById[id]; if (!r) return;
+        const geom = { type: 'MultiLineString', coordinates: r.lineas };
+        const g = gR.append('g').attr('class', 'rv');
+        const vis = g.append('path').attr('class', 'river').attr('d', path(geom)).node();
+        const hit = g.append('path').attr('class', 'river-hit').attr('d', path(geom)).node();
+        hit.__key = id; featEls[id] = [vis];
+      });
+    }
     layer.append('g').attr('class', 'labels');
     layer.append('g').attr('class', 'caps');
+    if (cat.kind === 'cities') { // punto de tamaño fijo en pantalla; el nombre aparece al acertar
+      const gC = layer.insert('g', '.caps').attr('class', 'cities'); // fuera de .caps, que no recibe clics
+      [...poolSet].map(id => featById[id]).filter(Boolean).sort((a, b) => a.pop - b.pop).forEach(c => {
+        const p = projection([c.lng, c.lat]); if (!p) return;
+        const g = gC.append('g').datum({ x: p[0], y: p[1] }).attr('class', 'cityg');
+        const hit = g.append('circle').attr('class', 'hit').node();
+        const dot = g.append('circle').attr('class', 'dot').node();
+        g.append('text').attr('y', 4);
+        hit.__key = c.id; featEls[c.id] = [dot, g.node()];
+      });
+      updateMarkers();
+    }
 
     zoom = d3.zoom().scaleExtent([1, 40]).translateExtent([[0, 0], [W, H]])
       // Rueda: zoom. Botón derecho: arrastrar. Botón izquierdo: solo responder (nunca arrastra).
@@ -154,7 +206,7 @@
         layer.attr('transform', ev.transform);
         currentK = ev.transform.k;
         updateMarkers(); updateCaps();
-        layer.selectAll('.label').attr('font-size', d => d.size / Math.sqrt(currentK)).attr('stroke-width', 3 / currentK);
+        layer.selectAll('.label').attr('font-size', d => d.size / (d.fixed ? currentK : Math.sqrt(currentK))).attr('stroke-width', 3 / currentK);
       });
     svg.call(zoom).on('dblclick.zoom', null);
     svg.on('contextmenu', ev => ev.preventDefault());
@@ -184,6 +236,8 @@
     let at, name, sea = false;
     if (key.startsWith('o:')) { at = G.OCEAN_LABEL_AT[key.slice(2)]; name = G.OCEAN_SHORT[key.slice(2)]; sea = true; }
     else if (key.startsWith('c:')) { at = CONT_LABEL_AT[key.slice(2)]; name = G.CONT_NAMES[key.slice(2)]; }
+    else if (featById[key] && featById[key].lineas) return addRiverLabel(key);
+    else if (featEls[key] && featEls[key][1]) { d3.select(featEls[key][1]).select('text').text(featName(featById[key])); updateCaps(); return; }
     else return;
     const p = projection(at); if (!p) return;
     const d = { size: sea ? 15 : 17 };
@@ -191,7 +245,9 @@
       .attr('x', p[0]).attr('y', p[1]).attr('font-size', d.size / Math.sqrt(currentK)).attr('stroke-width', 3 / currentK)
       .text(sea ? name.toUpperCase() : name);
   }
+  let featEls = {};
   function elementsFor(key) {
+    if (featEls[key]) return featEls[key];
     if (key.startsWith('o:')) return oceans.filter(f => 'o:' + f.id === key).map(f => f.el);
     const els = pieces.filter(p => p.el && p.key === key).map(p => p.el);
     if (state.markers[key]) els.push(state.markers[key]);
@@ -202,7 +258,7 @@
     const flag = state.cat && state.cat.kind === 'flags' ? flagUrl(key) : null;
     elementsFor(key).forEach((el, i) => {
       el.classList.add('painted'); el.classList.remove('hint');
-      el.style.fill = flag ? flagFill(el, flag, key + '-' + i) || c : c;
+      if (!featEls[key]) el.style.fill = flag ? flagFill(el, flag, key + '-' + i) || c : c;
     });
     addLabel(key);
     if (isCapitals()) addCapital(key);
@@ -384,7 +440,7 @@
     if (!el || !('__key' in el)) return;
     const key = el.__key;
     if (!key) {
-      if (el.__piece && state.cat.kind !== 'continents') toast(opts.showClicked ? t('toast.notInCatName', { name: G.countryName(el.__piece.raw, el.__piece.en) }) : t('toast.notInCat'));
+      if (el.__piece && state.cat.kind !== 'continents' && !isFeatKind(state.cat.kind)) toast(opts.showClicked ? t('toast.notInCatName', { name: G.countryName(el.__piece.raw, el.__piece.en) }) : t('toast.notInCat'));
       return;
     }
     if (state.found.has(key)) { toast(t('toast.already', { name: fullName(key) })); return; }
@@ -580,6 +636,7 @@
     layer.select('.labels').selectAll('*').remove();
     state.found.forEach(k => addLabel(k));
     layer.selectAll('.cap').each(function () { d3.select(this).select('text').text(G.capitalName(this.dataset.key)); });
+    state.found.forEach(k => { if (featEls[k] && featEls[k][1]) d3.select(featEls[k][1]).select('text').text(featName(featById[k])); });
     renderList();
   }
   function renderLangSel() {
@@ -708,6 +765,8 @@
     if (!world) world = await (await fetch('data/world.json')).json();
     if (!countries) countries = await (await fetch('data/countries.json')).json();
     G.init(countries);
+    FEAT = window.CARTARIUS_FEATURES || await (await fetch('data/features.json')).json();
+    FEAT.rios.concat(FEAT.ciudades).forEach(f => (featById[f.id] = f));
     if (window.CARTARIUS_FLAGS_URL) { try { flagBundle = await (await fetch(window.CARTARIUS_FLAGS_URL)).json(); } catch (e) { console.warn('Sin banderas', e); } }
     prepare(world);
     $('loading').remove();

@@ -142,9 +142,9 @@
 
   // Títulos, textos y grupos se calculan en el idioma del juego (getters)
   const CONTS = ['EU', 'AF', 'AS', 'AM', 'OC'];
-  const GROUP_OF = { continents: 'group.world', countries: 'group.countries', flags: 'group.flags', capitals: 'group.capitals' };
-  const PREFIX = { countries: 'paises', flags: 'banderas', capitals: 'capitales' };
-  const ALL_SUFFIX = { countries: 'todos', flags: 'todas', capitals: 'todas' };
+  const GROUP_OF = { continents: 'group.world', countries: 'group.countries', flags: 'group.flags', capitals: 'group.capitals', rivers: 'group.rivers', cities: 'group.cities' };
+  const PREFIX = { countries: 'paises', flags: 'banderas', capitals: 'capitales', rivers: 'rios', cities: 'ciudades' };
+  const ALL_SUFFIX = { countries: 'todos', flags: 'todas', capitals: 'todas', rivers: 'todos', cities: 'todas' };
   const CONT_SLUG = { EU: 'europa', AF: 'africa', AS: 'asia', AM: 'america', OC: 'oceania' };
   function makeCat(kind, cont) {
     const id = kind === 'continents' ? 'continentes' : PREFIX[kind] + '-' + (cont ? CONT_SLUG[cont] : ALL_SUFFIX[kind]);
@@ -157,7 +157,7 @@
     return c;
   }
   const CATEGORIES = [makeCat('continents')];
-  ['countries', 'flags', 'capitals'].forEach(k => { CONTS.forEach(c => CATEGORIES.push(makeCat(k, c))); CATEGORIES.push(makeCat(k, null)); });
+  ['countries', 'flags', 'capitals', 'rivers', 'cities'].forEach(k => { CONTS.forEach(c => CATEGORIES.push(makeCat(k, c))); CATEGORIES.push(makeCat(k, null)); });
   const UPCOMING = { get list() { return t('soon.list').split('|'); } };
 
   window.CartariusGeo = {

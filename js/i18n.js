@@ -58,7 +58,12 @@
       'blurb.countries.AM': 'De Canadá a Tierra del Fuego.', 'blurb.countries.OC': 'Australia y las islas del Pacífico.', 'blurb.countries.all': 'El mundo entero.',
       'blurb.flags': 'Lleva cada bandera a su país.', 'blurb.flags.all': 'Todas las banderas del mundo.',
       'blurb.capitals': 'Señala el país de cada capital.', 'blurb.capitals.all': 'Todas las capitales del mundo.',
-      'soon.list': 'Ríos|Montañas|Lenguas|Ciudades',
+      'group.rivers': 'Ríos', 'group.cities': 'Ciudades',
+      'cat.rivers': 'Ríos de {cont}', 'cat.rivers.all': 'Todos los ríos', 'cat.cities': 'Ciudades de {cont}', 'cat.cities.all': 'Grandes ciudades del mundo',
+      'blurb.rivers': 'Señala cada río en el mapa.', 'blurb.rivers.all': 'Los grandes ríos del planeta.',
+      'blurb.cities': 'Las ciudades más pobladas.', 'blurb.cities.all': 'Las grandes urbes del planeta.',
+      'hint.label': 'pista',
+      'soon.list': 'Montañas|Lenguas|Monumentos|Personajes',
       'cont.of.EU': 'Europa', 'cont.of.AF': 'África', 'cont.of.AS': 'Asia', 'cont.of.AM': 'América', 'cont.of.OC': 'Oceanía',
       'cont.AM': 'América', 'cont.EU': 'Europa', 'cont.AF': 'África', 'cont.AS': 'Asia', 'cont.OC': 'Oceanía', 'cont.AN': 'Antártida',
       'ocean.pacifico': 'Océano Pacífico', 'ocean.atlantico': 'Océano Atlántico', 'ocean.indico': 'Océano Índico', 'ocean.artico': 'Océano Ártico', 'ocean.antartico': 'Océano Antártico',
@@ -113,7 +118,12 @@
       'blurb.countries.AM': 'From Canada to Tierra del Fuego.', 'blurb.countries.OC': 'Australia and the Pacific islands.', 'blurb.countries.all': 'The whole world.',
       'blurb.flags': 'Match each flag to its country.', 'blurb.flags.all': 'Every flag in the world.',
       'blurb.capitals': 'Point to the country of each capital.', 'blurb.capitals.all': 'Every capital in the world.',
-      'soon.list': 'Rivers|Mountains|Languages|Cities',
+      'group.rivers': 'Rivers', 'group.cities': 'Cities',
+      'cat.rivers': 'Rivers of {cont}', 'cat.rivers.all': 'All rivers', 'cat.cities': 'Cities of {cont}', 'cat.cities.all': 'Major world cities',
+      'blurb.rivers': 'Find each river on the map.', 'blurb.rivers.all': 'The great rivers of the planet.',
+      'blurb.cities': 'The most populous cities.', 'blurb.cities.all': 'The great cities of the planet.',
+      'hint.label': 'hint',
+      'soon.list': 'Mountains|Languages|Monuments|Famous people',
       'cont.of.EU': 'Europe', 'cont.of.AF': 'Africa', 'cont.of.AS': 'Asia', 'cont.of.AM': 'the Americas', 'cont.of.OC': 'Oceania',
       'cont.AM': 'America', 'cont.EU': 'Europe', 'cont.AF': 'Africa', 'cont.AS': 'Asia', 'cont.OC': 'Oceania', 'cont.AN': 'Antarctica',
       'ocean.pacifico': 'Pacific Ocean', 'ocean.atlantico': 'Atlantic Ocean', 'ocean.indico': 'Indian Ocean', 'ocean.artico': 'Arctic Ocean', 'ocean.antartico': 'Southern Ocean',
@@ -155,6 +165,7 @@
     apply(root) {
       root = root || document;
       document.documentElement.lang = I.lang;
+      document.documentElement.style.setProperty('--hint-label', JSON.stringify(I.t('hint.label')));
       root.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = I.t(el.dataset.i18n); });
       root.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = I.t(el.dataset.i18nTitle); });
       root.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', I.t(el.dataset.i18nAria)); });
