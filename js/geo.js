@@ -6,7 +6,13 @@
   // init() se llama al arrancar, cuando ya están cargados.
   const COUNTRY = {};   // iso2 -> registro de countries.json
   const CONT_OF = {};   // iso2 -> EU | AF | AS | AM | OC | AN
-  const CONT_NAMES = { AM: 'América', EU: 'Europa', AF: 'África', AS: 'Asia', OC: 'Oceanía', AN: 'Antártida' };
+  const I18N = window.CartariusI18n;
+  const t = (k, v) => I18N.t(k, v);
+  const CONT_IDS = ['AM', 'EU', 'AF', 'AS', 'OC', 'AN'];
+  // Océanos y continentes no tienen nombre "local": con esa opción se usa el idioma del juego
+  const placeT = key => { const p = I18N.place(); const l = I18N.STR[p] ? p : I18N.lang; return (I18N.STR[l] && I18N.STR[l][key]) || t(key); };
+  const contName = k => placeT('cont.' + k);
+  const CONT_NAMES = {}; CONT_IDS.forEach(k => Object.defineProperty(CONT_NAMES, k, { get: () => contName(k), enumerable: true }));
   const LIMITED = new Set();   // reconocimiento limitado + observadores (salvo el Vaticano)
   const DEPENDENT = new Set(); // territorios dependientes
   const NEVER = new Set(['AQ', 'XG']); // Antártida (solo como continente) y glaciar de Siachen
@@ -29,12 +35,22 @@
     if (DEPENDENT.has(iso)) return !!opts.territories;
     return true;
   }
-  let dn = null;
-  try { dn = new Intl.DisplayNames(['es'], { type: 'region' }); } catch (e) { /* sin Intl */ }
+  const dns = {};
+  function displayNames(l) {
+    if (!(l in dns)) { try { dns[l] = new Intl.DisplayNames([l], { type: 'region' }); } catch (e) { dns[l] = null; } }
+    return dns[l];
+  }
+  // Nombre del país en el idioma de lugares elegido (es | en | local), con el inglés de respaldo
   function countryName(iso, fallback) {
-    if (COUNTRY[iso]) return COUNTRY[iso].nombre;
-    try { const n = dn && dn.of(iso); if (n && n !== iso) return n; } catch (e) {}
+    const c = COUNTRY[iso], p = I18N.place();
+    if (c) return (c.nombres && (c.nombres[p] || c.nombres.en)) || c.nombre;
+    try { const d = displayNames(p === 'local' ? 'en' : p), n = d && d.of(iso); if (n && n !== iso) return n; } catch (e) {}
     return fallback || iso;
+  }
+  function capitalName(iso) {
+    const c = COUNTRY[iso] && COUNTRY[iso].capital; if (!c) return null;
+    const p = I18N.place();
+    return (c.nombres && (c.nombres[p] || c.nombres.en)) || c.nombre;
   }
   function ownerName(iso) { const c = COUNTRY[iso]; return c && c.soberano ? countryName(c.soberano) : null; }
 
@@ -97,7 +113,12 @@
   // Atlántico: el borde norte va por el paralelo 66.5 de -95 a 60 (el array AP termina en -95, se añade [60,66.5])
   // Pacífico: el borde sur va por el paralelo -60 de -67 (=293) a 146.9+360; se normaliza al densificar.
 
-  const OCEAN_NAMES = { pacifico: 'Océano Pacífico', atlantico: 'Océano Atlántico', indico: 'Océano Índico', artico: 'Océano Ártico', antartico: 'Océano Antártico' };
+  const OCEAN_IDS = ['pacifico', 'atlantico', 'indico', 'artico', 'antartico'];
+  const OCEAN_NAMES = {}, OCEAN_SHORT = {};
+  OCEAN_IDS.forEach(k => {
+    Object.defineProperty(OCEAN_NAMES, k, { get: () => placeT('ocean.' + k), enumerable: true });
+    Object.defineProperty(OCEAN_SHORT, k, { get: () => placeT('oceanShort.' + k), enumerable: true });
+  });
   const OCEAN_LABEL_AT = { pacifico: [-140, 5], atlantico: [-35, 25], indico: [78, -22], artico: [0, 82], antartico: [0, -66] };
 
   function oceanFeatures(d3) {
@@ -119,31 +140,28 @@
     OC: { box: [[110, -50], [200, 15]], rotate: -160 }
   };
 
-  const CATEGORIES = [
-    { id: 'continentes', group: 'El mundo', title: 'Océanos y continentes', kind: 'continents', view: 'WORLD', blurb: 'Los cinco océanos y los seis continentes.' },
-    { id: 'paises-europa', group: 'Países', title: 'Países de Europa', kind: 'countries', cont: 'EU', view: 'EU', blurb: 'De Portugal a Rusia.' },
-    { id: 'paises-africa', group: 'Países', title: 'Países de África', kind: 'countries', cont: 'AF', view: 'AF', blurb: 'Del Magreb al cabo de Buena Esperanza.' },
-    { id: 'paises-asia', group: 'Países', title: 'Países de Asia', kind: 'countries', cont: 'AS', view: 'AS', blurb: 'De Turquía a Japón.' },
-    { id: 'paises-america', group: 'Países', title: 'Países de América', kind: 'countries', cont: 'AM', view: 'AM', blurb: 'De Canadá a Tierra del Fuego.' },
-    { id: 'paises-oceania', group: 'Países', title: 'Países de Oceanía', kind: 'countries', cont: 'OC', view: 'OC', blurb: 'Australia y las islas del Pacífico.' },
-    { id: 'paises-todos', group: 'Países', title: 'Todos los países', kind: 'countries', cont: null, view: 'WORLD', blurb: 'El mundo entero.' },
-    { id: 'banderas-europa', group: 'Banderas', title: 'Banderas de Europa', kind: 'flags', cont: 'EU', view: 'EU', blurb: 'Lleva cada bandera a su país.' },
-    { id: 'banderas-africa', group: 'Banderas', title: 'Banderas de África', kind: 'flags', cont: 'AF', view: 'AF', blurb: 'Lleva cada bandera a su país.' },
-    { id: 'banderas-asia', group: 'Banderas', title: 'Banderas de Asia', kind: 'flags', cont: 'AS', view: 'AS', blurb: 'Lleva cada bandera a su país.' },
-    { id: 'banderas-america', group: 'Banderas', title: 'Banderas de América', kind: 'flags', cont: 'AM', view: 'AM', blurb: 'Lleva cada bandera a su país.' },
-    { id: 'banderas-oceania', group: 'Banderas', title: 'Banderas de Oceanía', kind: 'flags', cont: 'OC', view: 'OC', blurb: 'Lleva cada bandera a su país.' },
-    { id: 'banderas-todas', group: 'Banderas', title: 'Todas las banderas', kind: 'flags', cont: null, view: 'WORLD', blurb: 'Todas las banderas del mundo.' },
-    { id: 'capitales-europa', group: 'Capitales', title: 'Capitales de Europa', kind: 'capitals', cont: 'EU', view: 'EU', blurb: 'Señala el país de cada capital.' },
-    { id: 'capitales-africa', group: 'Capitales', title: 'Capitales de África', kind: 'capitals', cont: 'AF', view: 'AF', blurb: 'Señala el país de cada capital.' },
-    { id: 'capitales-asia', group: 'Capitales', title: 'Capitales de Asia', kind: 'capitals', cont: 'AS', view: 'AS', blurb: 'Señala el país de cada capital.' },
-    { id: 'capitales-america', group: 'Capitales', title: 'Capitales de América', kind: 'capitals', cont: 'AM', view: 'AM', blurb: 'Señala el país de cada capital.' },
-    { id: 'capitales-oceania', group: 'Capitales', title: 'Capitales de Oceanía', kind: 'capitals', cont: 'OC', view: 'OC', blurb: 'Señala el país de cada capital.' },
-    { id: 'capitales-todas', group: 'Capitales', title: 'Todas las capitales', kind: 'capitals', cont: null, view: 'WORLD', blurb: 'Todas las capitales del mundo.' }
-  ];
-  const UPCOMING = ['Ríos', 'Montañas', 'Lenguas', 'Ciudades'];
+  // Títulos, textos y grupos se calculan en el idioma del juego (getters)
+  const CONTS = ['EU', 'AF', 'AS', 'AM', 'OC'];
+  const GROUP_OF = { continents: 'group.world', countries: 'group.countries', flags: 'group.flags', capitals: 'group.capitals' };
+  const PREFIX = { countries: 'paises', flags: 'banderas', capitals: 'capitales' };
+  const ALL_SUFFIX = { countries: 'todos', flags: 'todas', capitals: 'todas' };
+  const CONT_SLUG = { EU: 'europa', AF: 'africa', AS: 'asia', AM: 'america', OC: 'oceania' };
+  function makeCat(kind, cont) {
+    const id = kind === 'continents' ? 'continentes' : PREFIX[kind] + '-' + (cont ? CONT_SLUG[cont] : ALL_SUFFIX[kind]);
+    const c = { id, kind, cont: cont || null, view: cont || 'WORLD' };
+    Object.defineProperties(c, {
+      group: { get: () => t(GROUP_OF[kind]), enumerable: true },
+      title: { get: () => kind === 'continents' ? t('cat.continents') : cont ? t('cat.' + kind, { cont: t('cont.of.' + cont) }) : t('cat.' + kind + '.all'), enumerable: true },
+      blurb: { get: () => kind === 'continents' ? t('blurb.continents') : kind === 'countries' ? t('blurb.countries.' + (cont || 'all')) : t('blurb.' + kind + (cont ? '' : '.all')), enumerable: true }
+    });
+    return c;
+  }
+  const CATEGORIES = [makeCat('continents')];
+  ['countries', 'flags', 'capitals'].forEach(k => { CONTS.forEach(c => CATEGORIES.push(makeCat(k, c))); CATEGORIES.push(makeCat(k, null)); });
+  const UPCOMING = { get list() { return t('soon.list').split('|'); } };
 
   window.CartariusGeo = {
-    init, COUNTRY, CONT_OF, CONT_NAMES, LIMITED, DEPENDENT, ownerName, isAskable, ALIAS, countryName, polygonContinent,
-    oceanFeatures, OCEAN_NAMES, OCEAN_LABEL_AT, VIEWS, CATEGORIES, UPCOMING
+    init, COUNTRY, CONT_OF, CONT_NAMES, LIMITED, DEPENDENT, ownerName, isAskable, ALIAS, countryName, capitalName, polygonContinent,
+    oceanFeatures, OCEAN_NAMES, OCEAN_SHORT, OCEAN_LABEL_AT, VIEWS, CATEGORIES, UPCOMING
   };
 })();

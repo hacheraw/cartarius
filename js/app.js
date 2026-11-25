@@ -2,6 +2,7 @@
 (function () {
   'use strict';
   const G = window.CartariusGeo;
+  const I18N = window.CartariusI18n, t = I18N.t;
   const W = 1000, H = 520;
   const $ = id => document.getElementById(id);
 
@@ -17,11 +18,12 @@
     set(k, v) { try { localStorage.setItem('cartarius:' + k, JSON.stringify(v)); } catch (e) {} },
     del(k) { try { localStorage.removeItem('cartarius:' + k); } catch (e) {} }
   };
-  const DEFAULT_OPTS = { showClicked: false, hints: false, hintAfter: 3, limited: true, territories: false, order: 'rand', markerScale: 2, v: 2 };
+  const DEFAULT_OPTS = { placeLang: 'auto', showClicked: false, hints: false, hintAfter: 3, limited: true, territories: false, order: 'rand', markerScale: 2, v: 2 };
   const storedOpts = store.get('options', {});
   let opts = Object.assign({}, DEFAULT_OPTS, storedOpts);
   if ((storedOpts.v || 1) < 2) { opts.markerScale = 2; opts.v = 2; } // nuevo valor por defecto de los puntos
   const saveOpts = () => store.set('options', opts);
+  I18N.placePref = opts.placeLang;
 
   const markerR = () => 4.2 * (opts.markerScale || 1) / currentK;
   function updateCaps() {
@@ -38,7 +40,7 @@
     const g = layer.select('.caps').append('g').datum({ x: p[0], y: p[1] }).attr('class', 'cap').attr('data-key', key);
     g.append('circle').attr('r', 6);
     g.append('path').attr('d', STAR);
-    g.append('text').attr('x', 9).attr('y', 4).text(c.nombre);
+    g.append('text').attr('x', 9).attr('y', 4).text(G.capitalName(key));
     updateCaps();
   }
   function updateMarkers() { if (layer) layer.selectAll('.marker').attr('r', markerR()); }
@@ -73,20 +75,20 @@
         ...Object.entries(G.CONT_NAMES).map(([k, n]) => ({ key: 'c:' + k, name: n }))
       ];
     }
-    if (cat.kind === 'capitals') return pool.map(i => ({ key: i, name: capitalOf(i).nombre }));
+    if (cat.kind === 'capitals') return pool.map(i => ({ key: i, name: G.capitalName(i) }));
     return pool.map(i => ({ key: i, name: G.countryName(i) }));
   }
   function capitalOf(iso) { const c = G.COUNTRY[iso]; return c && c.capital && isFinite(c.capital.lat) ? c.capital : null; }
   const isCapitals = () => state.cat && state.cat.kind === 'capitals';
   // Nombre para mensajes tras acertar o con "mostrar país pulsado": en capitales, «País (Capital)»
   function fullName(key) {
-    if (isCapitals() && capitalOf(key)) return G.countryName(key) + ' (' + capitalOf(key).nombre + ')';
+    if (isCapitals() && capitalOf(key)) return G.countryName(key) + ' (' + G.capitalName(key) + ')';
     return nameOfKey(key);
   }
   function nameOfKey(key) {
     if (key.startsWith('o:')) return G.OCEAN_NAMES[key.slice(2)];
     if (key.startsWith('c:')) return G.CONT_NAMES[key.slice(2)];
-    if (isCapitals() && capitalOf(key)) return capitalOf(key).nombre;
+    if (isCapitals() && capitalOf(key)) return G.capitalName(key);
     return G.countryName(key);
   }
 
@@ -180,7 +182,7 @@
 
   function addLabel(key) {
     let at, name, sea = false;
-    if (key.startsWith('o:')) { at = G.OCEAN_LABEL_AT[key.slice(2)]; name = G.OCEAN_NAMES[key.slice(2)].replace('Océano ', ''); sea = true; }
+    if (key.startsWith('o:')) { at = G.OCEAN_LABEL_AT[key.slice(2)]; name = G.OCEAN_SHORT[key.slice(2)]; sea = true; }
     else if (key.startsWith('c:')) { at = CONT_LABEL_AT[key.slice(2)]; name = G.CONT_NAMES[key.slice(2)]; }
     else return;
     const p = projection(at); if (!p) return;
@@ -263,7 +265,7 @@
   };
 
   function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
-  function sortItems(items) { return opts.order === 'alpha' && !(state.cat && state.cat.kind === 'flags') ? items.sort((a, b) => a.name.localeCompare(b.name, 'es')) : shuffle(items); }
+  function sortItems(items) { return opts.order === 'alpha' && !(state.cat && state.cat.kind === 'flags') ? items.sort((a, b) => a.name.localeCompare(b.name, I18N.collator())) : shuffle(items); }
 
   function elapsed() { return state.acc + (state.runStart ? Date.now() - state.runStart : 0); }
   function fmt(ms) { const s = Math.floor(ms / 1000); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
@@ -331,7 +333,7 @@
     const cur = ol.querySelector('[aria-current="true"]');
     if (cur) cur.scrollIntoView({ block: 'nearest' });
     $('target').textContent = state.sel ? nameOfKey(state.sel) : '—';
-    $('pCount').textContent = state.items.length + ' restantes';
+    $('pCount').textContent = t('panel.remaining', { n: state.items.length });
   }
   // Dock de banderas (modo banderas): fila horizontal anclada abajo, la seleccionada más grande
   function renderDock() {
@@ -342,7 +344,7 @@
       let b = old.get(it.key);
       if (!b) {
         b = document.createElement('button'); b.className = 'flag'; b.dataset.key = it.key;
-        b.setAttribute('aria-label', 'Bandera'); // sin nombre: sería una pista
+        b.setAttribute('aria-label', t('flag.aria')); // sin nombre: sería una pista
         const img = document.createElement('img'); img.alt = ''; img.loading = 'lazy'; img.draggable = false; img.src = flagUrl(it.key) || '';
         b.appendChild(img);
         b.addEventListener('click', () => select(it.key));
@@ -357,7 +359,7 @@
     const cur = row.querySelector('.sel');
     if (cur) cur.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
     $('dockCount').textContent = state.items.length;
-    $('pCount').textContent = state.items.length + ' restantes';
+    $('pCount').textContent = t('panel.remaining', { n: state.items.length });
   }
   function select(key) {
     if (state.sel === key || state.paused) return;
@@ -382,10 +384,10 @@
     if (!el || !('__key' in el)) return;
     const key = el.__key;
     if (!key) {
-      if (el.__piece && state.cat.kind !== 'continents') toast(opts.showClicked ? G.countryName(el.__piece.raw, el.__piece.en) + ' no entra en esta carta' : 'Eso no entra en esta carta');
+      if (el.__piece && state.cat.kind !== 'continents') toast(opts.showClicked ? t('toast.notInCatName', { name: G.countryName(el.__piece.raw, el.__piece.en) }) : t('toast.notInCat'));
       return;
     }
-    if (state.found.has(key)) { toast('Ya colocado: ' + fullName(key)); return; }
+    if (state.found.has(key)) { toast(t('toast.already', { name: fullName(key) })); return; }
     ensureStarted();
     if (key === state.sel) {
       state.found.add(key); paint(key); toast(fullName(key), 'ok');
@@ -401,8 +403,8 @@
     } else {
       state.errors++; state.tries++;
       flash(elementsFor(key));
-      if (opts.showClicked) { state.aided = true; toast('No. Eso es ' + fullName(key), 'bad'); }
-      else toast('Incorrecto', 'bad');
+      if (opts.showClicked) { state.aided = true; toast(t('toast.no', { name: fullName(key) }), 'bad'); }
+      else toast(t('toast.wrong'), 'bad');
       if (opts.hints && state.tries >= opts.hintAfter) { state.aided = true; applyHint(); renderList(); }
       renderStats();
     }
@@ -421,9 +423,9 @@
     state.paused = on;
     document.body.classList.toggle('is-paused', on);
     $('pause').hidden = !on;
-    $('pauseBtn').textContent = on ? 'Continuar' : 'Pausa';
+    $('pauseBtn').textContent = on ? t('btn.resume') : t('btn.pause');
     $('tip').hidden = true;
-    if (on) { stopClock(); $('pTime').textContent = fmt(elapsed()); $('pProg').textContent = state.found.size + ' de ' + state.total + ' · ' + state.errors + ' errores'; if (!silent) saveGame(); }
+    if (on) { stopClock(); $('pTime').textContent = fmt(elapsed()); $('pProg').textContent = t('pause.prog', { found: state.found.size, total: state.total, err: state.errors }); if (!silent) saveGame(); }
     else startClock();
   }
   function togglePause() { if (state.cat && !state.ended) setPaused(!state.paused); }
@@ -458,16 +460,16 @@
     $('mSaveRow').hidden = false; $('mSaved').hidden = true;
     const recs = recordsOf(state.cat.id).slice().sort(rankSort);
     const pos = recs.filter(r => rankSort(r, pendingResult) < 0).length + 1;
-    $('mRecord').textContent = !recs.length ? 'Primera carta completada. Ya tienes marca que batir.'
-      : pos === 1 ? 'Nuevo récord en esta carta.'
-      : pos <= MAX_RECORDS ? 'Entras en el puesto ' + pos + ' de la tabla.'
-      : 'Te quedas fuera de los ' + MAX_RECORDS + ' mejores.';
+    $('mRecord').textContent = !recs.length ? t('end.first')
+      : pos === 1 ? t('end.newRecord')
+      : pos <= MAX_RECORDS ? t('end.rank', { pos })
+      : t('end.out', { n: MAX_RECORDS });
     renderRankTable($('mTable'), recs.slice(0, 5), null);
     setTimeout(() => { $('modal').hidden = false; $('mName').focus(); }, 700);
   }
   function saveResult() {
     if (!pendingResult) return;
-    const name = ($('mName').value || '').trim().slice(0, 24) || 'Anónimo';
+    const name = ($('mName').value || '').trim().slice(0, 24) || t('end.anon');
     store.set('player', name);
     const r = Object.assign({ name }, pendingResult); delete r.cat;
     const recs = recordsOf(pendingResult.cat.id); recs.push(r); recs.sort(rankSort);
@@ -475,19 +477,19 @@
     store.set('records:' + pendingResult.cat.id, kept);
     renderRankTable($('mTable'), kept.slice(0, 5), kept.indexOf(r) >= 0 ? r : null);
     $('mSaveRow').hidden = true; $('mSaved').hidden = false;
-    $('mSaved').textContent = kept.indexOf(r) >= 0 ? 'Guardado como ' + name + '.' : 'Guardado, pero no entra en los ' + MAX_RECORDS + ' mejores.';
+    $('mSaved').textContent = kept.indexOf(r) >= 0 ? t('end.savedAs', { name }) : t('end.savedOut', { n: MAX_RECORDS });
     pendingResult = null;
   }
   function renderRankTable(tbl, recs, highlight) {
     tbl.innerHTML = '';
-    if (!recs.length) { tbl.innerHTML = '<tr><td class="empty" colspan="5">Aún no hay marcas.</td></tr>'; return; }
+    if (!recs.length) { tbl.innerHTML = '<tr><td class="empty" colspan="5"></td></tr>'; tbl.querySelector('td').textContent = t('rec.empty'); return; }
     recs.forEach((r, i) => {
       const tr = document.createElement('tr'); if (r === highlight) tr.className = 'me';
       const d = new Date(r.date);
-      tr.innerHTML = '<td class="n">' + (i + 1) + '</td><td class="who"></td><td class="num">' + fmt(r.ms) + '</td><td class="num">' + r.errors + ' err.</td><td class="d">' +
-        d.toLocaleDateString('es', { day: 'numeric', month: 'short' }) + '</td>';
+      tr.innerHTML = '<td class="n">' + (i + 1) + '</td><td class="who"></td><td class="num">' + fmt(r.ms) + '</td><td class="num">' + r.errors + ' ' + t('rec.err') + '</td><td class="d">' +
+        d.toLocaleDateString(I18N.lang, { day: 'numeric', month: 'short' }) + '</td>';
       tr.querySelector('.who').textContent = r.name + (r.aided ? ' ·' : '');
-      if (r.aided) tr.querySelector('.who').title = 'Con ayudas activadas';
+      if (r.aided) tr.querySelector('.who').title = t('rec.aided');
       tbl.appendChild(tr);
     });
   }
@@ -508,19 +510,19 @@
       const best = recordsOf(cat.id).slice().sort(rankSort)[0];
       const saved = store.get('save:' + cat.id, null);
       const b = document.createElement('button'); b.className = 'card';
-      b.innerHTML = '<h3></h3><p></p><div class="meta"><span>' + n + ' elementos</span><span class="best"></span></div>';
+      b.innerHTML = '<h3></h3><p></p><div class="meta"><span>' + t('card.items', { n }) + '</span><span class="best"></span></div>';
       b.querySelector('h3').textContent = cat.title; b.querySelector('p').textContent = cat.blurb;
       const bs = b.querySelector('.best');
-      if (best) { bs.innerHTML = 'Récord <b></b>'; bs.querySelector('b').textContent = fmt(best.ms) + ' · ' + best.errors + ' err.'; bs.title = best.name; }
-      else bs.textContent = 'Sin jugar';
-      if (saved) { const s = document.createElement('span'); s.className = 'saved'; s.textContent = 'Partida a medias'; b.appendChild(s); }
+      if (best) { bs.innerHTML = '<span></span> <b></b>'; bs.querySelector('span').textContent = t('card.record'); bs.querySelector('b').textContent = fmt(best.ms) + ' · ' + best.errors + ' ' + t('rec.err'); bs.title = best.name; }
+      else bs.textContent = t('card.unplayed');
+      if (saved) { const s = document.createElement('span'); s.className = 'saved'; s.textContent = t('card.saved'); b.appendChild(s); }
       b.addEventListener('click', () => openCategory(cat));
       box.appendChild(b);
     });
     const soon = $('soon'); soon.innerHTML = '';
-    G.UPCOMING.forEach(t => {
+    G.UPCOMING.list.forEach(name => {
       const d = document.createElement('div'); d.className = 'card soon';
-      d.innerHTML = '<h3></h3><p>En preparación</p>'; d.querySelector('h3').textContent = t; soon.appendChild(d);
+      d.innerHTML = '<h3></h3><p></p>'; d.querySelector('h3').textContent = name; d.querySelector('p').textContent = t('soon.prep'); soon.appendChild(d);
     });
   }
   function showMenu() {
@@ -533,11 +535,14 @@
     const save = store.get('save:' + cat.id, null);
     if (!save) return startGame(cat);
     resumeCat = cat;
-    $('rInfo').textContent = cat.title + ': ' + save.found.length + ' de ' + save.total + ' colocados, ' + fmt(save.ms) + ', ' + save.errors + ' errores.';
+    $('rInfo').textContent = t('resume.info', { cat: cat.title, found: save.found.length, total: save.total, time: fmt(save.ms), err: save.errors });
     $('resumeDlg').hidden = false; $('rYes').focus();
   }
 
   function renderOptions() {
+    const sel = $('oPlace'); sel.innerHTML = '';
+    I18N.PLACE_LANGS.forEach(v => { const o = document.createElement('option'); o.value = v; o.textContent = t('place.' + v); sel.appendChild(o); });
+    sel.value = opts.placeLang;
     $('oShow').checked = opts.showClicked;
     $('oHints').checked = opts.hints;
     $('oHintN').value = opts.hintAfter; $('oHintN').disabled = !opts.hints;
@@ -545,11 +550,11 @@
     $('oTerr').checked = opts.territories;
     $('oMarker').value = String(opts.markerScale);
     const fmtList = set => [...set].filter(i => allIsos.includes(i)).map(i => G.countryName(i) + (G.ownerName(i) ? ' (' + G.ownerName(i) + ')' : ''))
-      .sort((a, b) => a.localeCompare(b, 'es')).join(', ');
+      .sort((a, b) => a.localeCompare(b, I18N.collator())).join(', ');
     $('oLimitedList').textContent = fmtList(G.LIMITED) + '.';
     $('oTerrList').textContent = fmtList(G.DEPENDENT) + '.';
     $('oTerrN').textContent = [...G.DEPENDENT].filter(i => allIsos.includes(i)).length;
-    $('oWipe').textContent = 'Borrar récords y partidas'; $('oWipe').dataset.armed = '';
+    $('oWipe').textContent = t('opt.wipe'); $('oWipe').dataset.armed = '';
   }
   function readOptions() {
     opts.showClicked = $('oShow').checked;
@@ -559,15 +564,46 @@
     opts.limited = $('oLimited').checked;
     opts.territories = $('oTerr').checked;
     opts.markerScale = parseFloat($('oMarker').value) || 1;
+    const placeChanged = opts.placeLang !== $('oPlace').value;
+    opts.placeLang = $('oPlace').value; I18N.placePref = opts.placeLang;
     updateMarkers();
     saveOpts();
+    if (placeChanged) { refreshNames(); renderOptions(); }
     if (!$('menu').hidden) renderMenu();
   }
+
+  // ---------- Idiomas ----------
+  // Rehace los nombres de lugares ya mostrados (lista, rótulos del mapa, capitales)
+  function refreshNames() {
+    if (!state.cat || !layer) return;
+    state.items.forEach(i => (i.name = nameOfKey(i.key)));
+    layer.select('.labels').selectAll('*').remove();
+    state.found.forEach(k => addLabel(k));
+    layer.selectAll('.cap').each(function () { d3.select(this).select('text').text(G.capitalName(this.dataset.key)); });
+    renderList();
+  }
+  function renderLangSel() {
+    const sel = $('langSel'); sel.innerHTML = '';
+    Object.entries(I18N.LANGS).forEach(([v, n]) => { const o = document.createElement('option'); o.value = v; o.textContent = n; sel.appendChild(o); });
+    sel.value = I18N.lang;
+  }
+  // Cambia el idioma del juego y vuelve a pintar todos los textos
+  function setLanguage(l) {
+    I18N.setLang(l);
+    renderLangSel();
+    $('pauseBtn').textContent = state.paused ? t('btn.resume') : t('btn.pause');
+    if (state.cat) $('catTitle').textContent = cat_title();
+    if (I18N.placePref === 'auto') refreshNames(); else if (state.cat) renderList();
+    if (!$('optionsDlg').hidden) renderOptions();
+    if (!$('recordsDlg').hidden) renderRecords();
+    if (!$('menu').hidden) renderMenu();
+  }
+  const cat_title = () => state.cat ? state.cat.title : t('app.sub');
   function wipeData() {
     const b = $('oWipe');
-    if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Pulsa otra vez para borrar todo'; return; }
+    if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = t('opt.wipe.confirm'); return; }
     try { Object.keys(localStorage).filter(k => k.startsWith('cartarius:records:') || k.startsWith('cartarius:save:')).forEach(k => localStorage.removeItem(k)); } catch (e) {}
-    b.textContent = 'Borrado'; b.dataset.armed = '';
+    b.textContent = t('opt.wipe.done'); b.dataset.armed = '';
     if (!$('menu').hidden) renderMenu();
   }
 
@@ -613,7 +649,8 @@
     $('optBtn').onclick = () => { renderOptions(); $('optionsDlg').hidden = false; };
     $('pOpts').onclick = () => { renderOptions(); $('optionsDlg').hidden = false; };
     $('optClose').onclick = () => { $('optionsDlg').hidden = true; };
-    ['oShow', 'oHints', 'oHintN', 'oLimited', 'oTerr', 'oMarker'].forEach(id => $(id).addEventListener('change', readOptions));
+    $('langSel').addEventListener('change', ev => setLanguage(ev.target.value));
+    ['oPlace', 'oShow', 'oHints', 'oHintN', 'oLimited', 'oTerr', 'oMarker'].forEach(id => $(id).addEventListener('change', readOptions));
     $('oWipe').onclick = wipeData;
     $('recBtn').onclick = () => { renderRecords(); $('recordsDlg').hidden = false; };
     $('recClose').onclick = () => { $('recordsDlg').hidden = true; };
@@ -665,6 +702,8 @@
   }
 
   async function boot() {
+    I18N.apply(); renderLangSel();
+    $('pauseBtn').textContent = t('btn.pause');
     let world = window.CARTARIUS_WORLD, countries = window.CARTARIUS_COUNTRIES;
     if (!world) world = await (await fetch('data/world.json')).json();
     if (!countries) countries = await (await fetch('data/countries.json')).json();
@@ -675,5 +714,5 @@
     wire();
     route();
   }
-  boot().catch(err => { $('loading').textContent = 'No se pudo cargar el mapa: ' + err.message; console.error(err); });
+  boot().catch(err => { $('loading').textContent = t('load.error', { msg: err.message }); console.error(err); });
 })();

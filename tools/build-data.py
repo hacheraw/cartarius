@@ -6,14 +6,28 @@ import json, os
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 raw = json.load(open(os.path.join(ROOT, 'data/raw/restcountries-v5.json'), encoding='utf-8'))
 ov = json.load(open(os.path.join(ROOT, 'data/overrides.json'), encoding='utf-8'))
-def capital_es(a2, c):
+def capital_of(a2, c):
+    """Capital principal (la primera si hay varias) con su nombre en es/en/local."""
     caps = c.get('capitals', [])
-    if not caps:
+    if caps:
+        x = next((x for x in caps if x['attributes'].get('primary')), caps[0])
+        en0, lat, lng = x['name'], x['coordinates']['lat'], x['coordinates']['lng']
+    else:
         x = ov.get('capitales_extra', {}).get(a2)
-        return dict(x, nombre_en=None) if x else None
-    x = next((x for x in caps if x['attributes'].get('primary')), caps[0])
-    return {'nombre': ov.get('capitales', {}).get(a2) or x['name'], 'nombre_en': x['name'],
-            'lat': x['coordinates']['lat'], 'lng': x['coordinates']['lng']}
+        if not x: return None
+        en0, lat, lng = x['nombre'], x['lat'], x['lng']
+    en = ov.get('capitales_en', {}).get(a2) or en0
+    es = ov.get('capitales', {}).get(a2) or en
+    local = ov.get('capitales_local', {}).get(a2) or en
+    return {'nombre': es, 'nombre_en': en, 'nombres': {'es': es, 'en': en, 'local': local}, 'lat': lat, 'lng': lng}
+
+def native_name(a2, c):
+    if a2 in ov.get('nombres_local', {}): return ov['nombres_local'][a2]
+    nat = (c.get('names') or {}).get('native') or {}
+    for l in c.get('languages', []):
+        k = l.get('iso639_3') or l.get('iso639_2t')
+        if k in nat: return nat[k]['common'].replace('\u200f', '').replace('\u200e', '').strip()
+    return next(iter(nat.values()))['common'].strip() if nat else None
 cont_of = {i: c for c, s in ov['continentes'].items() for i in s.split()}
 a3_to_a2 = {c['codes']['alpha_3']: c['codes']['alpha_2'] for c in raw['countries'] if c['codes'].get('alpha_2')}
 
@@ -36,7 +50,10 @@ for c in raw['countries']:
         'iso2': a2, 'iso3': c['codes'].get('alpha_3'), 'ccn3': c['codes'].get('ccn3'),
         'nombre': ov['nombres'].get(a2) or spa.get('common') or n['common'],
         'nombre_oficial': spa.get('official') or n['official'],
-        'nombre_en': n['common'],
+        'nombre_en': ov.get('nombres_en', {}).get(a2) or n['common'],
+        'nombres': {'es': ov['nombres'].get(a2) or spa.get('common') or n['common'],
+                    'en': ov.get('nombres_en', {}).get(a2) or n['common'],
+                    'local': native_name(a2, c) or ov.get('nombres_en', {}).get(a2) or n['common']},
         'continente': cont_of.get(a2),
         'region': c.get('region'), 'subregion': c.get('subregion'),
         'estatus': estatus(c),
@@ -44,7 +61,7 @@ for c in raw['countries']:
         'soberano': (c.get('parent') or {}).get('alpha_2') or None,
         'capitales': [{'nombre': x['name'], 'lat': x['coordinates']['lat'], 'lng': x['coordinates']['lng'],
                        'principal': x['attributes'].get('primary', False)} for x in c.get('capitals', [])],
-        'capital': capital_es(a2, c),
+        'capital': capital_of(a2, c),
         'bandera': {'svg': 'data/flags/%s.svg' % a2.lower() if f.get('url_svg') else None, 'emoji': f.get('emoji'),
                     'color': (f.get('colors') or {}).get('prominent'), 'descripcion_en': f.get('description') or None},
         'centro': [c.get('coordinates', {}).get('lat'), c.get('coordinates', {}).get('lng')],

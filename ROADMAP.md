@@ -14,8 +14,9 @@ Juego web de geografía. Estética: carta náutica, pergamino, toques regios.
 - [x] Pausa con desenfoque; partida guardada y "¿Quieres continuar donde lo dejaste?".
 
 ## Tramo 2 · Menú principal y estructura
+- [x] Multilingüe: interfaz en español e inglés (`js/i18n.js`, según el navegador; si no, inglés) con selector en el menú. Nombres de lugares en español, inglés o local (Opciones; por defecto, el idioma del juego).
 - [ ] Pantalla de inicio: elegir modo (Completa el mapa / Quiz).
-- [ ] Ajustes: idioma de nombres, sonido, dificultad (sin marcadores, sin pista).
+- [ ] Ajustes: sonido, dificultad (sin marcadores, sin pista).
 - [ ] Repositorio Git y despliegue (GitHub Pages o similar).
 
 ## Tramo 3 · Más pruebas de "Completa el mapa"
@@ -38,5 +39,5 @@ Juego web de geografía. Estética: carta náutica, pergamino, toques regios.
 - Banderas: 250 SVG locales en `data/flags/` (`tools/fetch-flags.mjs`, CDN gratuito sin clave).
 - Capitales: nombre en español en `overrides.json` (`capitales`), una por país (la primera si hay varias: Bolivia → Sucre, Sudáfrica → Pretoria). Campo `capital` en `countries.json`.
 - HTML + CSS + JS sin compilador; D3 (local en `js/vendor/`) para la proyección Natural Earth y el zoom.
-- Nombres en español con `Intl.DisplayNames` + correcciones propias.
+- Nombres de lugares: `nombres: {es, en, local}` en `countries.json` (y en `capital`). El local sale de REST Countries (`names.native`) y de `overrides.json` (`nombres_local`, `capitales_local`). Para añadir un idioma de interfaz: un bloque nuevo en `STR` de `js/i18n.js`.
 - Límites de océanos simplificados (inspirados en la OHI); el Mediterráneo cuenta como Atlántico.

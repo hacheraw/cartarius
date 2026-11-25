@@ -92,6 +92,9 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--royal)
 #map .marker { fill: var(--land); stroke: var(--sepia); stroke-width: .8; vector-effect: non-scaling-stroke; cursor: pointer; }
 #map .marker:hover { fill: #FFF9EA; stroke: var(--royal); }
 #map .label { font-family: var(--font-display); font-style: italic; font-weight: 600; fill: var(--ink); text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: rgba(248,242,227,.75); stroke-width: 3px; letter-spacing: .06em; }
+.menu-actions .lang-sel { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--sepia); padding: 0 6px 0 10px; background: var(--land); }
+.menu-actions .lang-sel svg { width: 16px; height: 16px; fill: none; stroke: var(--sepia); stroke-width: 1.5; }
+.menu-actions .lang-sel select { border: 0; background: transparent; font: inherit; font-size: 14px; padding: 8px 4px; color: var(--ink); cursor: pointer; }
 #map .caps { pointer-events: none; }
 #map .cap circle { fill: #FFF9EA; stroke: var(--royal); stroke-width: 1.4; }
 #map .cap path { fill: var(--royal); }
@@ -264,41 +267,41 @@ body.mode-dock .rose { bottom: 92px; }
 </svg>
 
 <header class="bar">
-  <button class="brand" id="home" title="Volver a las categorías"><svg><use href="#compass"/></svg><b>Cartarius</b></button>
-  <div class="cat-title" id="catTitle">Completa el mapa</div>
+  <button class="brand" id="home" data-i18n-title="home.title"><svg><use href="#compass"/></svg><b>Cartarius</b></button>
+  <div class="cat-title" id="catTitle" data-i18n="app.sub">Completa el mapa</div>
   <div class="stats">
-    <div class="stat"><small>Tiempo</small><span id="sTime">0:00</span></div>
-    <div class="stat"><small>Aciertos</small><span id="sFound">0/0</span></div>
-    <div class="stat err"><small>Errores</small><span id="sErr">0</span></div>
+    <div class="stat"><small data-i18n="stat.time">Tiempo</small><span id="sTime">0:00</span></div>
+    <div class="stat"><small data-i18n="stat.found">Aciertos</small><span id="sFound">0/0</span></div>
+    <div class="stat err"><small data-i18n="stat.errors">Errores</small><span id="sErr">0</span></div>
   </div>
-  <button class="btn" id="pauseBtn" title="Pausa (P)">Pausa</button>
-  <button class="btn" id="restart">Reiniciar</button>
-  <button class="btn primary" id="toMenu">Categorías</button>
+  <button class="btn" id="pauseBtn" data-i18n-title="btn.pauseTitle">Pausa</button>
+  <button class="btn" id="restart" data-i18n="btn.restart">Reiniciar</button>
+  <button class="btn primary" id="toMenu" data-i18n="btn.categories">Categorías</button>
 </header>
 
 <main class="stage">
   <section class="map-wrap">
     <div class="frame">
-      <svg id="map" viewBox="0 0 1000 520" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mapa del mundo en blanco"></svg>
-      <div class="loading" id="loading">Desplegando la carta…</div>
+      <svg id="map" viewBox="0 0 1000 520" preserveAspectRatio="xMidYMid meet" role="img" data-i18n-aria="map.aria"></svg>
+      <div class="loading" id="loading" data-i18n="loading">Desplegando la carta…</div>
       <svg class="rose" aria-hidden="true"><use href="#compass"/></svg>
       <div class="zoom">
-        <button id="zIn" title="Acercar" aria-label="Acercar">+</button>
-        <button id="zOut" title="Alejar" aria-label="Alejar">−</button>
-        <button id="zFit" title="Encuadrar" aria-label="Encuadrar">⌖</button>
+        <button id="zIn" data-i18n-title="zoom.in" data-i18n-aria="zoom.in">+</button>
+        <button id="zOut" data-i18n-title="zoom.out" data-i18n-aria="zoom.out">−</button>
+        <button id="zFit" data-i18n-title="zoom.fit" data-i18n-aria="zoom.fit">⌖</button>
       </div>
       <div class="toast" id="toast"></div>
     </div>
   </section>
   <aside class="panel">
     <div class="panel-head">
-      <h2>Índice <span id="pCount">0 restantes</span></h2>
+      <h2><span data-i18n="panel.index">Índice</span> <span id="pCount"></span></h2>
       <div class="progress"><i id="pBar"></i></div>
-      <div class="target"><small>Busca en el mapa</small><strong id="target">—</strong></div>
-      <div class="order">Orden
-        <button id="oRand" aria-pressed="true">Aleatorio</button>
+      <div class="target"><small data-i18n="panel.find">Busca en el mapa</small><strong id="target">—</strong></div>
+      <div class="order"><span data-i18n="panel.order">Orden</span>
+        <button id="oRand" aria-pressed="true" data-i18n="order.rand">Aleatorio</button>
         <button id="oAlpha" aria-pressed="false">A–Z</button>
-        <button id="skip" class="skip" title="Pasar al siguiente (tecla S)">Saltar ›</button>
+        <button id="skip" class="skip" data-i18n-title="skip.title" data-i18n="skip">Saltar ›</button>
       </div>
     </div>
     <ol class="list" id="list"></ol>
@@ -306,7 +309,7 @@ body.mode-dock .rose { bottom: 92px; }
 </main>
 
 <section class="dock" id="dock" hidden>
-  <div class="dock-info"><span><b id="dockCount">0</b> banderas</span><button class="btn" id="dockSkip" title="Pasar a la siguiente (tecla S)">Saltar ›</button></div>
+  <div class="dock-info"><span><b id="dockCount">0</b> <span data-i18n="dock.flags">banderas</span></span><button class="btn" id="dockSkip" data-i18n-title="skip.title" data-i18n="skip">Saltar ›</button></div>
   <div class="dock-scroll" id="dockScroll"><div class="dock-row" id="dockRow"></div></div>
 </section>
 
@@ -315,11 +318,11 @@ body.mode-dock .rose { bottom: 92px; }
     <header>
       <svg><use href="#compass"/></svg>
       <h1>Cartarius</h1>
-      <div class="sub">Completa el mapa</div>
+      <div class="sub" data-i18n="app.sub">Completa el mapa</div>
     </header>
-    <div class="menu-actions"><button class="btn" id="optBtn">Opciones</button><button class="btn" id="recBtn">Récords</button></div>
+    <div class="menu-actions"><button class="btn" id="optBtn" data-i18n="menu.options">Opciones</button><button class="btn" id="recBtn" data-i18n="menu.records">Récords</button><label class="lang-sel"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3Z"/></svg><select id="langSel" data-i18n-aria="lang.label"></select></label></div>
     <div id="cards" class="groups"></div>
-    <div class="rule">Próximamente</div>
+    <div class="rule" data-i18n="menu.soon">Próximamente</div>
     <div class="cards" id="soon"></div>
   </div>
 </section>
@@ -327,84 +330,89 @@ body.mode-dock .rose { bottom: 92px; }
 <div class="modal" id="modal" hidden>
   <div class="modal-box">
     <svg style="width:56px;height:56px;justify-self:center"><use href="#compass"/></svg>
-    <h2>Carta completa</h2>
+    <h2 data-i18n="end.title">Carta completa</h2>
     <div class="grid">
-      <div><b id="mTime">0:00</b><small>Tiempo</small></div>
-      <div><b id="mErr">0</b><small>Errores</small></div>
-      <div><b id="mAcc">100%</b><small>Precisión</small></div>
+      <div><b id="mTime">0:00</b><small data-i18n="stat.time">Tiempo</small></div>
+      <div><b id="mErr">0</b><small data-i18n="stat.errors">Errores</small></div>
+      <div><b id="mAcc">100%</b><small data-i18n="end.accuracy">Precisión</small></div>
     </div>
     <p id="mRecord"></p>
-    <div class="name-row" id="mSaveRow"><input id="mName" maxlength="24" placeholder="Tu nombre" aria-label="Nombre del jugador" autocomplete="nickname"><button class="btn primary" id="mSave">Guardar</button></div>
+    <div class="name-row" id="mSaveRow"><input id="mName" maxlength="24" data-i18n-ph="end.namePh" data-i18n-aria="end.nameAria" autocomplete="nickname"><button class="btn primary" id="mSave" data-i18n="end.save">Guardar</button></div>
     <p class="note" id="mSaved" hidden></p>
     <table class="rank" id="mTable"></table>
-    <div class="actions"><button class="btn" id="mAgain">Repetir</button><button class="btn primary" id="mMenu">Otra categoría</button></div>
+    <div class="actions"><button class="btn" id="mAgain" data-i18n="end.again">Repetir</button><button class="btn primary" id="mMenu" data-i18n="end.other">Otra categoría</button></div>
   </div>
 </div>
 <div class="pause" id="pause" hidden>
   <div class="modal-box">
-    <h2>En pausa</h2>
+    <h2 data-i18n="pause.title">En pausa</h2>
     <div class="big" id="pTime">0:00</div>
     <div class="sub" id="pProg"></div>
-    <div class="actions"><button class="btn primary" id="pResume">Continuar</button><button class="btn" id="pOpts">Opciones</button><button class="btn" id="pExit">Guardar y salir al menú</button></div>
+    <div class="actions"><button class="btn primary" id="pResume" data-i18n="btn.resume">Continuar</button><button class="btn" id="pOpts" data-i18n="menu.options">Opciones</button><button class="btn" id="pExit" data-i18n="pause.exit">Guardar y salir al menú</button></div>
   </div>
 </div>
 
 <div class="modal dlg" id="resumeDlg" hidden>
   <div class="modal-box" style="text-align:center">
-    <h2>Partida a medias</h2>
-    <p>¿Quieres continuar donde lo dejaste?</p>
+    <h2 data-i18n="resume.title">Partida a medias</h2>
+    <p data-i18n="resume.q">¿Quieres continuar donde lo dejaste?</p>
     <div class="sub" id="rInfo" style="font-size:13px;color:var(--ink-soft)"></div>
-    <div class="actions"><button class="btn primary" id="rYes">Continuar</button><button class="btn" id="rNo">Empezar de nuevo</button><button class="btn" id="rCancel">Cancelar</button></div>
+    <div class="actions"><button class="btn primary" id="rYes" data-i18n="resume.yes">Continuar</button><button class="btn" id="rNo" data-i18n="resume.no">Empezar de nuevo</button><button class="btn" id="rCancel" data-i18n="cancel">Cancelar</button></div>
   </div>
 </div>
 
 <div class="modal dlg" id="exitDlg" hidden>
   <div class="modal-box" style="text-align:center">
-    <h2>Salir</h2>
-    <p>¿Salir de la partida? (se guardará el progreso)</p>
-    <div class="actions"><button class="btn primary" id="xYes">Salir</button><button class="btn" id="xNo">Seguir jugando</button></div>
+    <h2 data-i18n="exit.title">Salir</h2>
+    <p data-i18n="exit.q">¿Salir de la partida? (se guardará el progreso)</p>
+    <div class="actions"><button class="btn primary" id="xYes" data-i18n="exit.yes">Salir</button><button class="btn" id="xNo" data-i18n="exit.no">Seguir jugando</button></div>
   </div>
 </div>
 
 <div class="modal dlg" id="optionsDlg" hidden>
   <div class="modal-box">
-    <h2>Opciones</h2>
+    <h2 data-i18n="opt.title">Opciones</h2>
     <div class="opt-group">
-      <h3>Ayudas</h3>
-      <div class="opt"><input type="checkbox" id="oShow"><label for="oShow">Mostrar país pulsado</label>
-        <div class="help">Al fallar, dice qué has señalado. También muestra el nombre al pasar por encima de lo que no entra en la carta.</div></div>
-      <div class="opt"><input type="checkbox" id="oHints"><label for="oHints">Activar pistas después de <input type="number" id="oHintN" min="1" max="20" value="3"> errores</label>
-        <div class="help">Tras ese número de fallos seguidos en el mismo elemento, la respuesta parpadea en el mapa.</div></div>
-      <div class="help" style="font-size:12px;color:var(--ink-soft)">Los récords conseguidos con ayudas llevan un punto (·) junto al nombre.</div>
+      <h3 data-i18n="opt.lang">Idioma</h3>
+      <div class="opt" style="grid-template-columns:1fr auto;align-items:center"><label for="oPlace" data-i18n="opt.placeLang">Nombres de lugares</label><select id="oPlace"></select>
+        <div class="help" style="grid-column:1/-1" data-i18n="opt.placeLang.help"></div></div>
     </div>
     <div class="opt-group">
-      <h3>Mapa</h3>
-      <div class="opt" style="grid-template-columns:1fr auto;align-items:center"><label for="oMarker">Tamaño de los puntos de países pequeños</label><select id="oMarker"><option value="1">1x</option><option value="1.5">1,5x</option><option value="2">2x</option><option value="2.5">2,5x</option><option value="3">3x</option><option value="3.5">3,5x</option><option value="4">4x</option><option value="4.5">4,5x</option><option value="5">5x</option></select>
-        <div class="help" style="grid-column:1/-1">Afecta a los círculos de Andorra, Malta, las islas del Caribe y del Pacífico, etc.</div></div>
+      <h3 data-i18n="opt.aids">Ayudas</h3>
+      <div class="opt"><input type="checkbox" id="oShow"><label for="oShow" data-i18n="opt.show">Mostrar país pulsado</label>
+        <div class="help" data-i18n="opt.show.help"></div></div>
+      <div class="opt"><input type="checkbox" id="oHints"><label for="oHints"><span data-i18n="opt.hints.pre">Activar pistas después de</span> <input type="number" id="oHintN" min="1" max="20" value="3"> <span data-i18n="opt.hints.post">errores</span></label>
+        <div class="help" data-i18n="opt.hints.help"></div></div>
+      <div class="help" style="font-size:12px;color:var(--ink-soft)" data-i18n="opt.aided"></div>
     </div>
     <div class="opt-group">
-      <h3>Qué se pregunta</h3>
-      <div class="opt"><input type="checkbox" id="oLimited"><label for="oLimited">Estados de reconocimiento limitado</label>
+      <h3 data-i18n="opt.map">Mapa</h3>
+      <div class="opt" style="grid-template-columns:1fr auto;align-items:center"><label for="oMarker" data-i18n="opt.marker">Tamaño de los puntos de países pequeños</label><select id="oMarker"><option value="1">1x</option><option value="1.5">1,5x</option><option value="2">2x</option><option value="2.5">2,5x</option><option value="3">3x</option><option value="3.5">3,5x</option><option value="4">4x</option><option value="4.5">4,5x</option><option value="5">5x</option></select>
+        <div class="help" style="grid-column:1/-1" data-i18n="opt.marker.help"></div></div>
+    </div>
+    <div class="opt-group">
+      <h3 data-i18n="opt.ask">Qué se pregunta</h3>
+      <div class="opt"><input type="checkbox" id="oLimited"><label for="oLimited" data-i18n="opt.limited">Estados de reconocimiento limitado</label>
         <div class="help"><span id="oLimitedList"></span></div></div>
-      <div class="opt"><input type="checkbox" id="oTerr"><label for="oTerr">Territorios dependientes (<span id="oTerrN"></span>)</label>
-        <div class="help"><details><summary>Ver lista</summary><span id="oTerrList"></span></details></div></div>
-      <div class="help" style="font-size:12px;color:var(--ink-soft)">Siempre se preguntan los 193 miembros de la ONU y el Vaticano. Estos cambios se aplican al empezar una carta.</div>
+      <div class="opt"><input type="checkbox" id="oTerr"><label for="oTerr"><span data-i18n="opt.terr">Territorios dependientes</span> (<span id="oTerrN"></span>)</label>
+        <div class="help"><details><summary data-i18n="opt.seeList">Ver lista</summary><span id="oTerrList"></span></details></div></div>
+      <div class="help" style="font-size:12px;color:var(--ink-soft)" data-i18n="opt.ask.note"></div>
     </div>
     <div class="opt-group">
-      <h3>Datos</h3>
+      <h3 data-i18n="opt.data">Datos</h3>
       <div><button class="btn" id="oWipe">Borrar récords y partidas</button></div>
     </div>
-    <div class="actions"><button class="btn primary" id="optClose">Hecho</button></div>
+    <div class="actions"><button class="btn primary" id="optClose" data-i18n="done">Hecho</button></div>
   </div>
 </div>
 
 <div class="modal dlg" id="recordsDlg" hidden>
   <div class="modal-box">
-    <h2>Récords</h2>
+    <h2 data-i18n="rec.title">Récords</h2>
     <div class="tabs" id="recTabs"></div>
     <table class="rank" id="recTable"></table>
-    <div class="help" style="font-size:12px;color:var(--ink-soft)">Orden: menos errores primero, luego menor tiempo. (·) = con ayudas.</div>
-    <div class="actions"><button class="btn primary" id="recClose">Cerrar</button></div>
+    <div class="help" style="font-size:12px;color:var(--ink-soft)" data-i18n="rec.note"></div>
+    <div class="actions"><button class="btn primary" id="recClose" data-i18n="close">Cerrar</button></div>
   </div>
 </div>
 <div class="tip" id="tip" hidden></div>
@@ -412,6 +420,7 @@ body.mode-dock .rose { bottom: 92px; }
 <script src="js/vendor/d3.min.js"></script>
 <script src="data/world.js"></script>
 <script src="data/countries.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/geo.js"></script>
 <script src="js/app.js"></script>
 </body>
