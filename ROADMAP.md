@@ -34,6 +34,9 @@ Juego web de geografía. Estética: carta náutica, pergamino, toques regios.
 - [ ] Requiere servidor en tiempo real (WebSocket: Node + Socket.IO, o servicio tipo Supabase/Firebase).
 
 ## Decisiones técnicas
+- Datos de países: REST Countries v5 descargado una vez a `data/raw/restcountries-v5.json` (`tools/fetch-countries.mjs`, gasta 3 peticiones). `tools/build-data.py` + `data/overrides.json` generan `data/countries.json`/`.js` (nombres en español, continente, estatus, capitales, bandera, población, idiomas, monedas, fronteras…). La clave no va en el juego.
+- Banderas: 250 SVG locales en `data/flags/` (`tools/fetch-flags.mjs`, CDN gratuito sin clave).
+- Pendiente para la prueba de capitales: los nombres de capitales vienen en inglés; habrá que traducirlos en `overrides.json`.
 - HTML + CSS + JS sin compilador; D3 (local en `js/vendor/`) para la proyección Natural Earth y el zoom.
 - Nombres en español con `Intl.DisplayNames` + correcciones propias.
 - Límites de océanos simplificados (inspirados en la OHI); el Mediterráneo cuenta como Atlántico.

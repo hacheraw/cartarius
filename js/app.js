@@ -432,7 +432,7 @@
     $('oLimited').checked = opts.limited;
     $('oTerr').checked = opts.territories;
     $('oMarker').value = String(opts.markerScale);
-    const fmtList = set => [...set].filter(i => allIsos.includes(i)).map(i => G.countryName(i) + (G.TERR_OWNER[i] ? ' (' + G.TERR_OWNER[i] + ')' : ''))
+    const fmtList = set => [...set].filter(i => allIsos.includes(i)).map(i => G.countryName(i) + (G.ownerName(i) ? ' (' + G.ownerName(i) + ')' : ''))
       .sort((a, b) => a.localeCompare(b, 'es')).join(', ');
     $('oLimitedList').textContent = fmtList(G.LIMITED) + '.';
     $('oTerrList').textContent = fmtList(G.DEPENDENT) + '.';
@@ -546,8 +546,10 @@
   }
 
   async function boot() {
-    let world = window.CARTARIUS_WORLD;
-    if (!world) { const r = await fetch('data/world.json'); world = await r.json(); }
+    let world = window.CARTARIUS_WORLD, countries = window.CARTARIUS_COUNTRIES;
+    if (!world) world = await (await fetch('data/world.json')).json();
+    if (!countries) countries = await (await fetch('data/countries.json')).json();
+    G.init(countries);
     prepare(world);
     $('loading').remove();
     wire();

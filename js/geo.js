@@ -2,63 +2,41 @@
 (function () {
   'use strict';
 
-  const CONTINENTS = {
-    EU: 'AD AL AT AX BA BE BG BY CH CY CZ DE DK EE ES FI FO FR GB GG GR HR HU IE IM IS IT JE LI LT LU LV MC MD ME MK MT NL NO PL PT RO RS RU SE SI SK SM UA VA XK XC',
-    AF: 'AO BF BI BJ BW CD CF CG CI CM CV DJ DZ EG EH ER ET GA GH GM GN GQ GW KE KM LR LS LY MA MG ML MR MU MW MZ NA NE NG RW SC SD SH SL SN SO SS ST SZ TD TG TN TZ UG ZA ZM ZW XS',
-    AS: 'AE AF AM AZ BD BH BN BT CN GE HK ID IL IN IO IQ IR JO JP KG KH KP KR KW KZ LA LB LK MM MN MO MV MY NP OM PH PK PS QA SA SG SY TH TJ TL TM TR TW UZ VN YE XG',
-    AM: 'AG AI AR AW BB BL BM BO BR BS BZ CA CL CO CR CU CW DM DO EC FK GD GL GS GT GY HN HT JM KN KY LC MF MS MX NI PA PE PM PR PY SR SV SX TC TT US UY VC VE VG VI',
-    OC: 'AS AU CK FJ FM GU KI MH MP NC NF NR NU NZ PF PG PN PW SB TO TV VU WF WS',
-    AN: 'AQ'
-  };
-  const CONT_OF = {};
-  for (const [c, list] of Object.entries(CONTINENTS)) list.split(' ').forEach(i => (CONT_OF[i] = c));
-
+  // Los datos de cada país vienen de data/countries.json (REST Countries + data/overrides.json).
+  // init() se llama al arrancar, cuando ya están cargados.
+  const COUNTRY = {};   // iso2 -> registro de countries.json
+  const CONT_OF = {};   // iso2 -> EU | AF | AS | AM | OC | AN
   const CONT_NAMES = { AM: 'América', EU: 'Europa', AF: 'África', AS: 'Asia', OC: 'Oceanía', AN: 'Antártida' };
-
-  // Qué se puede preguntar. Por defecto: 193 miembros de la ONU + Vaticano (siempre)
-  // + estados de reconocimiento limitado (opción) + territorios dependientes (opción).
-  const LIMITED = new Set('XK TW PS EH'.split(' '));
-  const DEPENDENT = new Set('AI AS AW AX BL BM CK CW FK FO GG GL GS GU HK HM IM IO JE KY MF MO MP MS NC NF NU PF PM PN PR SH SX TC TF VG VI WF'.split(' '));
+  const LIMITED = new Set();   // reconocimiento limitado + observadores (salvo el Vaticano)
+  const DEPENDENT = new Set(); // territorios dependientes
   const NEVER = new Set(['AQ', 'XG']); // Antártida (solo como continente) y glaciar de Siachen
-  const TERR_OWNER = {
-    AI: 'Reino Unido', AS: 'EE. UU.', AW: 'Países Bajos', AX: 'Finlandia', BL: 'Francia', BM: 'Reino Unido', CK: 'Nueva Zelanda',
-    CW: 'Países Bajos', FK: 'Reino Unido', FO: 'Dinamarca', GG: 'Reino Unido', GL: 'Dinamarca', GS: 'Reino Unido', GU: 'EE. UU.',
-    HK: 'China', HM: 'Australia', IM: 'Reino Unido', IO: 'Reino Unido', JE: 'Reino Unido', KY: 'Reino Unido', MF: 'Francia',
-    MO: 'China', MP: 'EE. UU.', MS: 'Reino Unido', NC: 'Francia', NF: 'Australia', NU: 'Nueva Zelanda', PF: 'Francia',
-    PM: 'Francia', PN: 'Reino Unido', PR: 'EE. UU.', SH: 'Reino Unido', SX: 'Países Bajos', TC: 'Reino Unido', TF: 'Francia',
-    VG: 'Reino Unido', VI: 'EE. UU.', WF: 'Francia'
-  };
+  // Zonas del mapa sin código ISO que se cuentan como parte de otro país
+  const ALIAS = { XC: 'CY', XS: 'SO' };
+
+  function init(data) {
+    (data.paises || []).forEach(c => {
+      COUNTRY[c.iso2] = c;
+      if (c.continente) CONT_OF[c.iso2] = c.continente;
+      if (c.estatus === 'reconocimiento_limitado' || (c.estatus === 'observador' && c.iso2 !== 'VA')) LIMITED.add(c.iso2);
+      if (c.estatus === 'dependiente' && !NEVER.has(c.iso2)) DEPENDENT.add(c.iso2);
+    });
+    Object.entries(ALIAS).forEach(([a, b]) => { if (CONT_OF[b]) CONT_OF[a] = CONT_OF[b]; });
+    CONT_OF.XG = 'AS';
+  }
   function isAskable(iso, opts) {
     if (NEVER.has(iso)) return false;
     if (LIMITED.has(iso)) return !!opts.limited;
     if (DEPENDENT.has(iso)) return !!opts.territories;
     return true;
   }
-  // Zonas que se cuentan como parte de otro país
-  const ALIAS = { XC: 'CY', XS: 'SO' };
-
-  // Nombres en español: Intl + correcciones
-  const NAME_FIX = {
-    CI: 'Costa de Marfil', PS: 'Palestina', CD: 'República Democrática del Congo', CG: 'República del Congo',
-    US: 'Estados Unidos', MM: 'Myanmar', SZ: 'Esuatini', CZ: 'Chequia', VA: 'Ciudad del Vaticano',
-    TL: 'Timor Oriental', CV: 'Cabo Verde', FM: 'Micronesia', KR: 'Corea del Sur', KP: 'Corea del Norte',
-    MK: 'Macedonia del Norte', BA: 'Bosnia y Herzegovina', TW: 'Taiwán', XK: 'Kosovo', GB: 'Reino Unido',
-    ST: 'Santo Tomé y Príncipe', KN: 'San Cristóbal y Nieves', VC: 'San Vicente y las Granadinas',
-    AG: 'Antigua y Barbuda', TT: 'Trinidad y Tobago', CF: 'República Centroafricana', DO: 'República Dominicana',
-    AE: 'Emiratos Árabes Unidos', SA: 'Arabia Saudí', GQ: 'Guinea Ecuatorial', SS: 'Sudán del Sur', MH: 'Islas Marshall', SB: 'Islas Salomón',
-    HK: 'Hong Kong', MO: 'Macao', AX: 'Islas Åland', EH: 'Sáhara Occidental', BL: 'San Bartolomé', MF: 'San Martín (Francia)',
-    SX: 'San Martín (Países Bajos)', PM: 'San Pedro y Miquelón', SH: 'Santa Elena', GS: 'Islas Georgias del Sur', HM: 'Islas Heard y McDonald',
-    TF: 'Tierras Australes Francesas', IO: 'Territorio Británico del Océano Índico', NF: 'Isla Norfolk', CK: 'Islas Cook',
-    VG: 'Islas Vírgenes Británicas', VI: 'Islas Vírgenes de EE. UU.', FO: 'Islas Feroe', FK: 'Islas Malvinas', KY: 'Islas Caimán', TC: 'Islas Turcas y Caicos',
-    MP: 'Islas Marianas del Norte', AS: 'Samoa Americana', PF: 'Polinesia Francesa', NC: 'Nueva Caledonia', WF: 'Wallis y Futuna', PN: 'Islas Pitcairn'
-  };
   let dn = null;
   try { dn = new Intl.DisplayNames(['es'], { type: 'region' }); } catch (e) { /* sin Intl */ }
   function countryName(iso, fallback) {
-    if (NAME_FIX[iso]) return NAME_FIX[iso];
+    if (COUNTRY[iso]) return COUNTRY[iso].nombre;
     try { const n = dn && dn.of(iso); if (n && n !== iso) return n; } catch (e) {}
     return fallback || iso;
   }
+  function ownerName(iso) { const c = COUNTRY[iso]; return c && c.soberano ? countryName(c.soberano) : null; }
 
   // Continente de un polígono concreto (territorios de ultramar, Rusia asiática, Hawái)
   function polygonContinent(iso, lon, lat) {
@@ -153,7 +131,7 @@
   const UPCOMING = ['Banderas', 'Capitales', 'Ríos', 'Montañas', 'Lenguas', 'Ciudades'];
 
   window.CartariusGeo = {
-    CONT_OF, CONT_NAMES, LIMITED, DEPENDENT, TERR_OWNER, isAskable, ALIAS, countryName, polygonContinent,
+    init, COUNTRY, CONT_OF, CONT_NAMES, LIMITED, DEPENDENT, ownerName, isAskable, ALIAS, countryName, polygonContinent,
     oceanFeatures, OCEAN_NAMES, OCEAN_LABEL_AT, VIEWS, CATEGORIES, UPCOMING
   };
 })();

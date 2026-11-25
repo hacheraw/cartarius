@@ -1,0 +1,43 @@
+{
+  "_nota": "Correcciones propias sobre los datos de REST Countries. Las aplica tools/build-data.py.",
+  "nombres": {
+    "CD": "República Democrática del Congo",
+    "CG": "República del Congo",
+    "SZ": "Esuatini",
+    "VC": "San Vicente y las Granadinas",
+    "AX": "Islas Åland",
+    "EH": "Sáhara Occidental",
+    "MF": "San Martín",
+    "SX": "Sint Maarten",
+    "SH": "Santa Elena",
+    "GS": "Islas Georgias del Sur",
+    "TF": "Tierras Australes Francesas",
+    "NF": "Isla Norfolk",
+    "VG": "Islas Vírgenes Británicas",
+    "VI": "Islas Vírgenes de EE. UU.",
+    "FO": "Islas Feroe",
+    "TC": "Islas Turcas y Caicos",
+    "BH": "Baréin",
+    "BN": "Brunéi",
+    "BW": "Botsuana",
+    "DJ": "Yibuti",
+    "GD": "Granada",
+    "IR": "Irán",
+    "KG": "Kirguistán",
+    "LS": "Lesoto",
+    "ML": "Malí",
+    "MW": "Malaui",
+    "SK": "Eslovaquia",
+    "SL": "Sierra Leona",
+    "RO": "Rumanía"
+  },
+  "_continentes": "Convención escolar española: América es un solo continente. Rusia cuenta como Europa y Turquía como Asia.",
+  "continentes": {
+    "EU": "AD AL AT AX BA BE BG BY CH CY CZ DE DK EE ES FI FO FR GB GG GI GR HR HU IE IM IS IT JE LI LT LU LV MC MD ME MK MT NL NO PL PT RO RS RU SE SI SJ SK SM UA VA XK",
+    "AF": "AO BF BI BJ BW CD CF CG CI CM CV DJ DZ EG EH ER ET GA GH GM GN GQ GW KE KM LR LS LY MA MG ML MR MU MW MZ NA NE NG RE RW SC SD SH SL SN SO SS ST SZ TD TG TN TZ UG YT ZA ZM ZW",
+    "AS": "AE AF AM AZ BD BH BN BT CC CN CX GE HK ID IL IN IO IQ IR JO JP KG KH KP KR KW KZ LA LB LK MM MN MO MV MY NP OM PH PK PS QA SA SG SY TH TJ TL TM TR TW UZ VN YE",
+    "AM": "AG AI AR AW BB BL BM BO BQ BR BS BZ CA CL CO CR CU CW DM DO EC FK GD GF GL GP GS GT GY HN HT JM KN KY LC MF MQ MS MX NI PA PE PM PR PY SR SV SX TC TT US UY VC VE VG VI",
+    "OC": "AS AU CK FJ FM GU KI MH MP NC NF NR NU NZ PF PG PN PW SB TK TO TV UM VU WF WS",
+    "AN": "AQ BV"
+  }
+}
