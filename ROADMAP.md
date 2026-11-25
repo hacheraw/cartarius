@@ -19,7 +19,7 @@ Juego web de geografía. Estética: carta náutica, pergamino, toques regios.
 - [ ] Repositorio Git y despliegue (GitHub Pages o similar).
 
 ## Tramo 3 · Más pruebas de "Completa el mapa"
-- [ ] Banderas (se muestra la bandera en la lista; clic en el país).
+- [x] Banderas: mapa a todo el ancho, dock inferior con scroll horizontal; al acertar el país se rellena con su bandera.
 - [ ] Capitales (punto en el mapa; clic en el país o en la ciudad).
 - [ ] Ríos, montañas y cordilleras (requiere nuevas capas: Natural Earth rivers/geography).
 - [ ] Provincias/comunidades de España y otros países (capas admin-1).

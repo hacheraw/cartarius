@@ -120,15 +120,21 @@
   };
 
   const CATEGORIES = [
-    { id: 'continentes', title: 'Océanos y continentes', kind: 'continents', view: 'WORLD', blurb: 'Los cinco océanos y los seis continentes.' },
-    { id: 'paises-europa', title: 'Países de Europa', kind: 'countries', cont: 'EU', view: 'EU', blurb: 'De Portugal a Rusia.' },
-    { id: 'paises-africa', title: 'Países de África', kind: 'countries', cont: 'AF', view: 'AF', blurb: 'Del Magreb al cabo de Buena Esperanza.' },
-    { id: 'paises-asia', title: 'Países de Asia', kind: 'countries', cont: 'AS', view: 'AS', blurb: 'De Turquía a Japón.' },
-    { id: 'paises-america', title: 'Países de América', kind: 'countries', cont: 'AM', view: 'AM', blurb: 'De Canadá a Tierra del Fuego.' },
-    { id: 'paises-oceania', title: 'Países de Oceanía', kind: 'countries', cont: 'OC', view: 'OC', blurb: 'Australia y las islas del Pacífico.' },
-    { id: 'paises-todos', title: 'Todos los países', kind: 'countries', cont: null, view: 'WORLD', blurb: 'El mundo entero.' }
+    { id: 'continentes', group: 'El mundo', title: 'Océanos y continentes', kind: 'continents', view: 'WORLD', blurb: 'Los cinco océanos y los seis continentes.' },
+    { id: 'paises-europa', group: 'Países', title: 'Países de Europa', kind: 'countries', cont: 'EU', view: 'EU', blurb: 'De Portugal a Rusia.' },
+    { id: 'paises-africa', group: 'Países', title: 'Países de África', kind: 'countries', cont: 'AF', view: 'AF', blurb: 'Del Magreb al cabo de Buena Esperanza.' },
+    { id: 'paises-asia', group: 'Países', title: 'Países de Asia', kind: 'countries', cont: 'AS', view: 'AS', blurb: 'De Turquía a Japón.' },
+    { id: 'paises-america', group: 'Países', title: 'Países de América', kind: 'countries', cont: 'AM', view: 'AM', blurb: 'De Canadá a Tierra del Fuego.' },
+    { id: 'paises-oceania', group: 'Países', title: 'Países de Oceanía', kind: 'countries', cont: 'OC', view: 'OC', blurb: 'Australia y las islas del Pacífico.' },
+    { id: 'paises-todos', group: 'Países', title: 'Todos los países', kind: 'countries', cont: null, view: 'WORLD', blurb: 'El mundo entero.' },
+    { id: 'banderas-europa', group: 'Banderas', title: 'Banderas de Europa', kind: 'flags', cont: 'EU', view: 'EU', blurb: 'Lleva cada bandera a su país.' },
+    { id: 'banderas-africa', group: 'Banderas', title: 'Banderas de África', kind: 'flags', cont: 'AF', view: 'AF', blurb: 'Lleva cada bandera a su país.' },
+    { id: 'banderas-asia', group: 'Banderas', title: 'Banderas de Asia', kind: 'flags', cont: 'AS', view: 'AS', blurb: 'Lleva cada bandera a su país.' },
+    { id: 'banderas-america', group: 'Banderas', title: 'Banderas de América', kind: 'flags', cont: 'AM', view: 'AM', blurb: 'Lleva cada bandera a su país.' },
+    { id: 'banderas-oceania', group: 'Banderas', title: 'Banderas de Oceanía', kind: 'flags', cont: 'OC', view: 'OC', blurb: 'Lleva cada bandera a su país.' },
+    { id: 'banderas-todas', group: 'Banderas', title: 'Todas las banderas', kind: 'flags', cont: null, view: 'WORLD', blurb: 'Todas las banderas del mundo.' }
   ];
-  const UPCOMING = ['Banderas', 'Capitales', 'Ríos', 'Montañas', 'Lenguas', 'Ciudades'];
+  const UPCOMING = ['Capitales', 'Ríos', 'Montañas', 'Lenguas', 'Ciudades'];
 
   window.CartariusGeo = {
     init, COUNTRY, CONT_OF, CONT_NAMES, LIMITED, DEPENDENT, ownerName, isAskable, ALIAS, countryName, polygonContinent,

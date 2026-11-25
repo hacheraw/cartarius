@@ -81,6 +81,7 @@
     svg.attr('class', cat.kind === 'continents' ? 'mode-continents' : 'mode-countries');
     projection = d3.geoNaturalEarth1().rotate([view.rotate, 0]).fitExtent([[6, 6], [W - 6, H - 6]], { type: 'Sphere' });
     path = d3.geoPath(projection);
+    svg.append('defs').attr('id', 'flagDefs');
     layer = svg.append('g');
     layer.append('path').attr('class', 'sphere').datum({ type: 'Sphere' }).attr('d', path);
     layer.append('path').attr('class', 'grat').datum(d3.geoGraticule10()).attr('d', path);
@@ -100,7 +101,7 @@
       if (!d) return;
       const el = gL.append('path').attr('d', d).attr('class', 'land ' + (key ? 'play' : 'off')).node();
       el.__key = key; el.__piece = p; p.el = el;
-      if (key && cat.kind === 'countries') {
+      if (key && cat.kind !== 'continents') {
         const a = path.area(p.geom);
         const e = areaByKey[key] || (areaByKey[key] = { area: 0, best: null, bestA: -1 });
         e.area += a; if (a > e.bestA) { e.bestA = a; e.best = p; }
@@ -169,8 +170,52 @@
   }
   function paint(key) {
     const c = colorFor(key);
-    elementsFor(key).forEach(el => { el.classList.add('painted'); el.classList.remove('hint'); el.style.fill = c; });
+    const flag = state.cat && state.cat.kind === 'flags' ? flagUrl(key) : null;
+    elementsFor(key).forEach((el, i) => {
+      el.classList.add('painted'); el.classList.remove('hint');
+      el.style.fill = flag ? flagFill(el, flag, key + '-' + i) || c : c;
+    });
     addLabel(key);
+  }
+  // En la vista previa publicada las banderas llegan en un solo JSON (data/flags.json) y se sirven como blob:
+  let flagBundle = null; const flagBlobs = {};
+  function flagUrl(iso) {
+    const c = G.COUNTRY[iso]; const path = c && c.bandera && c.bandera.svg;
+    if (!flagBundle) return path;
+    const k = iso.toLowerCase();
+    if (!flagBlobs[k] && flagBundle[k]) flagBlobs[k] = URL.createObjectURL(new Blob([flagBundle[k]], { type: 'image/svg+xml' }));
+    return flagBlobs[k] || path;
+  }
+  // Proporción real de cada bandera (ancho/alto), leída al cargarla
+  const flagRatio = {};
+  function loadRatio(href) {
+    if (flagRatio[href]) return Promise.resolve(flagRatio[href]);
+    return new Promise(res => {
+      const im = new Image();
+      im.onload = () => { const r = im.naturalWidth && im.naturalHeight ? im.naturalWidth / im.naturalHeight : 1.5; flagRatio[href] = r; res(r); };
+      im.onerror = () => res(1.5);
+      im.src = href;
+    });
+  }
+  // Rellena un trozo de país con su bandera: la imagen se dimensiona para cubrir toda la caja del trozo
+  function flagFill(el, href, id) {
+    let b; try { b = el.getBBox(); } catch (e) { return null; }
+    if (!b.width || !b.height) return null;
+    const pid = 'pf-' + id;
+    const defs = d3.select('#flagDefs');
+    defs.select('#' + CSS.escape(pid)).remove();
+    const p = defs.append('pattern').attr('id', pid).attr('patternUnits', 'userSpaceOnUse')
+      .attr('x', b.x).attr('y', b.y).attr('width', b.width).attr('height', b.height);
+    p.append('rect').attr('width', b.width).attr('height', b.height).attr('fill', '#F8F2E3');
+    const img = p.append('image').attr('href', href).attr('preserveAspectRatio', 'none');
+    const fit = r => {
+      let w = b.width, h = w / r;
+      if (h < b.height) { h = b.height; w = h * r; }
+      img.attr('x', (b.width - w) / 2).attr('y', (b.height - h) / 2).attr('width', w).attr('height', h);
+    };
+    fit(flagRatio[href] || 1.5);
+    if (!flagRatio[href]) loadRatio(href).then(fit);
+    return 'url(#' + pid + ')';
   }
   function flash(els) {
     els.forEach(el => { if (el.classList.contains('painted')) return; el.classList.remove('wrong'); void el.getBBox(); el.classList.add('wrong'); setTimeout(() => el.classList.remove('wrong'), 700); });
@@ -190,7 +235,7 @@
   };
 
   function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
-  function sortItems(items) { return opts.order === 'alpha' ? items.sort((a, b) => a.name.localeCompare(b.name, 'es')) : shuffle(items); }
+  function sortItems(items) { return opts.order === 'alpha' && !(state.cat && state.cat.kind === 'flags') ? items.sort((a, b) => a.name.localeCompare(b.name, 'es')) : shuffle(items); }
 
   function elapsed() { return state.acc + (state.runStart ? Date.now() - state.runStart : 0); }
   function fmt(ms) { const s = Math.floor(ms / 1000); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
@@ -206,6 +251,8 @@
     });
     state.timer = setInterval(() => { $('sTime').textContent = fmt(elapsed()); }, 500);
     $('catTitle').textContent = cat.title;
+    document.body.classList.toggle('mode-dock', cat.kind === 'flags');
+    $('dock').hidden = cat.kind !== 'flags';
     hideAllDialogs(); $('menu').hidden = true; setPaused(false, true);
     drawMap(cat, new Set(pool || []));
     if (location.hash !== '#' + cat.id) history.replaceState(null, '', '#' + cat.id);
@@ -241,6 +288,7 @@
   }
 
   function renderList() {
+    if (state.cat && state.cat.kind === 'flags') return renderDock();
     const ol = $('list'); ol.innerHTML = '';
     state.items.forEach((it, i) => {
       const li = document.createElement('li');
@@ -255,6 +303,32 @@
     const cur = ol.querySelector('[aria-current="true"]');
     if (cur) cur.scrollIntoView({ block: 'nearest' });
     $('target').textContent = state.sel ? nameOfKey(state.sel) : '—';
+    $('pCount').textContent = state.items.length + ' restantes';
+  }
+  // Dock de banderas (modo banderas): fila horizontal anclada abajo, la seleccionada más grande
+  function renderDock() {
+    const row = $('dockRow'), sc = $('dockScroll'), keep = sc.scrollLeft;
+    const old = new Map([...row.children].map(b => [b.dataset.key, b]));
+    row.innerHTML = '';
+    state.items.forEach(it => {
+      let b = old.get(it.key);
+      if (!b) {
+        b = document.createElement('button'); b.className = 'flag'; b.dataset.key = it.key;
+        b.setAttribute('aria-label', 'Bandera'); // sin nombre: sería una pista
+        const img = document.createElement('img'); img.alt = ''; img.loading = 'lazy'; img.draggable = false; img.src = flagUrl(it.key) || '';
+        b.appendChild(img);
+        b.addEventListener('click', () => select(it.key));
+      }
+      b.classList.remove('gone');
+      b.classList.toggle('sel', it.key === state.sel);
+      b.classList.toggle('hinted', state.hinted.has(it.key));
+      if (it.key === state.sel) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+      row.appendChild(b);
+    });
+    sc.scrollLeft = keep;
+    const cur = row.querySelector('.sel');
+    if (cur) cur.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
+    $('dockCount').textContent = state.items.length;
     $('pCount').textContent = state.items.length + ' restantes';
   }
   function select(key) {
@@ -280,7 +354,7 @@
     if (!el || !('__key' in el)) return;
     const key = el.__key;
     if (!key) {
-      if (el.__piece && state.cat.kind === 'countries') toast(opts.showClicked ? G.countryName(el.__piece.raw, el.__piece.en) + ' no entra en esta carta' : 'Eso no entra en esta carta');
+      if (el.__piece && state.cat.kind !== 'continents') toast(opts.showClicked ? G.countryName(el.__piece.raw, el.__piece.en) + ' no entra en esta carta' : 'Eso no entra en esta carta');
       return;
     }
     if (state.found.has(key)) { toast('Ya colocado: ' + nameOfKey(key)); return; }
@@ -288,7 +362,7 @@
     if (key === state.sel) {
       state.found.add(key); paint(key); toast(nameOfKey(key), 'ok');
       const idx = state.items.findIndex(i => i.key === key);
-      const li = $('list').querySelector('li[data-key="' + CSS.escape(key) + '"]');
+      const li = state.cat.kind === 'flags' ? $('dockRow').querySelector('[data-key="' + CSS.escape(key) + '"]') : $('list').querySelector('li[data-key="' + CSS.escape(key) + '"]');
       state.items.splice(idx, 1);
       state.sel = state.items.length ? state.items[Math.min(idx, state.items.length - 1)].key : null;
       state.tries = 0; clearHints();
@@ -394,8 +468,14 @@
   function hideAllDialogs() { ['modal', 'resumeDlg', 'optionsDlg', 'recordsDlg', 'exitDlg'].forEach(id => ($(id).hidden = true)); }
 
   function renderMenu() {
-    const box = $('cards'); box.innerHTML = '';
+    const groups = $('cards'); groups.innerHTML = '';
+    const boxes = {};
     G.CATEGORIES.forEach(cat => {
+      let box = boxes[cat.group];
+      if (!box) {
+        const r = document.createElement('div'); r.className = 'rule'; r.textContent = cat.group; groups.appendChild(r);
+        box = boxes[cat.group] = document.createElement('div'); box.className = 'cards'; groups.appendChild(box);
+      }
       const n = cat.kind === 'continents' ? 11 : poolFor(cat).length;
       const best = recordsOf(cat.id).slice().sort(rankSort)[0];
       const saved = store.get('save:' + cat.id, null);
@@ -480,7 +560,7 @@
     const el = ev.target; let name = null;
     if (state.paused) { tip.hidden = true; return; }
     if (el && el.classList && el.classList.contains('painted') && el.__key) name = nameOfKey(el.__key);
-    else if (opts.showClicked && el && el.__piece && !el.__key && state.cat && state.cat.kind === 'countries') name = G.countryName(el.__piece.raw, el.__piece.en);
+    else if (opts.showClicked && el && el.__piece && !el.__key && state.cat && state.cat.kind !== 'continents') name = G.countryName(el.__piece.raw, el.__piece.en);
     if (!name) { tip.hidden = true; return; }
     tip.textContent = name; tip.hidden = false;
     tip.style.left = (ev.clientX + 14) + 'px'; tip.style.top = (ev.clientY + 12) + 'px';
@@ -509,7 +589,12 @@
     $('oWipe').onclick = wipeData;
     $('recBtn').onclick = () => { renderRecords(); $('recordsDlg').hidden = false; };
     $('recClose').onclick = () => { $('recordsDlg').hidden = true; };
-    $('skip').onclick = skip;
+    $('skip').onclick = skip; $('dockSkip').onclick = skip;
+    // rueda sobre el dock: desplazamiento horizontal
+    $('dock').addEventListener('wheel', ev => {
+      const d = Math.abs(ev.deltaY) > Math.abs(ev.deltaX) ? ev.deltaY : ev.deltaX;
+      $('dockScroll').scrollLeft += d * (ev.deltaMode === 1 ? 40 : 1); ev.preventDefault();
+    }, { passive: false });
     $('zIn').onclick = () => svg.transition().duration(250).call(zoom.scaleBy, 1.6);
     $('zOut').onclick = () => svg.transition().duration(250).call(zoom.scaleBy, 1 / 1.6);
     $('zFit').onclick = () => state.cat && fitView(state.cat, true);
@@ -532,7 +617,9 @@
       if (ev.key === 'p' || ev.key === 'P' || ev.key === 'Escape') { ev.preventDefault(); togglePause(); return; }
       if (state.paused || !state.items.length) return;
       const idx = state.items.findIndex(i => i.key === state.sel);
-      if (ev.key === 'ArrowDown') { ev.preventDefault(); select(state.items[(idx + 1) % state.items.length].key); }
+      if (ev.key === 'ArrowRight' && state.cat.kind === 'flags') { ev.preventDefault(); select(state.items[(idx + 1) % state.items.length].key); }
+      else if (ev.key === 'ArrowLeft' && state.cat.kind === 'flags') { ev.preventDefault(); select(state.items[(idx - 1 + state.items.length) % state.items.length].key); }
+      else if (ev.key === 'ArrowDown') { ev.preventDefault(); select(state.items[(idx + 1) % state.items.length].key); }
       else if (ev.key === 'ArrowUp') { ev.preventDefault(); select(state.items[(idx - 1 + state.items.length) % state.items.length].key); }
       else if (ev.key === 's' || ev.key === 'S') skip();
     });
@@ -554,6 +641,7 @@
     if (!world) world = await (await fetch('data/world.json')).json();
     if (!countries) countries = await (await fetch('data/countries.json')).json();
     G.init(countries);
+    if (window.CARTARIUS_FLAGS_URL) { try { flagBundle = await (await fetch(window.CARTARIUS_FLAGS_URL)).json(); } catch (e) { console.warn('Sin banderas', e); } }
     prepare(world);
     $('loading').remove();
     wire();

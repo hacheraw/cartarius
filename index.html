@@ -173,7 +173,7 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--royal)
 
 /* ---------- Pausa ---------- */
 .stage > * { transition: filter .25s; }
-body.is-paused .stage > .map-wrap, body.is-paused .stage > .panel { filter: blur(16px) saturate(.6); pointer-events: none; user-select: none; }
+body.is-paused .stage > .map-wrap, body.is-paused .stage > .panel, body.is-paused .dock { filter: blur(16px) saturate(.6); pointer-events: none; user-select: none; }
 .pause { position: fixed; inset: 0; z-index: 25; display: grid; place-items: center; padding: 16px; background: rgba(236,226,202,.35); }
 .pause .modal-box { max-width: 380px; }
 .pause .big { font-family: var(--font-display); font-size: 44px; font-weight: 700; font-variant-numeric: tabular-nums lining-nums; line-height: 1; }
@@ -207,6 +207,28 @@ body.is-paused .stage > .map-wrap, body.is-paused .stage > .panel { filter: blur
 .name-row { display: flex; gap: 8px; }
 .name-row input { flex: 1; min-width: 0; font: inherit; font-size: 15px; padding: 8px 10px; border: 1px solid var(--sepia); background: var(--land); }
 .modal-box .note { font-family: var(--font-ui); font-style: normal; font-size: 13px; color: var(--ok); }
+
+/* ---------- Modo banderas: mapa a todo el ancho + dock inferior ---------- */
+.groups { display: grid; gap: 22px; }
+body.mode-dock .panel { display: none; }
+body.mode-dock .zoom { bottom: 96px; }
+body.mode-dock .rose { bottom: 92px; }
+.dock { position: relative; flex: none; height: 96px; background: var(--paper-2); border-top: 1px solid var(--sepia); box-shadow: 0 -2px 0 -1px var(--paper), 0 -3px 0 -1px var(--sepia); z-index: 5; }
+.dock-info { position: absolute; left: 0; top: 0; bottom: 0; width: 132px; display: grid; align-content: center; justify-items: center; gap: 6px; border-right: 1px solid rgba(140,108,69,.4); padding-left: env(safe-area-inset-left, 0px); }
+.dock-info span { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.dock-info b { font-family: var(--font-display); font-size: 24px; letter-spacing: 0; color: var(--ink); font-variant-numeric: tabular-nums lining-nums; }
+.dock-info .btn { padding: 4px 10px; font-size: 12px; }
+/* el área de scroll es más alta que la barra para que la bandera grande sobresalga; solo las banderas reciben el ratón */
+.dock-scroll { position: absolute; left: 132px; right: 0; bottom: 0; height: 190px; overflow-x: auto; overflow-y: hidden; pointer-events: none; scrollbar-width: thin; scrollbar-color: var(--sepia) transparent; }
+.dock-row { display: flex; align-items: flex-end; gap: 12px; height: 100%; padding: 0 24px 16px; width: max-content; }
+.flag { pointer-events: auto; flex: none; padding: 0; border: 0; background: none; line-height: 0; transform-origin: bottom center; transition: transform .18s ease; }
+.flag img { display: block; height: 46px; width: auto; min-width: 46px; max-width: 120px; object-fit: contain; background: var(--paper-3); border: 1px solid rgba(42,32,22,.35); box-shadow: 0 2px 4px rgba(42,32,22,.18); transition: height .22s ease, max-width .22s ease, box-shadow .22s; }
+.flag:hover { transform: translateY(-4px); }
+.flag.sel img { height: 118px; max-width: 300px; box-shadow: 0 0 0 3px var(--paper-3), 0 0 0 5px var(--royal), 0 10px 22px rgba(42,32,22,.35); }
+.flag.sel:hover { transform: none; }
+.flag.hinted img { outline: 2px dashed var(--gold); outline-offset: 3px; }
+.flag.gone { animation: flaggone .3s ease-in forwards; }
+@keyframes flaggone { to { opacity: 0; transform: translateY(-40px) scale(.6); } }
 
 @media (max-width: 820px) {
   body { overflow: auto; }
@@ -277,6 +299,11 @@ body.is-paused .stage > .map-wrap, body.is-paused .stage > .panel { filter: blur
   </aside>
 </main>
 
+<section class="dock" id="dock" hidden>
+  <div class="dock-info"><span><b id="dockCount">0</b> banderas</span><button class="btn" id="dockSkip" title="Pasar a la siguiente (tecla S)">Saltar ›</button></div>
+  <div class="dock-scroll" id="dockScroll"><div class="dock-row" id="dockRow"></div></div>
+</section>
+
 <section class="menu" id="menu">
   <div class="menu-inner">
     <header>
@@ -285,8 +312,7 @@ body.is-paused .stage > .map-wrap, body.is-paused .stage > .panel { filter: blur
       <div class="sub">Completa el mapa</div>
     </header>
     <div class="menu-actions"><button class="btn" id="optBtn">Opciones</button><button class="btn" id="recBtn">Récords</button></div>
-    <div class="rule">Elige una carta</div>
-    <div class="cards" id="cards"></div>
+    <div id="cards" class="groups"></div>
     <div class="rule">Próximamente</div>
     <div class="cards" id="soon"></div>
   </div>
