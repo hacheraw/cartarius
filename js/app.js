@@ -17,9 +17,14 @@
     set(k, v) { try { localStorage.setItem('cartarius:' + k, JSON.stringify(v)); } catch (e) {} },
     del(k) { try { localStorage.removeItem('cartarius:' + k); } catch (e) {} }
   };
-  const DEFAULT_OPTS = { showClicked: false, hints: false, hintAfter: 3, limited: true, territories: false, order: 'rand' };
-  let opts = Object.assign({}, DEFAULT_OPTS, store.get('options', {}));
+  const DEFAULT_OPTS = { showClicked: false, hints: false, hintAfter: 3, limited: true, territories: false, order: 'rand', markerScale: 2, v: 2 };
+  const storedOpts = store.get('options', {});
+  let opts = Object.assign({}, DEFAULT_OPTS, storedOpts);
+  if ((storedOpts.v || 1) < 2) { opts.markerScale = 2; opts.v = 2; } // nuevo valor por defecto de los puntos
   const saveOpts = () => store.set('options', opts);
+
+  const markerR = () => 4.2 * (opts.markerScale || 1) / currentK;
+  function updateMarkers() { if (layer) layer.selectAll('.marker').attr('r', markerR()); }
 
   // ---------- Datos ----------
   const pieces = [];    // un trozo por polígono: {iso, raw, en, cont, geom, el, key}
@@ -106,7 +111,7 @@
       if (e.area >= 14) return;
       const [x, y] = path.centroid(e.best.geom);
       if (!isFinite(x)) return;
-      const c = gM.append('circle').attr('class', 'marker').attr('cx', x).attr('cy', y).attr('r', 4.2).node();
+      const c = gM.append('circle').attr('class', 'marker').attr('cx', x).attr('cy', y).attr('r', markerR()).node();
       c.__key = key;
       state.markers[key] = c;
     });
@@ -117,7 +122,7 @@
       .on('zoom', ev => {
         layer.attr('transform', ev.transform);
         currentK = ev.transform.k;
-        layer.selectAll('.marker').attr('r', 4.2 / currentK);
+        updateMarkers();
         layer.selectAll('.label').attr('font-size', d => d.size / Math.sqrt(currentK)).attr('stroke-width', 3 / currentK);
       });
     svg.call(zoom).on('dblclick.zoom', null);
@@ -324,6 +329,13 @@
     showMenu();
   }
 
+  function askLeave() { // pide confirmación si hay una partida empezada
+    if (!state.cat || state.ended || !state.started) return leaveToMenu();
+    stopClock(); $('tip').hidden = true;
+    $('exitDlg').hidden = false; $('xNo').focus();
+  }
+  function cancelLeave() { $('exitDlg').hidden = true; startClock(); }
+
   // ---------- Fin y récords ----------
   function recordsOf(id) { return store.get('records:' + id, []); }
   function rankSort(a, b) { return (a.errors - b.errors) || (a.ms - b.ms); }
@@ -375,7 +387,7 @@
   }
 
   // ---------- Menú, opciones y diálogos ----------
-  function hideAllDialogs() { ['modal', 'resumeDlg', 'optionsDlg', 'recordsDlg'].forEach(id => ($(id).hidden = true)); }
+  function hideAllDialogs() { ['modal', 'resumeDlg', 'optionsDlg', 'recordsDlg', 'exitDlg'].forEach(id => ($(id).hidden = true)); }
 
   function renderMenu() {
     const box = $('cards'); box.innerHTML = '';
@@ -419,6 +431,7 @@
     $('oHintN').value = opts.hintAfter; $('oHintN').disabled = !opts.hints;
     $('oLimited').checked = opts.limited;
     $('oTerr').checked = opts.territories;
+    $('oMarker').value = String(opts.markerScale);
     const fmtList = set => [...set].filter(i => allIsos.includes(i)).map(i => G.countryName(i) + (G.TERR_OWNER[i] ? ' (' + G.TERR_OWNER[i] + ')' : ''))
       .sort((a, b) => a.localeCompare(b, 'es')).join(', ');
     $('oLimitedList').textContent = fmtList(G.LIMITED) + '.';
@@ -433,6 +446,8 @@
     $('oHintN').disabled = !opts.hints;
     opts.limited = $('oLimited').checked;
     opts.territories = $('oTerr').checked;
+    opts.markerScale = parseFloat($('oMarker').value) || 1;
+    updateMarkers();
     saveOpts();
     if (!$('menu').hidden) renderMenu();
   }
@@ -470,7 +485,8 @@
   // ---------- Arranque ----------
   function wire() {
     svg.on('click', onMapClick).on('mousemove', onMove).on('mouseleave', () => (tip.hidden = true));
-    $('home').onclick = leaveToMenu; $('toMenu').onclick = leaveToMenu;
+    $('home').onclick = askLeave; $('toMenu').onclick = askLeave;
+    $('xYes').onclick = () => { $('exitDlg').hidden = true; leaveToMenu(); }; $('xNo').onclick = cancelLeave;
     $('mMenu').onclick = () => { if (pendingResult && $('mName').value.trim()) saveResult(); showMenu(); };
     $('restart').onclick = () => state.cat && startGame(state.cat);
     $('mAgain').onclick = () => { if (pendingResult && $('mName').value.trim()) saveResult(); startGame(state.cat); };
@@ -483,8 +499,9 @@
     $('rNo').onclick = () => startGame(resumeCat);
     $('rCancel').onclick = () => { $('resumeDlg').hidden = true; };
     $('optBtn').onclick = () => { renderOptions(); $('optionsDlg').hidden = false; };
+    $('pOpts').onclick = () => { renderOptions(); $('optionsDlg').hidden = false; };
     $('optClose').onclick = () => { $('optionsDlg').hidden = true; };
-    ['oShow', 'oHints', 'oHintN', 'oLimited', 'oTerr'].forEach(id => $(id).addEventListener('change', readOptions));
+    ['oShow', 'oHints', 'oHintN', 'oLimited', 'oTerr', 'oMarker'].forEach(id => $(id).addEventListener('change', readOptions));
     $('oWipe').onclick = wipeData;
     $('recBtn').onclick = () => { renderRecords(); $('recordsDlg').hidden = false; };
     $('recClose').onclick = () => { $('recordsDlg').hidden = true; };
@@ -501,6 +518,8 @@
     setOrder(opts.order);
     document.addEventListener('keydown', ev => {
       if (ev.target && ev.target.tagName === 'INPUT') return;
+      if (ev.key === 'Escape' && !$('exitDlg').hidden) { cancelLeave(); return; }
+      if (!$('exitDlg').hidden) return;
       if (ev.key === 'Escape') {
         const open = ['optionsDlg', 'recordsDlg', 'resumeDlg'].find(id => !$(id).hidden);
         if (open) { $(open).hidden = true; return; }
