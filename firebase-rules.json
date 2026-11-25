@@ -3,7 +3,7 @@
     "rooms": {
       "$code": {
         ".read": "auth != null",
-        ".write": "auth != null && (!data.exists() || data.child('host').val() === auth.uid || data.child('created').val() < now - 86400000)",
+        ".write": "auth != null && (!data.exists() || data.child('host').val() === auth.uid || (root.child('claims/' + $code + '/' + auth.uid).exists() && root.child('claims/' + $code + '/' + auth.uid).val() === root.child('hostKeys/' + $code).val()) || data.child('seen').val() < now - 15552000000 || (!data.child('seen').exists() && data.child('created').val() < now - 15552000000))",
         ".validate": "$code.matches(/^[A-Z0-9]{4}$/)",
         "host": { ".validate": "newData.val() === auth.uid" },
         "players": {
@@ -19,6 +19,20 @@
               ".validate": "newData.child('c').isNumber() && newData.child('t').val() === now"
             }
           }
+        }
+      }
+    },
+    "hostKeys": {
+      "$code": {
+        ".write": "auth != null && root.child('rooms/' + $code + '/host').val() === auth.uid",
+        ".validate": "newData.isString() && newData.val().length >= 16"
+      }
+    },
+    "claims": {
+      "$code": {
+        "$uid": {
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.val() === root.child('hostKeys/' + $code).val()"
         }
       }
     }

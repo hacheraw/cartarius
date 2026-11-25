@@ -59,6 +59,7 @@ for i, r in enumerate(cur):
         print('SIN GEOMETRÍA:', r['en']); continue
     g = linemerge(MultiLineString(lines)).simplify(0.02, preserve_topology=False)
     rivers.append({'id': 'r%d' % i, 'cont': r['cont'], 'nombres': {'es': r['es'], 'en': r['en'], 'local': r['local']},
+                   'nace': r.get('nace', []), 'desemboca': r.get('desemboca', []),
                    'lineas': rnd(g)})
 
 # ---------- Ciudades ----------

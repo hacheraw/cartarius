@@ -31,12 +31,14 @@ Juego web de geografía. Estética: carta náutica, pergamino, toques regios.
 ## Tramo 4 · Quiz multijugador
 - [x] Anfitrión (`quiz.html`): ajustes, crea sala, QR (lleva a `play.html?sala=CÓDIGO`) y código de 4 caracteres, lista de jugadores.
 - [x] Móviles (`play.html`): entrar por QR o URL + código, poner nombre, botones de colores.
-- [x] Preguntas: banderas, capitales, siluetas y continentes; distractores del mismo continente.
-- [x] Configuración: tiempo (5 s por defecto), 2–4 opciones, nº de preguntas, región.
+- [x] Preguntas: banderas, capitales (capital de un país / país de una capital), ríos (dónde nace / desemboca), ciudades (país de una ciudad / ciudad de un país) y siluetas (sin microestados ni contornos deformes); distractores del mismo continente.
+- [x] Configuración: tiempo (5 s por defecto), tiempo entre preguntas (o manual), 2–4 opciones, nº de preguntas, varias regiones a la vez.
 - [x] Puntos por acierto y rapidez; marcador final con aciertos, más rápido y más lento.
+- [x] Contador en pantalla, cuenta atrás hasta la siguiente pregunta, pausa (tecla P) y terminar partida.
+- [x] Sala persistente: se guarda en el navegador del anfitrión (código + clave secreta) y se reabre al recargar; historial de partidas por sala.
 - [x] Conexión aislada en `js/net.js`: Firebase Realtime Database + modo local de pruebas (pestañas del mismo navegador). Reglas en `firebase-rules.json`.
-- [ ] Configurar el proyecto de Firebase (`js/firebase-config.js`) y publicar en GitHub Pages.
-- [ ] Más tipos de pregunta (ríos, ciudades), sonido.
+- [x] Firebase configurado (`js/firebase-config.js`); repo en GitHub.
+- [ ] GitHub Pages, sonido.
 
 ## Decisiones técnicas
 - Datos de países: REST Countries v5 descargado una vez a `data/raw/restcountries-v5.json` (`tools/fetch-countries.mjs`, gasta 3 peticiones). `tools/build-data.py` + `data/overrides.json` generan `data/countries.json`/`.js` (nombres en español, continente, estatus, capitales, bandera, población, idiomas, monedas, fronteras…). La clave no va en el juego.

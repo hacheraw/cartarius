@@ -1,40 +1,50 @@
 /* Cartarius · generador de preguntas del Quiz (lo usa la pantalla del anfitrión).
-   Cada pregunta: { type, key, text, flag?, shape?, options: [{ k, label }], correct } */
+   Cada pregunta: { type, key, text, flag?, shape?, options: [{ k, label }], correct }
+   Tipos: flag (bandera), capital (capital de un país / país de una capital), river (dónde nace / desemboca),
+   city (país de una ciudad / ciudad de un país), shape (silueta; sin microestados). */
 (function () {
   'use strict';
   const G = window.CartariusGeo, I18N = window.CartariusI18n, t = I18N.t;
   const CONTS = ['EU', 'AF', 'AS', 'AM', 'OC'];
+  const TYPES = ['flag', 'capital', 'river', 'city', 'shape'];
   const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+  const featName = f => (f.nombres && (f.nombres[I18N.place()] || f.nombres.en)) || f.id;
 
   // ---------- Siluetas: polígonos de cada país a partir de data/world ----------
-  const shapes = {}; // iso -> [{ coords, area }]
+  const shapes = {}; // iso -> [Polygon]
+  const MIN_POINTS = 16; // con menos puntos el contorno es un triángulo o un rombo (Vaticano, Malta, Luxemburgo…)
   function prepareShapes(world) {
     world.forEach(f => {
       const iso = G.ALIAS[f.i] || f.i;
       f.p.forEach(poly => (shapes[iso] = shapes[iso] || []).push({ type: 'Polygon', coordinates: poly }));
     });
   }
-  // Devuelve el trazado SVG (viewBox 0 0 400 300) de la parte principal del país
-  function shapePath(iso) {
+  function shapeParts(iso) {
     const polys = (shapes[iso] || []).map(g => ({ g, a: d3.geoArea(g) })).sort((x, y) => y.a - x.a);
     if (!polys.length) return null;
-    const main = polys[0].g, c = d3.geoCentroid(main);
+    const main = polys[0], c = d3.geoCentroid(main.g);
     // se quedan las partes grandes y cercanas (sin territorios de ultramar)
-    const keep = polys.filter(p => p.a >= polys[0].a * 0.01 && d3.geoDistance(d3.geoCentroid(p.g), c) < 0.5).map(p => p.g);
-    const geo = { type: 'GeometryCollection', geometries: keep };
-    const proj = d3.geoAzimuthalEqualArea().rotate([-c[0], -c[1]]).fitExtent([[10, 10], [390, 290]], geo);
+    const keep = polys.filter(p => p.a >= main.a * 0.01 && d3.geoDistance(d3.geoCentroid(p.g), c) < 0.5).map(p => p.g);
+    return { keep, c, points: main.g.coordinates[0].length };
+  }
+  // contornos que con esta resolución salen deformes o irreconocibles
+  const BAD_SHAPES = new Set(['HT', 'GM', 'GW', 'EH', 'CY', 'JM', 'TL', 'DJ', 'LB', 'BS', 'BZ']);
+  const hasShape = iso => { if (BAD_SHAPES.has(iso)) return false; const s = shapeParts(iso); return !!s && s.points >= MIN_POINTS; };
+  // Trazado SVG (viewBox 0 0 400 300) de la parte principal del país
+  function shapePath(iso) {
+    const s = shapeParts(iso); if (!s) return null;
+    const geo = { type: 'GeometryCollection', geometries: s.keep };
+    const proj = d3.geoAzimuthalEqualArea().rotate([-s.c[0], -s.c[1]]).fitExtent([[10, 10], [390, 290]], geo);
     return d3.geoPath(proj)(geo);
   }
 
-  // ---------- Conjunto de países que se pueden preguntar ----------
-  function pool(region, opts) {
-    return Object.keys(G.COUNTRY).filter(iso => G.isAskable(iso, opts) && CONTS.includes(G.CONT_OF[iso]) && (region === 'all' || G.CONT_OF[iso] === region));
-  }
-  // Distractores: primero del mismo continente, sin repetir etiqueta
-  function distractors(key, n, candidates, labelOf) {
-    const cont = G.CONT_OF[key], seen = new Set([labelOf(key)]);
-    const same = shuffle(candidates.filter(i => i !== key && G.CONT_OF[i] === cont));
-    const other = shuffle(candidates.filter(i => i !== key && G.CONT_OF[i] !== cont));
+  // ---------- Opciones ----------
+  // Distractores: primero del mismo continente que `cont`, sin repetir etiqueta
+  function distractors(keys, n, candidates, labelOf, contOf, cont, exclude) {
+    const seen = new Set(keys.map(labelOf)), ex = new Set(keys.concat(exclude || []));
+    const ok = candidates.filter(i => !ex.has(i));
+    const same = shuffle(ok.filter(i => contOf(i) === cont)), other = shuffle(ok.filter(i => contOf(i) !== cont));
     const out = [];
     for (const i of same.concat(other)) {
       const l = labelOf(i); if (!l || seen.has(l)) continue;
@@ -42,49 +52,85 @@
     }
     return out;
   }
-  function withOptions(q, keys, labelOf) {
-    const opts = shuffle(keys.map(k => ({ k, label: labelOf(k) })));
-    q.options = opts; q.correct = opts.findIndex(o => o.k === q.key);
+  function build(q, answer, others, labelOf) {
+    const opts = shuffle([answer].concat(others).map(k => ({ k, label: labelOf(k) })));
+    q.options = opts; q.correct = opts.findIndex(o => o.k === answer);
     return q;
   }
+  const contOf = iso => G.CONT_OF[iso];
+  // Pregunta cuya respuesta es un país
+  function countryQ(q, iso, n, ctx, exclude) {
+    if (!ctx.countries.includes(iso)) return null;
+    return build(q, iso, distractors([iso], n - 1, ctx.countries, G.countryName, contOf, contOf(iso), exclude), G.countryName);
+  }
 
-  const MAKERS = {
-    flag(iso, n, cands) {
-      const c = G.COUNTRY[iso]; if (!c || !c.bandera || !c.bandera.svg) return null;
-      return withOptions({ type: 'flag', key: iso, text: t('q.flag'), flag: c.bandera.svg }, [iso].concat(distractors(iso, n - 1, cands, G.countryName)), G.countryName);
+  // ---------- Tipos ----------
+  // items(ctx): elementos que se pueden preguntar; make(item, n, ctx): la pregunta (o null)
+  const KINDS = {
+    flag: {
+      items: ctx => ctx.countries.filter(iso => G.COUNTRY[iso] && G.COUNTRY[iso].bandera && G.COUNTRY[iso].bandera.svg),
+      make: (iso, n, ctx) => countryQ({ type: 'flag', key: iso, text: t('q.flag'), flag: G.COUNTRY[iso].bandera.svg }, iso, n, ctx)
     },
-    capital(iso, n, cands) {
-      if (!G.capitalName(iso)) return null;
-      const capCands = cands.filter(i => G.capitalName(i));
-      return withOptions({ type: 'capital', key: iso, text: t('q.capital', { x: G.countryName(iso) }) }, [iso].concat(distractors(iso, n - 1, capCands, G.capitalName)), G.capitalName);
+    capital: {
+      items: ctx => ctx.countries.filter(iso => G.capitalName(iso)),
+      make(iso, n, ctx) {
+        if (Math.random() < 0.5) return countryQ({ type: 'capital', key: iso, text: t('q.capitalOf', { x: G.capitalName(iso) }) }, iso, n, ctx);
+        const caps = ctx.countries.filter(i => G.capitalName(i));
+        return build({ type: 'capital', key: iso, text: t('q.capital', { x: G.countryName(iso) }) }, iso, distractors([iso], n - 1, caps, G.capitalName, contOf, contOf(iso)), G.capitalName);
+      }
     },
-    shape(iso, n, cands) {
-      const d = shapePath(iso); if (!d) return null;
-      return withOptions({ type: 'shape', key: iso, text: t('q.shape'), shape: d }, [iso].concat(distractors(iso, n - 1, cands.filter(i => shapes[i]), G.countryName)), G.countryName);
+    river: {
+      items: ctx => ctx.feat.rios.filter(r => ctx.regions.includes(r.cont) && ((r.nace || []).length || (r.desemboca || []).length)),
+      make(r, n, ctx) {
+        const dirs = [['nace', 'q.riverSrc'], ['desemboca', 'q.riverMouth']].filter(([k]) => (r[k] || []).length && ctx.countries.includes(r[k][0]));
+        if (!dirs.length) return null;
+        const [k, txt] = pick(dirs);
+        return countryQ({ type: 'river', key: r.id, text: t(txt, { x: featName(r) }) }, r[k][0], n, ctx, r[k]);
+      }
     },
-    continent(iso, n) {
-      const cont = G.CONT_OF[iso];
-      const others = shuffle(CONTS.filter(c => c !== cont)).slice(0, n - 1);
-      const q = { type: 'continent', key: iso, text: t('q.continent', { x: G.countryName(iso) }) };
-      const opts = shuffle([cont].concat(others).map(k => ({ k, label: G.CONT_NAMES[k] })));
-      q.options = opts; q.correct = opts.findIndex(o => o.k === cont);
-      return q;
+    city: {
+      items: ctx => ctx.feat.ciudades.filter(c => ctx.countries.includes(c.iso)),
+      make(c, n, ctx) {
+        if (Math.random() < 0.5) return countryQ({ type: 'city', key: c.id, text: t('q.cityIn', { x: featName(c) }) }, c.iso, n, ctx);
+        // ¿Qué ciudad está en X? Las otras opciones son ciudades de otros países
+        const byId = ctx.cityById, others = ctx.feat.ciudades.filter(o => o.iso !== c.iso && ctx.countries.includes(o.iso)).map(o => o.id);
+        const label = id => featName(byId[id]);
+        const ds = distractors([c.id], n - 1, others, label, id => byId[id].cont, c.cont);
+        return build({ type: 'city', key: c.id, text: t('q.cityOf', { x: G.countryName(c.iso) }) }, c.id, ds, label);
+      }
+    },
+    shape: {
+      items: ctx => ctx.countries.filter(hasShape),
+      make: (iso, n, ctx) => countryQ({ type: 'shape', key: iso, text: t('q.shape'), shape: shapePath(iso) }, iso, n, { countries: ctx.countries.filter(hasShape) })
     }
   };
 
-  // Genera `count` preguntas mezclando los tipos elegidos, sin repetir país
-  function generate({ types, region, count, nOptions, opts }) {
-    const cands = pool(region, opts);
-    const order = shuffle(cands.slice());
-    const out = []; let ti = Math.floor(Math.random() * types.length);
-    for (const iso of order) {
-      if (out.length >= count) break;
-      const type = types[ti % types.length];
-      const q = MAKERS[type](iso, nOptions, cands);
-      if (q && q.options.length === nOptions) { out.push(q); ti++; }
+  // Genera `count` preguntas alternando los tipos elegidos, sin repetir elemento
+  function generate({ types, regions, count, nOptions, opts, features }) {
+    regions = (regions || CONTS).filter(r => CONTS.includes(r));
+    const countries = Object.keys(G.COUNTRY).filter(iso => G.isAskable(iso, opts) && regions.includes(G.CONT_OF[iso]));
+    const feat = features || { rios: [], ciudades: [] };
+    const ctx = { regions, countries, feat, cityById: Object.fromEntries(feat.ciudades.map(c => [c.id, c])) };
+    const bags = {};
+    types.filter(k => KINDS[k]).forEach(k => { bags[k] = shuffle(KINDS[k].items(ctx).slice()); });
+    let live = Object.keys(bags).filter(k => bags[k].length);
+    const out = [], used = new Set();
+    let ti = Math.floor(Math.random() * Math.max(1, live.length));
+    while (out.length < count && live.length) {
+      const type = live[ti % live.length], bag = bags[type];
+      let q = null;
+      while (!q && bag.length) {
+        const item = bag.pop(), id = typeof item === 'string' ? item : item.id;
+        if (used.has(type + ':' + id)) continue;
+        q = KINDS[type].make(item, nOptions, ctx);
+        if (q && q.options.length !== nOptions) q = null;
+        if (q) used.add(type + ':' + id);
+      }
+      if (q) { out.push(q); ti++; }
+      live = live.filter(k => bags[k].length);
     }
     return out;
   }
 
-  window.CartariusQuestions = { prepareShapes, generate, CONTS };
+  window.CartariusQuestions = { prepareShapes, generate, shapePath, hasShape, CONTS, TYPES };
 })();

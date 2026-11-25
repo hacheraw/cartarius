@@ -39,13 +39,15 @@
       <div class="q-checks" id="sTypes">
         <label><input type="checkbox" value="flag" checked> <span data-i18n="qt.flag">Banderas</span></label>
         <label><input type="checkbox" value="capital" checked> <span data-i18n="qt.capital">Capitales</span></label>
+        <label><input type="checkbox" value="river"> <span data-i18n="qt.river">Ríos</span></label>
+        <label><input type="checkbox" value="city"> <span data-i18n="qt.city">Ciudades</span></label>
         <label><input type="checkbox" value="shape"> <span data-i18n="qt.shape">Siluetas</span></label>
-        <label><input type="checkbox" value="continent"> <span data-i18n="qt.continent">Continentes</span></label>
       </div>
     </div>
-    <div class="q-field"><h3 data-i18n="quiz.region">Región</h3><select id="sRegion"></select></div>
+    <div class="q-field"><h3 data-i18n="quiz.region">Regiones</h3><div class="q-checks" id="sRegions"></div></div>
     <div class="q-field"><h3 data-i18n="quiz.count">Número de preguntas</h3><div class="seg" id="sCount" data-values="5,10,15,20,30"></div></div>
     <div class="q-field"><h3 data-i18n="quiz.time">Tiempo por pregunta</h3><div class="seg" id="sTime" data-values="5,10,15,20,30"></div></div>
+    <div class="q-field"><h3 data-i18n="quiz.gap">Tiempo entre preguntas</h3><div class="seg" id="sGap" data-values="5,8,10,15,20,0"></div></div>
     <div class="q-field"><h3 data-i18n="quiz.options">Opciones por pregunta</h3><div class="seg" id="sOpts" data-values="2,3,4"></div></div>
     <p class="q-err" id="sErr" hidden></p>
   </section>
@@ -54,6 +56,7 @@
     <div id="roomEmpty" class="q-room-empty">
       <svg class="q-compass"><use href="#compass"/></svg>
       <button class="btn primary big" id="createBtn" data-i18n="quiz.create">Crear sala</button>
+      <p class="q-note" id="roomMsg" hidden></p>
       <p class="q-err" id="createErr" hidden></p>
     </div>
     <div id="roomOpen" hidden>
@@ -70,6 +73,9 @@
       <h3><span data-i18n="quiz.players">Jugadores</span> <span class="q-count" id="pCount">0</span></h3>
       <ul class="q-players" id="players"></ul>
       <button class="btn primary big" id="startBtn" disabled data-i18n="quiz.start">Empezar partida</button>
+      <h3 data-i18n="quiz.history">Historial</h3>
+      <ul class="q-history" id="history"></ul>
+      <button class="btn link" id="newRoomBtn" data-i18n="quiz.newRoom">Nueva sala</button>
     </div>
   </section>
 </main>
@@ -79,6 +85,8 @@
   <div class="q-top">
     <span class="q-progress" id="qProg"></span>
     <span class="q-answered" id="qAnswered"></span>
+    <b class="q-clock" id="qClock" aria-live="off"></b>
+    <button class="btn q-pause" id="pauseBtn" title="P"><span aria-hidden="true">❚❚</span> <span data-i18n="quiz.pause">Pausa</span></button>
   </div>
   <div class="q-timer"><i id="qTimer"></i></div>
   <h1 class="q-text" id="qText"></h1>
@@ -87,7 +95,14 @@
   <div class="q-reveal" id="qReveal" hidden>
     <div class="q-hits" id="qHits"></div>
     <div class="q-mini"><h3 data-i18n="quiz.top">Clasificación</h3><ol id="qTop"></ol></div>
-    <button class="btn primary big" id="nextBtn" data-i18n="quiz.next">Siguiente ›</button>
+    <div class="q-next"><span id="qNextIn"></span><button class="btn primary big" id="nextBtn" data-i18n="quiz.next">Siguiente ›</button></div>
+  </div>
+  <div class="q-paused" id="paused" hidden>
+    <div class="q-card">
+      <h2 data-i18n="quiz.paused">Partida en pausa</h2>
+      <p class="q-note" data-i18n="quiz.pausedNote"></p>
+      <div class="actions"><button class="btn primary big" id="resumeBtn" data-i18n="quiz.resume">Continuar</button><button class="btn big" id="stopBtn" data-i18n="quiz.stop">Terminar partida</button></div>
+    </div>
   </div>
 </main>
 
@@ -96,12 +111,13 @@
   <h1 data-i18n="quiz.final">Resultados</h1>
   <div class="q-stats" id="fStats"></div>
   <table class="rank q-rank" id="fTable"></table>
-  <div class="actions"><button class="btn primary big" id="againBtn" data-i18n="quiz.again">Otra partida</button><button class="btn big" id="newRoomBtn" data-i18n="quiz.newRoom">Nueva sala</button></div>
+  <div class="actions"><button class="btn primary big" id="againBtn" data-i18n="quiz.again">Otra partida</button></div>
 </main>
 
 <script src="js/vendor/d3.min.js"></script>
 <script src="data/world.js"></script>
 <script src="data/countries.js"></script>
+<script src="data/features.js"></script>
 <script src="js/vendor/qrcode.js"></script>
 <script src="js/vendor/firebase/firebase-app-compat.js"></script>
 <script src="js/vendor/firebase/firebase-auth-compat.js"></script>
