@@ -29,12 +29,14 @@ Juego web de geografía. Estética: carta náutica, pergamino, toques regios.
 - [ ] Lenguas, personajes famosos (Wikidata; personajes mejor en el Quiz).
 
 ## Tramo 4 · Quiz multijugador
-- [ ] Pantalla principal (anfitrión): crea sala, muestra QR y código de 4 caracteres.
-- [ ] Móviles: entrar por QR o URL + código, poner nombre.
-- [ ] Preguntas de las mismas categorías ("¿De qué país es esta bandera?").
-- [ ] Configuración: tiempo por pregunta (5 s por defecto), 2–4 opciones, nº de preguntas.
-- [ ] Respuestas en tiempo real y marcador final: aciertos, más rápido, más lento.
-- [ ] Requiere servidor en tiempo real (WebSocket: Node + Socket.IO, o servicio tipo Supabase/Firebase).
+- [x] Anfitrión (`quiz.html`): ajustes, crea sala, QR (lleva a `play.html?sala=CÓDIGO`) y código de 4 caracteres, lista de jugadores.
+- [x] Móviles (`play.html`): entrar por QR o URL + código, poner nombre, botones de colores.
+- [x] Preguntas: banderas, capitales, siluetas y continentes; distractores del mismo continente.
+- [x] Configuración: tiempo (5 s por defecto), 2–4 opciones, nº de preguntas, región.
+- [x] Puntos por acierto y rapidez; marcador final con aciertos, más rápido y más lento.
+- [x] Conexión aislada en `js/net.js`: Firebase Realtime Database + modo local de pruebas (pestañas del mismo navegador). Reglas en `firebase-rules.json`.
+- [ ] Configurar el proyecto de Firebase (`js/firebase-config.js`) y publicar en GitHub Pages.
+- [ ] Más tipos de pregunta (ríos, ciudades), sonido.
 
 ## Decisiones técnicas
 - Datos de países: REST Countries v5 descargado una vez a `data/raw/restcountries-v5.json` (`tools/fetch-countries.mjs`, gasta 3 peticiones). `tools/build-data.py` + `data/overrides.json` generan `data/countries.json`/`.js` (nombres en español, continente, estatus, capitales, bandera, población, idiomas, monedas, fronteras…). La clave no va en el juego.

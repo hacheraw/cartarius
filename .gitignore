@@ -1,0 +1,5 @@
+# Datos brutos descargados (se regeneran con tools/fetch-*.{mjs,sh})
+data/raw/
+node_modules/
+.DS_Store
+Thumbs.db

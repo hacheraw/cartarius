@@ -8,7 +8,10 @@ rd = lambda p: open(os.path.join(ROOT, p), encoding='utf-8').read()
 s = rd('index.html')
 head = s[s.index('<title>'):s.index('</head>')]
 head = re.sub(r'<meta charset[^>]*>\s*|<meta name="viewport"[^>]*>\s*', '', head)
+head = head.replace('<link rel="stylesheet" href="css/cartarius.css">', '<style>\n' + rd('css/cartarius.css') + '</style>')
 body = s[s.index('<body>') + 6:s.index('</body>')]
+# El Quiz necesita sus propias páginas (quiz.html, play.html): no entra en la vista previa de una sola página
+body = re.sub(r'<a class="btn primary" id="quizBtn"[^>]*>.*?</a>', '', body)
 for a, b in [('<script src="js/vendor/d3.min.js"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>'),
              ('<script src="data/world.js"></script>\n', ''), ('<script src="data/countries.js"></script>\n', ''), ('<script src="data/features.js"></script>\n', ''),
              ('<script src="js/i18n.js"></script>', '<script>\n' + rd('js/i18n.js') + '\n</script>'),
