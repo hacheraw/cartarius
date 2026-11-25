@@ -118,7 +118,8 @@
     layer.append('g').attr('class', 'labels');
 
     zoom = d3.zoom().scaleExtent([1, 40]).translateExtent([[0, 0], [W, H]])
-      .filter(ev => (!ev.ctrlKey || ev.type === 'wheel') && !ev.button)
+      // Rueda: zoom. Botón derecho: arrastrar. Botón izquierdo: solo responder (nunca arrastra).
+      .filter(ev => ev.type === 'wheel' || ev.type.startsWith('touch') || (ev.type === 'mousedown' && ev.button === 2))
       .on('zoom', ev => {
         layer.attr('transform', ev.transform);
         currentK = ev.transform.k;
@@ -126,6 +127,9 @@
         layer.selectAll('.label').attr('font-size', d => d.size / Math.sqrt(currentK)).attr('stroke-width', 3 / currentK);
       });
     svg.call(zoom).on('dblclick.zoom', null);
+    svg.on('contextmenu', ev => ev.preventDefault());
+    svg.on('mousedown.grab', ev => { if (ev.button === 2) svg.classed('grabbing', true); });
+    d3.select(window).on('mouseup.grab', () => svg.classed('grabbing', false));
     fitView(cat, false);
   }
 
